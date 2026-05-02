@@ -1,0 +1,22 @@
+{
+  "name": "falcon",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "4.2.2",
+    "astro": "6.1.1",
+    "astro-icon": "1.1.5",
+    "tailwindcss": "4.2.2"
+  },
+  "devDependencies": {
+    "vite": "7.3.6"
+  }
+}
