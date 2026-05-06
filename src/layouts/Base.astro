@@ -1,0 +1,47 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${site.legalName} — Roofing Contractor in ${site.address.city}, Oregon`,
+  description = site.description,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "RoofingContractor",
+  name: site.legalName,
+  description: site.description,
+  telephone: site.phone,
+  email: site.email,
+  url: `https://${site.domain}`,
+  address: {
+    "@type": "PostalAddress",
+    // Omitted rather than empty while the new street address is unconfirmed —
+    // an empty streetAddress is a validation error, a missing one is not.
+    ...(site.address.street ? { streetAddress: site.address.street } : {}),
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    ...(site.address.zip ? { postalCode: site.address.zip } : {}),
+    addressCountry: "US",
+  },
+  areaServed: [
+    "Washington County, OR",
+    "Multnomah County, OR",
+    "Clackamas County, OR",
+    "Marion County, OR",
+  ],
+  // Weekday hours only: Saturday is by appointment, which has no honest
+  // opens/closes pair.
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "07:00",
+    closes: "18:00",
