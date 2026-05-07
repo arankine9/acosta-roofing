@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/*
+  Token layer transcribed from DESIGN.md. Three inks — forest green, cream,
+  charcoal — and nothing else chromatic. The system alternates cream body
+  chapters against solid forest-green bands, builds hierarchy from condensed
+  uppercase weight rather than color, and separates content with hairline
+  rules instead of shadow. Names match the design doc's token names so the
+  two stay auditable.
+*/
+@theme {
+  /* The three brand inks. Everything below is derived from these. */
+  --color-forest: #1b3d2e;
+  --color-cream: #f2efe6;
+  --color-charcoal: #2b2b2b;
+
+  /* Derived greens. `forest-deep` is the hover/press step and the footer
+     fine-print band; `forest-mid` is the de-emphasised ink for step numerals,
+     the lightest green that still clears AA on cream-deep (6.1:1). */
+  --color-forest-deep: #14301f;
+  --color-forest-mid: #2f5a44;
+
+  /* Surface. Two paper weights, one board. `cream-deep` carries alternating
+     body sections; `board` is the printed-sign panel used for the estimate
+     card and the yard-sign CTA. */
+  --color-canvas: #f2efe6;
+  --color-cream-deep: #e7e2d3;
+  --color-board: #fbfaf6;
+
+  /* Rules. `hairline` on cream, `hairline-dark` on forest. Both are the ink
+     they sit on, thinned — never a neutral gray. */
+  --color-hairline: rgba(43, 43, 43, 0.22);
+  --color-hairline-strong: rgba(43, 43, 43, 0.45);
+  --color-hairline-dark: rgba(242, 239, 230, 0.28);
+
+  /* Text */
+  --color-ink: #2b2b2b;
+  --color-body: #3d3d3d;
+  --color-mute: #6b6a63;
+  --color-on-forest: #f2efe6;
+  --color-on-forest-mute: rgba(242, 239, 230, 0.72);
+
+  --color-error: #8c2f22;
+
+  /* Oswald is the open-source stand-in for the wordmark's condensed cut and
+     is used ONLY uppercase. Barlow carries every sentence-case sentence. */
+  --font-display: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --font-sans: "Barlow", Arial, Helvetica, ui-sans-serif, sans-serif;
+
+  /* 8px base. Deliberately kept OUT of Tailwind's spacing namespace: that
+     namespace also drives max-w/w/h, so a 24px "xl" there silently redefines
+     max-w-xl. Markup uses the numeric utilities; these drive the component
+     classes below. */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+
+  /* The identity is printed signage: square corners. 2px exists only so
+     inputs and buttons don't look like a rendering bug at small sizes. */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+
+  /* No elevation anywhere in content. The one shadow is on sticky chrome. */
+  --shadow-chrome: 0 1px 0 0 rgba(43, 43, 43, 0.18);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  /* Headings are the condensed cut, uppercase, letterspaced — they inherit
+     color from their surface. Hierarchy is size and tracking, never tint. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.08;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
