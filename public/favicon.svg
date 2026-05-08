@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Single file: forest tile with a cream mark, legible at 16px. The tab
+       icon drops the treeline detail — at that size only the gable survives. -->
+  <rect width="64" height="64" fill="#1b3d2e" />
+  <g fill="#f2efe6">
+    <path d="M32 14 L56 38 L56 47 L49 47 L32 30 L15 47 L8 47 L8 38 Z" />
+    <path d="M7 45 H57 V52 H7 Z" />
+    <path d="M28 34 H36 V44 H28 Z" fill="#1b3d2e" />
+  </g>
+</svg>
