@@ -1,0 +1,52 @@
+---
+// The brand board's pictogram set: single-weight line art on a 24-unit grid,
+// square caps, no fills. They are drawn rather than pulled from an icon font
+// so the stroke weight matches the hairline rules they sit between.
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 28, class: className = "" } = Astro.props;
+
+const paths: Record<string, string> = {
+  // Services
+  "roof-install": "M2 12 12 3l10 9M5 11v10h14V11M9.5 21v-5.5h5V21M12 3v-1M16.5 6.9V4h2.5v5.2",
+  "roof-repair": "M3 15.5 12.5 6M2.6 15.1l3.8 3.8-2.2 2.2-3.8-3.8ZM11 4.5l3.5-1.5 6 6-2 2-6-6Z",
+  "roof-maintain": "M12 2.5 4 5.5v6.2c0 4.6 3.2 8.2 8 9.8 4.8-1.6 8-5.2 8-9.8V5.5ZM8.5 12l2.5 2.5 4.5-4.5",
+  gutters: "M2 9 12 2.5 22 9M4.5 12h15v4.5h-15ZM4.5 16.5v4.5M19.5 16.5v4.5M8 12v-1.5M16 12v-1.5M12 16.5v5",
+  commercial: "M3 21V6l7-3v18M10 21h11V10h-11M13.5 13.5h1.5M17.5 13.5H19M13.5 17h1.5M17.5 17H19M5.5 8h2M5.5 11.5h2M5.5 15h2",
+  waterproof: "M2 9.5 12 2l10 7.5M5 12v9h14v-9M12 12.5c-1.8 2.2-2.8 3.7-2.8 5a2.8 2.8 0 0 0 5.6 0c0-1.3-1-2.8-2.8-5Z",
+  solar: "M2 11 12 3.5 22 11M4.5 13.5h15v7h-15ZM4.5 17h15M9.5 13.5v7M14.5 13.5v7",
+  // Trust bar + contact
+  quality: "M12 2.5 4 5.5v6.2c0 4.6 3.2 8.2 8 9.8 4.8-1.6 8-5.2 8-9.8V5.5ZM8.5 11.8l2.5 2.6 4.5-4.6",
+  honest: "M12 1.5 15.5 8h-2.2l3.2 6h-2.6l3.6 7H14v2.5h-4V21H4.5l3.6-7H5.5l3.2-6H6.5Z",
+  built: "M2 12 12 3l10 9M5.5 11.2V21h13v-9.8M9 21v-6h6v6M2 12l10 3.5L22 12",
+  oregon: "M1.5 19 8 8l4.5 7 2.5-3.5L22.5 19ZM8 8l2.2 3.8M15 11.5 12.8 15",
+  phone: "M4.5 3.5h4l1.8 4.4-2.3 1.6a12 12 0 0 0 6.5 6.5l1.6-2.3 4.4 1.8v4c0 .8-.7 1.5-1.5 1.5A17 17 0 0 1 3 5c0-.8.7-1.5 1.5-1.5Z",
+  mail: "M2.5 5.5h19v13h-19ZM2.5 6l9.5 7 9.5-7",
+  pin: "M12 21.5s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 13a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z",
+  clock: "M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19ZM12 6.5V12l3.8 2.5",
+  globe: "M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19ZM2.5 12h19M12 2.5c2.4 2.6 3.6 5.7 3.6 9.5S14.4 18.9 12 21.5c-2.4-2.6-3.6-5.7-3.6-9.5S9.6 5.1 12 2.5Z",
+  check: "M4 12.5 9.5 18 20 6.5",
+  arrow: "M3 12h17M14 6l6 6-6 6",
+};
+
+const d = paths[name] ?? paths.check;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.4"
+  stroke-linecap="square"
+  stroke-linejoin="miter"
+  aria-hidden="true"
+  class={className}
+>
+  <path d={d}></path>
+</svg>

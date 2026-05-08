@@ -1,0 +1,31 @@
+---
+// The lockup. Two arrangements of the same parts, because the brand board
+// specifies both: `stacked` is the full sign — mark over wordmark, "ROOFING"
+// flanked by rules, tagline under — and `inline` is the horizontal cut used
+// in chrome, where the tagline is dropped rather than shrunk to unreadable.
+// `tagline={false}` suppresses it on the stacked cut too, for the one place
+// the same sentence is already carrying the headline.
+import { site } from "../data/site";
+
+interface Props {
+  tone?: "forest" | "cream";
+  layout?: "inline" | "stacked";
+  tagline?: boolean;
+  class?: string;
+}
+
+const {
+  tone = "forest",
+  layout = "inline",
+  tagline = true,
+  class: className = "",
+} = Astro.props;
+
+const mark = tone === "cream" ? "/icon-light.svg" : "/icon.svg";
+// The inline cut uses the wider nav mark (firs + gable, 196.8x90). Its roof
+// face is canvas-cream, so on the forest footer it falls back to the light icon.
+const inlineMark = tone === "cream" ? "/icon-light.svg" : "/mark.svg";
+const ink = tone === "cream" ? "text-on-forest" : "text-forest";
+const sub = tone === "cream" ? "text-on-forest-mute" : "text-mute";
+---
+
