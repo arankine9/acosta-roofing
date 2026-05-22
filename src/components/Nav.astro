@@ -1,0 +1,45 @@
+---
+// 76px cream bar under the utility strip: lockup left, link row center, one
+// forest CTA right. Below 1024px the row collapses into a drawer built from
+// <details> — no framework, and it still opens with JS off.
+import Logo from "./Logo.astro";
+import { site } from "../data/site";
+
+const links = [
+  { href: "#services", label: "Services" },
+  { href: "#process", label: "How We Work" },
+  { href: "#service-area", label: "Service Area" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-hairline bg-canvas shadow-[0_1px_0_0_rgba(43,43,43,0.18)]">
+  <nav class="container-page flex h-[76px] items-center justify-between gap-6" aria-label="Main">
+    <a href="/" class="shrink-0">
+      <Logo />
+      <span class="sr-only">Acosta Roofing home</span>
+    </a>
+
+    <div class="hidden items-center gap-8 lg:flex">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="t-spaced-sm border-b-2 border-transparent pb-1 text-ink hover:border-forest hover:text-forest"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="hidden items-center gap-6 lg:flex">
+      <a href={site.phoneHref} class="t-heading-sm text-forest hover:text-forest-deep">
+        {site.phone}
+      </a>
+      <a href="#contact" class="btn btn-primary">Free Estimate</a>
+    </div>
+
+    <details class="group lg:hidden">
+      <summary
+        class="flex h-11 w-11 cursor-pointer list-none items-center justify-end text-forest [&::-webkit-details-marker]:hidden"
