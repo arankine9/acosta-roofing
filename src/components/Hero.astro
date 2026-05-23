@@ -1,0 +1,44 @@
+---
+// The opening plate: a solid forest band with the copy on the left and the
+// yard sign on the right — the same sign the crew stakes in the lawn, drawn
+// in HTML rather than photographed, so the phone number and licence blank on
+// it are real text. The treeline at the foot hands off to the cream body.
+import Logo from "./Logo.astro";
+import Treeline from "./Treeline.astro";
+import { site } from "../data/site";
+---
+
+<section class="on-forest relative bg-forest text-on-forest">
+  <div class="container-page grid gap-12 pt-16 pb-28 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-16 lg:pt-24 lg:pb-36">
+    <div>
+      <p class="t-eyebrow ruled-label ruled-label-left text-on-forest-mute">
+        <span class="whitespace-nowrap">{site.address.city}, Oregon &middot; Residential &amp; Commercial</span>
+      </p>
+
+      <h1 class="t-display-xl mt-6 max-w-[15ch]">{site.tagline}</h1>
+
+      <p class="t-lead mt-6 max-w-xl text-on-forest-mute">
+        Installation, repairs, maintenance and gutter systems across {site.serviceArea}
+        — from a crew small enough that the person who quotes your job is the
+        person on your roof.
+      </p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href={site.phoneHref} class="btn btn-cream">Call {site.phone}</a>
+        <a href="#contact" class="btn btn-outline-cream">Request a Free Estimate</a>
+      </div>
+
+      <!-- Proof row. Hairline rules, no cards — nothing lifts off this band. -->
+      <dl class="mt-14 grid max-w-xl grid-cols-3 border-t border-hairline-dark">
+        {
+          [
+            { value: "5", label: "Services under one roof" },
+            { value: "4", label: "Counties served" },
+            { value: "Free", label: "On-site estimates" },
+          ].map((item) => (
+            <div class="border-r border-hairline-dark py-5 pr-4 last:border-r-0">
+              <dd class="t-display-lg">{item.value}</dd>
+              <dt class="t-spaced-sm mt-3 text-on-forest-mute">{item.label}</dt>
+            </div>
+          ))
+        }
