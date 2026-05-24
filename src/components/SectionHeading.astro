@@ -1,0 +1,40 @@
+---
+// Eyebrow + headline. The eyebrow is the rule-flanked spaced caps the brand
+// board uses to title every plate; the headline is the condensed display cut.
+// Neither takes a tint — they inherit the ink of the surface they sit on.
+interface Props {
+  label: string;
+  title: string;
+  description?: string;
+  tone?: "forest" | "cream";
+  align?: "left" | "center";
+  class?: string;
+}
+
+const {
+  label,
+  title,
+  description,
+  tone = "forest",
+  align = "left",
+  class: className = "",
+} = Astro.props;
+
+const titleTone = tone === "cream" ? "text-on-forest" : "text-ink";
+const bodyTone = tone === "cream" ? "text-on-forest-mute" : "text-body";
+const labelTone = tone === "cream" ? "text-on-forest-mute" : "text-forest";
+---
+
+<div class={`${align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"} ${className}`}>
+  <p
+    class:list={[
+      "t-eyebrow ruled-label",
+      align === "left" && "ruled-label-left",
+      labelTone,
+    ]}
+  >
+    <span class="whitespace-nowrap">{label}</span>
+  </p>
+  <h2 class={`t-display-lg mt-5 ${titleTone}`}>{title}</h2>
+  {description && <p class={`t-lead mt-5 ${bodyTone}`}>{description}</p>}
+</div>
