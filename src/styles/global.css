@@ -93,3 +93,98 @@
     line-height: 1.08;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 3px;
+  }
+  .on-forest :focus-visible {
+    outline-color: var(--color-cream);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  /*
+    Type scale. Roles are classes, not ad-hoc utilities, so "this is a card
+    title" survives refactors and stays greppable against DESIGN.md.
+    Everything on the display cut is uppercase by definition of the cut.
+  */
+  .t-wordmark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    line-height: 0.92;
+  }
+  .t-display-xl {
+    font-family: var(--font-display);
+    font-size: 68px;
+    font-weight: 700;
+    line-height: 1.02;
+    text-transform: uppercase;
+    letter-spacing: 0.015em;
+  }
+  .t-display-lg {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.06;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .t-heading-xl {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.12;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .t-heading-md {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.18;
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+  }
+  .t-heading-sm {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* The spaced-out uppercase line that runs under a mark or across a strip:
+     "LICENSED · BONDED · INSURED". Tracking is the whole effect — do not
+     tighten it. */
+  .t-spaced {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+  }
+  .t-spaced-sm {
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    font-weight: 500;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.26em;
+  }
+  .t-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
