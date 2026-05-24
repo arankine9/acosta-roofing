@@ -1,0 +1,46 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import Icon from "./Icon.astro";
+
+// The five services named on the brand board, in the board's order. Each panel
+// is a printed board: hairline keyline, pictogram in the corner, category tag,
+// a 16:9 photo slot and a ruled footer link. Job photos drop into
+// public/images/ under the filenames below; until then the shingle field
+// stands in.
+const services = [
+  {
+    icon: "roof-install",
+    kind: "Residential",
+    title: "Roof installation",
+    body: "Full tear-off and re-roof on architectural shingle, with new underlayment, flashing and ventilation — not a fresh layer over old problems.",
+    image: "/images/roof-installation.jpg",
+  },
+  {
+    icon: "roof-repair",
+    kind: "Residential",
+    title: "Roof repairs",
+    body: "Leaks traced to the actual source: failed flashing, split boots, lifted ridge, storm damage. Repaired to match, so it isn't obvious work was done.",
+    image: "/images/roof-repairs.jpg",
+  },
+  {
+    icon: "roof-maintain",
+    kind: "Residential",
+    title: "Roof maintenance",
+    body: "Seasonal inspection, moss treatment and debris clearing. Most of the roofs we replace early were lost to maintenance nobody was doing.",
+    image: "/images/roof-maintenance.jpg",
+  },
+  {
+    icon: "gutters",
+    kind: "Residential",
+    title: "Gutter systems",
+    body: "Gutter installation, replacement and cleaning. Water that leaves the roof cleanly is most of what keeps a roof — and a foundation — sound.",
+    image: "/images/gutter-systems.jpg",
+  },
+  {
+    icon: "commercial",
+    kind: "Commercial",
+    title: "Commercial roofing",
+    body: "Single-ply and low-slope systems for shops, warehouses and light-industrial buildings, installed to spec and detailed properly at every penetration.",
+    image: "/images/commercial-roofing.jpg",
+  },
+];
