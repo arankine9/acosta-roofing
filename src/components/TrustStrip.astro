@@ -1,0 +1,37 @@
+---
+// The four-up pictogram bar that closes the brand board, moved up under the
+// hero where it does the most work: it is the first thing a homeowner scans
+// after the headline. Hairline dividers, no boxes.
+import Icon from "./Icon.astro";
+
+const claims = [
+  { icon: "quality", label: "Quality workmanship" },
+  { icon: "honest", label: "Honest & reliable" },
+  { icon: "built", label: "Built to last" },
+  { icon: "oregon", label: "Rooted in Oregon" },
+];
+---
+
+<div class="bg-canvas">
+  <div class="container-page">
+    <ul class="grid grid-cols-2 border-b border-hairline lg:grid-cols-4">
+      {
+        claims.map((claim, index) => (
+          <li
+            class:list={[
+              "flex items-center justify-center gap-3 px-4 py-6 text-forest",
+              // Right rule on every item except the last in its row; the row
+              // width changes at lg, so both cases are spelled out.
+              index % 2 === 0 && "border-r border-hairline",
+              index < 2 && "border-b border-hairline lg:border-b-0",
+              "lg:border-r lg:last:border-r-0",
+            ]}
+          >
+            <Icon name={claim.icon} size={26} class="shrink-0" />
+            <span class="t-spaced-sm">{claim.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
