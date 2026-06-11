@@ -25,3 +25,31 @@ export const site = {
   address: {
     street: "",
     city: "Beaverton",
+    state: "OR",
+    zip: "",
+  },
+
+  // TODO: Oregon law requires the CCB licence number to appear in contractor
+  // advertising, including the website. The brand board leaves it blank, and
+  // so does the site — the hero sign and the footer render the printed blank
+  // until this is set.
+  ccb: "",
+
+  serviceArea: "the Portland metro",
+
+  // TODO: placeholder hours. Confirm before launch.
+  hours: [
+    { days: "Monday – Friday", time: "7:00 AM – 6:00 PM" },
+    { days: "Saturday", time: "By appointment" },
+    { days: "Sunday", time: "Closed" },
+  ],
+} as const;
+
+// City line, always present. The street sits above it and the ZIP after it,
+// each only when set.
+export const cityLine = [
+  `${site.address.city}, ${site.address.state}`,
+  site.address.zip,
+]
+  .filter(Boolean)
+  .join(" ");
