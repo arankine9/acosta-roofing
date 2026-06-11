@@ -1,0 +1,52 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { site } from "../data/site";
+
+// Long-form 60/40: the four stages ruled down the left, stat boards stacked in
+// the right rail. Below 1024px the rail drops beneath the body.
+const stages = [
+  {
+    name: "The walk-through",
+    body: "We get on the roof, into the attic where it matters, and tell you what we actually see — including when a repair will do and a replacement won't pay for itself yet.",
+  },
+  {
+    name: "The written quote",
+    body: "One page, itemized, no financing pitch. The number you sign is the number you pay unless we open the deck and find rot, which we photograph and price before we continue.",
+  },
+  {
+    name: "The tear-off",
+    body: "Ground protected, landscaping covered, magnet run over the whole property at the end of every day. You should not be finding nails next spring.",
+  },
+  {
+    name: "The hand-off",
+    body: "Photos of the flashing, valleys and ventilation before they were covered, plus the manufacturer warranty paperwork and a straight answer on what to watch for.",
+  },
+];
+
+const stats = [
+  {
+    value: "1 crew",
+    caption: "The people who quote the job are the people who do it.",
+  },
+  {
+    value: "1 page",
+    caption: "What the quote is — short enough to read in the driveway.",
+  },
+  {
+    value: "0",
+    caption: "Sales calls between the walk-through and the work.",
+  },
+];
+---
+
+<section id="process" class="section bg-cream-deep">
+  <div class="container-page">
+    <SectionHeading label="How we work" title="A small crew, and that is the point" class="mb-14" />
+
+    <div class="grid gap-14 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-12">
+      <div>
+        <p class="t-body-md max-w-2xl text-body">
+          {site.name} is a small crew working {site.serviceArea}, and it stays
+          small on purpose: the estimate, the tear-off and the follow-up call all
+          come from the same people. The four stages below are the whole
+          process — there is no sales call between them, and no number changes
