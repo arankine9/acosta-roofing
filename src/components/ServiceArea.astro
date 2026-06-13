@@ -1,0 +1,43 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+// Hairline table rather than a panel grid — this is reference data, and the
+// system treats reference data as documentation. The header row is the brand
+// board's forest label plate.
+const counties = [
+  {
+    name: "Washington County",
+    towns: "Beaverton, Hillsboro, Tigard, Tualatin, Sherwood, Forest Grove",
+    note: "Home county",
+  },
+  {
+    name: "Multnomah County",
+    towns: "Portland, Gresham, Troutdale, Fairview",
+    note: "Full service",
+  },
+  {
+    name: "Clackamas County",
+    towns: "Lake Oswego, Oregon City, Canby, Wilsonville, Molalla",
+    note: "Full service",
+  },
+  {
+    name: "Marion County",
+    towns: "Woodburn, Salem, Keizer, Mt. Angel, Silverton",
+    note: "Full service",
+  },
+];
+---
+
+<section id="service-area" class="section bg-canvas">
+  <div class="container-page">
+    <SectionHeading
+      label="Service area"
+      title="Where we work"
+      description="Four counties across the greater Portland metro area and south into the valley."
+      class="mb-14"
+    />
+
+    <div class="overflow-x-auto border border-hairline">
+      <table class="w-full min-w-[680px] border-collapse text-left">
+        <thead>
+          <tr class="bg-forest text-on-forest">
