@@ -1,0 +1,60 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import Icon from "./Icon.astro";
+import { site, cityLine } from "../data/site";
+---
+
+<section id="contact" class="section bg-cream-deep">
+  <div class="container-page">
+    <SectionHeading
+      label="Get in touch"
+      title="Free estimates, no pressure"
+      description="Call during shop hours and you'll get someone who has been on a roof today. Leave a message after hours and you'll hear back the next working morning."
+      class="mb-14"
+    />
+
+    <div class="grid gap-5 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
+      <!--
+        Static form. There is no backend yet: it posts nowhere, and the note
+        under the submit button says so rather than silently swallowing an
+        enquiry. Wire `action` to a handler before launch.
+      -->
+      <form class="panel p-7 md:p-9" method="post" action="#contact">
+        <div class="plate-label -mx-7 -mt-7 mb-8 md:-mx-9 md:-mt-9">
+          <span class="t-spaced">Request an estimate</span>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="name" class="label-field">Name</label>
+            <input id="name" name="name" type="text" required class="text-input" placeholder="Your name" />
+          </div>
+          <div>
+            <label for="phone" class="label-field">Phone</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              class="text-input"
+              placeholder="(503) 000-0000"
+            />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="address" class="label-field">Property address</label>
+            <input id="address" name="address" type="text" class="text-input" placeholder="Street, city" />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="detail" class="label-field">What's going on with the roof?</label>
+            <textarea
+              id="detail"
+              name="detail"
+              rows="4"
+              class="text-input"
+              placeholder="Leak, age of the roof, storm damage, or just due for a look."></textarea>
+          </div>
+        </div>
+
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <button type="submit" class="btn btn-primary">Send it over</button>
+          <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
