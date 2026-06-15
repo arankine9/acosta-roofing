@@ -1,0 +1,57 @@
+---
+import Logo from "./Logo.astro";
+import Treeline from "./Treeline.astro";
+import { site, cityLine } from "../data/site";
+
+const year = new Date().getFullYear();
+
+// Four link columns, not six. A four-person roofing company does not have six
+// columns of real pages, and inventing them to satisfy a grid would be worse
+// than the grid.
+const columns = [
+  {
+    heading: "Residential",
+    links: [
+      { label: "Roof installation", href: "#services" },
+      { label: "Roof repairs", href: "#services" },
+      { label: "Roof maintenance", href: "#services" },
+      { label: "Gutter systems", href: "#services" },
+    ],
+  },
+  {
+    heading: "Commercial",
+    links: [
+      { label: "Flat & single-ply", href: "#services" },
+      { label: "Low-slope systems", href: "#services" },
+      { label: "Light-industrial roofs", href: "#services" },
+      { label: "Maintenance calls", href: "#contact" },
+    ],
+  },
+  {
+    heading: "Service area",
+    links: [
+      { label: "Washington County", href: "#service-area" },
+      { label: "Multnomah County", href: "#service-area" },
+      { label: "Clackamas County", href: "#service-area" },
+      { label: "Marion County", href: "#service-area" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "How we work", href: "#process" },
+      { label: "Service area", href: "#service-area" },
+      { label: site.email, href: `mailto:${site.email}` },
+      { label: site.phone, href: site.phoneHref },
+    ],
+  },
+];
+---
+
+<footer class="on-forest relative bg-forest text-on-forest">
+  <Treeline tone="forest" height={64} class="absolute inset-x-0 bottom-full" />
+
+  <div class="container-page relative pt-24 pb-14">
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(4,minmax(0,1fr))]">
+      <div class="max-w-xs">
+        <Logo tone="cream" />
