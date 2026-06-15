@@ -1,0 +1,26 @@
+---
+// Forest band bridging two cream chapters, with the treeline running along the
+// top edge so the join reads as the brand board's plate seam rather than as a
+// flat color change.
+import Treeline from "./Treeline.astro";
+import { site } from "../data/site";
+---
+
+<section class="on-forest relative bg-forest text-on-forest">
+  <Treeline tone="forest" height={64} class="absolute inset-x-0 bottom-full" />
+
+  <div
+    class="container-page relative flex flex-col items-start gap-8 pt-24 pb-16 md:flex-row md:items-center md:justify-between md:pt-28"
+  >
+    <div>
+      <h2 class="t-heading-xl">Ready to get a number on it?</h2>
+      <p class="t-body-md mt-3 max-w-xl text-on-forest-mute">
+        Free on-site estimates across the Portland metro, in writing and itemized.
+      </p>
+    </div>
+    <div class="flex shrink-0 flex-col gap-3 sm:flex-row">
+      <a href={site.phoneHref} class="btn btn-cream">Call {site.phone}</a>
+      <a href="#contact" class="btn btn-outline-cream">Request an Estimate</a>
+    </div>
+  </div>
+</section>
