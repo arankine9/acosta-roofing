@@ -42,3 +42,30 @@ import { site } from "../data/site";
             </div>
           ))
         }
+      </dl>
+    </div>
+
+    <!-- Yard sign. Cream board, routed keyline, lockup, licence blank. -->
+    <div class="mx-auto w-full max-w-[420px]">
+      <div class="panel panel-keyline bg-cream px-8 pt-10 pb-8 text-center">
+        <Logo layout="stacked" tagline={false} class="w-full" />
+
+        <div class="mt-8 border-y border-hairline py-3">
+          <p class="t-spaced text-forest">Licensed &middot; Bonded &middot; Insured</p>
+        </div>
+
+        <div class="mt-6 flex items-stretch gap-3 text-left">
+          <!--
+            CCB blank, exactly as it appears on the printed sign. Oregon
+            requires the number in advertising; until `ccb` is set in
+            src/data/site.ts this renders the blank rather than a fake number.
+          -->
+          <div class="flex-1 border border-hairline px-3 py-2">
+            <p class="t-spaced-sm text-mute">CCB #</p>
+            <p class="t-heading-sm mt-1 text-forest">
+              {site.ccb || <span class="text-mute">__________</span>}
+            </p>
+          </div>
+          <a
+            href={site.phoneHref}
+            class="flex flex-1 flex-col justify-center bg-forest px-3 py-2 text-center text-cream"
