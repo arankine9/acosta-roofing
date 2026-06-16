@@ -43,3 +43,34 @@ const links = [
     <details class="group lg:hidden">
       <summary
         class="flex h-11 w-11 cursor-pointer list-none items-center justify-end text-forest [&::-webkit-details-marker]:hidden"
+      >
+        <span class="sr-only">Toggle navigation</span>
+        <svg class="group-open:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M2 6h20M2 12h20M2 18h20" stroke="currentColor" stroke-width="2"></path>
+        </svg>
+        <svg class="hidden group-open:block" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="2"></path>
+        </svg>
+      </summary>
+
+      <!-- Drawer hangs off the sticky header so it tracks the 76px bar. -->
+      <div
+        class="absolute inset-x-0 top-[76px] h-[calc(100vh-76px)] overflow-y-auto border-t border-hairline bg-canvas px-6 pb-8"
+      >
+        <ul>
+          {
+            links.map((link) => (
+              <li class="border-b border-hairline">
+                <a href={link.href} class="t-heading-md block py-5 text-ink">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <a href={site.phoneHref} class="btn btn-primary mt-8 w-full">Call {site.phone}</a>
+        <a href="#contact" class="btn btn-outline mt-3 w-full">Request an Estimate</a>
+      </div>
+    </details>
+  </nav>
+</header>
