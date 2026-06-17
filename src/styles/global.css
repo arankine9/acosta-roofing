@@ -188,3 +188,99 @@
     font-size: 13px;
     font-weight: 600;
     line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+  }
+
+  .t-lead {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.55;
+  }
+  .t-body-md {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .t-body-strong {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  .t-body-sm {
+    font-size: 15.5px;
+    font-weight: 400;
+    line-height: 1.62;
+  }
+  .t-caption {
+    font-size: 13.5px;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  /* Display headlines step down; tracking holds so the cut stays recognizable. */
+  @media (max-width: 1024px) {
+    .t-display-xl {
+      font-size: 54px;
+    }
+    .t-display-lg {
+      font-size: 38px;
+    }
+  }
+  @media (max-width: 640px) {
+    .t-display-xl {
+      font-size: 40px;
+    }
+    .t-display-lg {
+      font-size: 30px;
+    }
+    .t-heading-xl {
+      font-size: 25px;
+    }
+  }
+
+  /*
+    Buttons. Square, condensed, letterspaced — signage, not app chrome. All
+    variants sit at 48px so a row stays optically level and clears WCAG AA.
+  */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    min-height: 48px;
+    padding: 12px 28px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-align: center;
+    transition:
+      background-color 140ms ease,
+      border-color 140ms ease,
+      color 140ms ease;
+  }
+
+  .btn-primary {
+    background-color: var(--color-forest);
+    color: var(--color-cream);
+  }
+  .btn-primary:hover,
+  .btn-primary:active {
+    background-color: var(--color-forest-deep);
+  }
+
+  /* Secondary on cream: a clear pane bordered in forest. The 2px border is
+     part of the identity — do not thin it to 1px. */
+  .btn-outline {
+    background-color: transparent;
+    color: var(--color-forest);
+    border: 2px solid var(--color-forest);
+    padding: 10px 26px;
+  }
+  .btn-outline:hover {
+    background-color: var(--color-forest);
+    color: var(--color-cream);
