@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 96" fill="none" role="img" aria-label="Acosta Roofing">
+  <!--
+    Brand mark: a stand of Douglas fir behind a gable roof. Drawn as solid
+    fills at a single ink so it survives being cut in vinyl for a truck door,
+    embroidered on a cap, or routed into a yard sign — no strokes that hairline
+    out, no shape smaller than ~2px at 32px render.
+  -->
+  <defs>
+    <path id="fir" d="M10 0 L15.5 13 L12.6 13 L17.4 25 L14 25 L20 39.5 L11 39.5 L11 46 L9 46 L9 39.5 L0 39.5 L6 25 L2.6 25 L7.4 13 L4.5 13 Z" />
+  </defs>
+
+  <g fill="#f2efe6">
+    <!-- Treeline. Outer firs are shorter so the ridge stays the tallest read
+         after the tips; the two inner firs frame the chimney and the rake. -->
+    <use href="#fir" transform="translate(0 30) scale(0.86)" />
+    <use href="#fir" transform="translate(13 12) scale(1.12)" />
+    <use href="#fir" transform="translate(31 22) scale(0.94)" />
+    <use href="#fir" transform="translate(72 22) scale(0.94)" />
+    <use href="#fir" transform="translate(88 12) scale(1.12)" />
+    <use href="#fir" transform="translate(103 30) scale(0.86)" />
+
+    <!-- Roof: rake band and eave band, drawn as one solid chevron so the
+         gable face reads as an opening rather than as an outline. -->
+    <path d="M60 26 L104 68 L104 78 L95.5 78 L60 44 L24.5 78 L16 78 L16 68 Z" />
+    <path d="M14 76 H106 V84 H14 Z" />
+
+    <!-- Gable window: four lights. -->
+    <path d="M53 55 H67 V73 H53 Z M58.6 58 H61.4 V70 H58.6 Z M55.5 62.8 H64.5 V65.2 H55.5 Z" fill-rule="evenodd" />
+  </g>
+</svg>
