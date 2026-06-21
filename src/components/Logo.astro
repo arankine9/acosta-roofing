@@ -29,3 +29,25 @@ const ink = tone === "cream" ? "text-on-forest" : "text-forest";
 const sub = tone === "cream" ? "text-on-forest-mute" : "text-mute";
 ---
 
+{
+  layout === "stacked" ? (
+    <span class={`inline-flex flex-col items-center text-center ${className}`}>
+      <img src={mark} alt="" width="120" height="96" class="h-[88px] w-[110px] shrink-0" />
+      <span class={`t-wordmark mt-3 text-[40px] ${ink}`}>Acosta</span>
+      {/* The rules are part of the wordmark, not decoration — they set
+          "ROOFING" at the same optical width as the name above it. */}
+      <span class={`ruled-label mt-2 w-full max-w-[280px] ${ink}`}>
+        <span class="t-spaced whitespace-nowrap">Roofing</span>
+      </span>
+      {tagline && <span class={`t-spaced-sm mt-3 ${sub}`}>{site.tagline}</span>}
+    </span>
+  ) : (
+    <span class={`inline-flex items-center gap-3 ${className}`}>
+      <img src={inlineMark} alt="" width="197" height="90" class="h-10 w-[88px] shrink-0" />
+      <span class="leading-none">
+        <span class={`t-wordmark block text-[21px] ${ink}`}>Acosta</span>
+        <span class={`t-spaced-sm mt-1.5 block ${sub}`}>Roofing</span>
+      </span>
+    </span>
+  )
+}
