@@ -68,3 +68,74 @@ typography:
     case: upper
   heading-sm:
     fontFamily: Oswald
+    fontSize: 18px
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: 0.06em
+    case: upper
+  spaced:
+    fontFamily: Oswald
+    fontSize: 14px
+    fontWeight: 500
+    lineHeight: 1.3
+    letterSpacing: 0.24em
+    case: upper
+  spaced-sm:
+    fontFamily: Oswald
+    fontSize: 11.5px
+    fontWeight: 500
+    lineHeight: 1.3
+    letterSpacing: 0.26em
+    case: upper
+  eyebrow:
+    fontFamily: Oswald
+    fontSize: 13px
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: 0.3em
+    case: upper
+  lead:
+    fontFamily: Barlow
+    fontSize: 20px
+    fontWeight: 400
+    lineHeight: 1.55
+  body-md:
+    fontFamily: Barlow
+    fontSize: 17px
+    fontWeight: 400
+    lineHeight: 1.6
+  body-strong:
+    fontFamily: Barlow
+    fontSize: 17px
+    fontWeight: 600
+    lineHeight: 1.6
+  body-sm:
+    fontFamily: Barlow
+    fontSize: 15.5px
+    fontWeight: 400
+    lineHeight: 1.62
+  caption:
+    fontFamily: Barlow
+    fontSize: 13.5px
+    fontWeight: 400
+    lineHeight: 1.45
+  button:
+    fontFamily: Oswald
+    fontSize: 15px
+    fontWeight: 600
+    lineHeight: 1
+    letterSpacing: 0.12em
+    case: upper
+
+rounded:
+  none: 0px
+  sm: 2px
+
+spacing:
+  base: 8px
+  xs: 4px
+  sm: 8px
+  md: 12px
+  lg: 16px
+  xl: 24px
+  xxl: 32px
