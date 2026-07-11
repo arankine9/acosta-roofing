@@ -58,3 +58,39 @@ import { site, cityLine } from "../data/site";
         <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
           <button type="submit" class="btn btn-primary">Send it over</button>
           <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
+        </div>
+
+        <p class="t-caption mt-5 text-mute">
+          Form delivery isn't connected yet — the phone is the reliable route today.
+        </p>
+      </form>
+
+      <div class="flex flex-col gap-5">
+        <!-- Business card, front: the brand board's card, set as a real
+             contact block so the details are selectable. -->
+        <div class="panel panel-keyline panel-keyline-cream bg-forest p-7 text-on-forest">
+          <h3 class="t-heading-sm">{site.legalName}</h3>
+          <ul class="mt-5 space-y-4">
+            <li class="flex items-center gap-3">
+              <Icon name="phone" size={20} class="shrink-0 text-on-forest-mute" />
+              <a href={site.phoneHref} class="t-body-strong">{site.phone}</a>
+            </li>
+            <li class="flex items-center gap-3">
+              <Icon name="pin" size={20} class="shrink-0 text-on-forest-mute" />
+              <address class="t-body-sm not-italic text-on-forest-mute">
+                {site.address.street && <>{site.address.street}<br /></>}
+                {cityLine}
+              </address>
+            </li>
+            <li class="flex items-center gap-3">
+              <Icon name="mail" size={20} class="shrink-0 text-on-forest-mute" />
+              <a href={`mailto:${site.email}`} class="t-body-sm text-on-forest-mute hover:text-on-forest">
+                {site.email}
+              </a>
+            </li>
+            <li class="flex items-center gap-3">
+              <Icon name="globe" size={20} class="shrink-0 text-on-forest-mute" />
+              <span class="t-body-sm text-on-forest-mute">{site.domain}</span>
+            </li>
+          </ul>
+          <p class="t-spaced-sm mt-6 border-t border-hairline-dark pt-4 text-on-forest-mute">
