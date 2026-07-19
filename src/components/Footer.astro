@@ -55,3 +55,37 @@ const columns = [
     <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(4,minmax(0,1fr))]">
       <div class="max-w-xs">
         <Logo tone="cream" />
+        <p class="t-body-sm mt-6 text-on-forest-mute">
+          {site.tagline} Residential and commercial roofing across
+          {" "}{site.serviceArea}, from Beaverton.
+        </p>
+        <a href="#contact" class="btn btn-cream mt-6">Free Estimate</a>
+      </div>
+
+      {
+        columns.map((column) => (
+          <div>
+            <h2 class="t-spaced-sm text-on-forest">{column.heading}</h2>
+            <ul class="mt-5 space-y-3 border-t border-hairline-dark pt-4">
+              {column.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                    target={link.external ? "_blank" : undefined}
+                    class="t-body-sm text-on-forest-mute hover:text-on-forest"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div
+      class="mt-16 flex flex-col gap-5 border-t border-hairline-dark pt-7 md:flex-row md:items-center md:justify-between"
+    >
+      <p class="t-spaced text-on-forest">Licensed &middot; Bonded &middot; Insured</p>
