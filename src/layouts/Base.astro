@@ -73,3 +73,22 @@ const schema = {
       only; Barlow carries body copy. Arial Narrow / Arial are the fallbacks,
       so the page still reads as signage if the fonts never arrive.
     -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body class="antialiased bg-canvas text-body">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-[2px] focus:bg-forest focus:px-4 focus:py-2 focus:t-body-strong focus:text-on-forest"
+    >
+      Skip to content
+    </a>
+    <slot />
+  </body>
+</html>
