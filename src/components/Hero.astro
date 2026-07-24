@@ -69,3 +69,21 @@ import { site } from "../data/site";
           <a
             href={site.phoneHref}
             class="flex flex-1 flex-col justify-center bg-forest px-3 py-2 text-center text-cream"
+          >
+            <span class="t-spaced-sm text-on-forest-mute">Call</span>
+            <span class="t-heading-sm mt-1 whitespace-nowrap">{site.phone}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- The two stakes under the sign. Cheap, but it is what sells the
+           object as a sign rather than as a card. -->
+      <div class="mx-auto flex w-1/2 justify-between" aria-hidden="true">
+        <span class="h-10 w-2 bg-forest-deep"></span>
+        <span class="h-10 w-2 bg-forest-deep"></span>
+      </div>
+    </div>
+  </div>
+
+  <Treeline tone="cream" height={64} class="absolute inset-x-0 bottom-0" />
+</section>
