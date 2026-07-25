@@ -284,3 +284,98 @@
   .btn-outline:hover {
     background-color: var(--color-forest);
     color: var(--color-cream);
+  }
+
+  /* On a forest band the fill inverts: cream solid, forest text. */
+  .btn-cream {
+    background-color: var(--color-cream);
+    color: var(--color-forest);
+  }
+  .btn-cream:hover {
+    background-color: #ffffff;
+  }
+  .btn-outline-cream {
+    background-color: transparent;
+    color: var(--color-cream);
+    border: 2px solid var(--color-cream);
+    padding: 10px 26px;
+  }
+  .btn-outline-cream:hover {
+    background-color: var(--color-cream);
+    color: var(--color-forest);
+  }
+
+  /*
+    Panel. A printed sign: flat board, hairline keyline, square corners, no
+    shadow. Separation is a rule, never a lift.
+  */
+  .panel {
+    background-color: var(--color-board);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-sm);
+  }
+
+  /* The signature ornament off the brand board: a keyline inset a few px
+     inside the panel edge, the way a routed sign has a border groove. */
+  .panel-keyline {
+    position: relative;
+  }
+  .panel-keyline::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid var(--color-hairline);
+    pointer-events: none;
+  }
+  /* Same groove on a forest panel, where the charcoal rule disappears. */
+  .panel-keyline-cream::after {
+    border-color: var(--color-hairline-dark);
+  }
+
+  /* Section header bar: solid forest strip with cream spaced caps, exactly
+     as the brand board labels each of its plates. */
+  .plate-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    background-color: var(--color-forest);
+    color: var(--color-on-forest);
+    padding: 10px 20px;
+  }
+
+  /*
+    Rule-flanked label — "———— OUR SERVICES ————". The rules are drawn with
+    flex children rather than borders on the text so they center regardless
+    of string length.
+  */
+  .ruled-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+  .ruled-label::before,
+  .ruled-label::after {
+    content: "";
+    flex: 1 1 auto;
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0.4;
+  }
+  .ruled-label-left::before {
+    display: none;
+  }
+  .ruled-label-left::after {
+    flex: 0 0 56px;
+  }
+
+  /* Dot-separated trust line. The separator is a real character so it
+     survives copy/paste into a quote or a sign order. */
+  .dot-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md) var(--space-lg);
+  }
+
+  .badge-tag {
+    display: inline-block;
