@@ -72,3 +72,22 @@ const services = [
                 decoding="async"
                 class="h-full w-full object-cover"
                 onerror="this.remove()"
+              />
+            </div>
+
+            <h3 class="t-heading-md mt-6 text-ink">{service.title}</h3>
+            <p class="t-body-sm mt-3 grow text-body">{service.body}</p>
+
+            <a
+              href="#contact"
+              class="t-spaced-sm mt-6 flex items-center justify-between border-t border-hairline pt-4 text-forest hover:text-forest-deep"
+            >
+              Get a quote
+              <Icon name="arrow" size={18} />
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
