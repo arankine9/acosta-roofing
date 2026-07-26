@@ -50,3 +50,38 @@ const stats = [
           small on purpose: the estimate, the tear-off and the follow-up call all
           come from the same people. The four stages below are the whole
           process — there is no sales call between them, and no number changes
+          after you sign it.
+        </p>
+
+        <!-- Ruled list, not cards. Dense sequential content separated by rules
+             is the system's default for long-form. -->
+        <ol class="mt-10 border-t border-hairline">
+          {
+            stages.map((stage, index) => (
+              <li class="grid grid-cols-[56px_minmax(0,1fr)] gap-5 border-b border-hairline py-7">
+                <span class="t-display-lg text-forest-mid">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 class="t-heading-md text-ink">{stage.name}</h3>
+                  <p class="t-body-sm mt-3 max-w-xl text-body">{stage.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <aside class="flex flex-col gap-5">
+        {
+          stats.map((stat) => (
+            <div class="panel panel-keyline p-8">
+              <p class="t-display-lg text-forest">{stat.value}</p>
+              <p class="t-body-sm mt-3 text-body">{stat.caption}</p>
+            </div>
+          ))
+        }
+      </aside>
+    </div>
+  </div>
+</section>
