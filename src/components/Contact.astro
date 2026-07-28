@@ -94,3 +94,27 @@ import { site, cityLine } from "../data/site";
             </li>
           </ul>
           <p class="t-spaced-sm mt-6 border-t border-hairline-dark pt-4 text-on-forest-mute">
+            Licensed &middot; Bonded &middot; Insured
+          </p>
+        </div>
+
+        <div class="panel p-7">
+          <h3 class="t-heading-sm flex items-center gap-3 text-forest">
+            <Icon name="clock" size={20} />
+            Shop hours
+          </h3>
+          <dl class="mt-5 border-t border-hairline">
+            {
+              site.hours.map((entry) => (
+                <div class="flex items-baseline justify-between gap-4 border-b border-hairline py-3">
+                  <dt class="t-body-strong text-ink">{entry.days}</dt>
+                  <dd class="t-body-sm text-body">{entry.time}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
