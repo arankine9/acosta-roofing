@@ -89,3 +89,26 @@ const columns = [
       class="mt-16 flex flex-col gap-5 border-t border-hairline-dark pt-7 md:flex-row md:items-center md:justify-between"
     >
       <p class="t-spaced text-on-forest">Licensed &middot; Bonded &middot; Insured</p>
+      <address class="t-body-sm not-italic text-on-forest-mute">
+        {site.address.street && <>{site.address.street} &middot; </>}{cityLine}
+        &middot; {site.email}
+      </address>
+      <a href={site.phoneHref} class="t-heading-sm text-on-forest">{site.phone}</a>
+    </div>
+  </div>
+
+  <!-- Legal fine-print band. DESIGN.md calls for `mute` here, but #6b6a63 on
+       #14301f lands at 2.6:1 — on-forest-mute keeps the same read and clears AA. -->
+  <div class="bg-forest-deep">
+    <div
+      class="container-page flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p class="t-spaced-sm text-on-forest-mute">
+        &copy; {year} {site.legalName} All rights reserved.
+      </p>
+      <p class="t-spaced-sm text-on-forest-mute">
+        Bonded and insured in the State of Oregon.{site.ccb && <> &middot; CCB #{site.ccb}</>}
+      </p>
+    </div>
+  </div>
+</footer>
