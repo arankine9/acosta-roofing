@@ -198,3 +198,39 @@ heading: text takes the ink of whatever surface it sits on.
 
 ### Rules
 - **Hairline** (`{colors.hairline}`): 1px panel border, table rule, list divider on cream.
+- **Hairline Strong** (`{colors.hairline-strong}`): input borders and badge outlines, where a 22% rule disappears against a filled field.
+- **Hairline Dark** (`{colors.hairline-dark}`): the same rules on a forest band. A charcoal rule on forest is invisible — always switch.
+
+### Text
+- **Ink** (`{colors.ink}`) headlines on cream · **Body** (`{colors.body}`) paragraphs · **Mute** (`{colors.mute}`) captions and licence blanks.
+- **On Forest** (`{colors.on-forest}`) and **On Forest Mute** (`{colors.on-forest-mute}`) are the only two text colors permitted on a band.
+
+## Typography
+
+**Oswald** is the open-source stand-in for the wordmark's condensed cut, at
+weights 500/600/700, and it is used **uppercase only** — it has no sentence-case
+role anywhere in the system. **Barlow** (400/500/600/700) carries every
+sentence. Fallbacks are Arial Narrow → Arial for the display cut and Arial for
+body, so the page still reads as signage if the webfont never arrives.
+
+The scale is deliberately short: five display steps, three spaced-caps steps,
+four body steps. Anything that needs to feel manufactured is set in the display
+cut with tracking; anything that needs to be read at length is set in Barlow at
+1.6 line-height.
+
+## Layout
+
+- Container: 1240px max, 24px gutters, 48px at ≥1440px.
+- Section rhythm: 88px block padding, 64px ≤900px, 44px ≤560px.
+- Chapters alternate `canvas → cream-deep → forest → canvas`; a forest band is
+  always preceded by a treeline seam.
+- Grids are 3-up at desktop, 2-up at ≥640px, 1-up below. Long-form runs
+  60/40 with the rail dropping under the body below 1024px.
+
+## Accessibility
+
+- Cream on forest is 10.4:1; charcoal on cream is 12.3:1; body on cream is 9.5:1. All clear AA at every size in the scale.
+- `on-forest-mute` (72% cream) is the floor for secondary text on a band at 6.2:1 — do not thin it further.
+- `mute` (4.7:1 on cream) is cream-surface only. On `{colors.forest-deep}` it lands at 2.6:1; the footer fine print uses `on-forest-mute` for exactly this reason.
+- Focus is a 2px outline at 3px offset — forest on cream, cream on forest via `.on-forest`.
+- Buttons and inputs are 48px tall; the letterspaced label never reduces the target.
