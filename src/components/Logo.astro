@@ -1,10 +1,11 @@
 ---
 // The lockup. Two arrangements of the same parts, because the brand board
-// specifies both: `stacked` is the full sign — mark over wordmark, "ROOFING"
-// flanked by rules, tagline under — and `inline` is the horizontal cut used
+// specifies both: `stacked` is the full sign (mark over wordmark, "ROOFING"
+// flanked by rules, tagline under), and `inline` is the horizontal cut used
 // in chrome, where the tagline is dropped rather than shrunk to unreadable.
 // `tagline={false}` suppresses it on the stacked cut too, for the one place
 // the same sentence is already carrying the headline.
+import Wordmark from "./Wordmark.astro";
 import { site } from "../data/site";
 
 interface Props {
@@ -21,10 +22,9 @@ const {
   class: className = "",
 } = Astro.props;
 
-const mark = tone === "cream" ? "/icon-light.svg" : "/icon.svg";
-// The inline cut uses the wider nav mark (firs + gable, 196.8x90). Its roof
-// face is canvas-cream, so on the forest footer it falls back to the light icon.
-const inlineMark = tone === "cream" ? "/icon-light.svg" : "/mark.svg";
+// Both cuts use the real mark (firs + gable, 196.8x90). Its roof face is
+// canvas-cream, so on a forest band it swaps to the inverted cream cut.
+const mark = tone === "cream" ? "/mark-light.svg" : "/mark.svg";
 const ink = tone === "cream" ? "text-on-forest" : "text-forest";
 const sub = tone === "cream" ? "text-on-forest-mute" : "text-mute";
 ---
@@ -32,22 +32,16 @@ const sub = tone === "cream" ? "text-on-forest-mute" : "text-mute";
 {
   layout === "stacked" ? (
     <span class={`inline-flex flex-col items-center text-center ${className}`}>
-      <img src={mark} alt="" width="120" height="96" class="h-[88px] w-[110px] shrink-0" />
-      <span class={`t-wordmark mt-3 text-[40px] ${ink}`}>Acosta</span>
-      {/* The rules are part of the wordmark, not decoration — they set
-          "ROOFING" at the same optical width as the name above it. */}
-      <span class={`ruled-label mt-2 w-full max-w-[280px] ${ink}`}>
-        <span class="t-spaced whitespace-nowrap">Roofing</span>
-      </span>
+      <img src={mark} alt="" width="197" height="90" class="h-auto w-[210px] shrink-0" />
+      {/* The rules under the name are part of the supplied wordmark art, not
+          decoration; they set "ROOFING" at the name's optical width. */}
+      <Wordmark class={`mt-4 h-auto w-full max-w-[200px] ${ink}`} />
       {tagline && <span class={`t-spaced-sm mt-3 ${sub}`}>{site.tagline}</span>}
     </span>
   ) : (
     <span class={`inline-flex items-center gap-3 ${className}`}>
-      <img src={inlineMark} alt="" width="197" height="90" class="h-10 w-[88px] shrink-0" />
-      <span class="leading-none">
-        <span class={`t-wordmark block text-[21px] ${ink}`}>Acosta</span>
-        <span class={`t-spaced-sm mt-1.5 block ${sub}`}>Roofing</span>
-      </span>
+      <img src={mark} alt="" width="197" height="90" class="h-10 w-auto shrink-0 max-[340px]:h-8" />
+      <Wordmark class={`h-9 w-auto max-[340px]:h-7 ${ink}`} />
     </span>
   )
 }
