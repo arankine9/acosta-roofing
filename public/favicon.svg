@@ -1,10 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Single file: forest tile with a cream mark, legible at 16px. The tab
-       icon drops the treeline detail — at that size only the gable survives. -->
-  <rect width="64" height="64" fill="#1b3d2e" />
-  <g fill="#f2efe6">
-    <path d="M32 14 L56 38 L56 47 L49 47 L32 30 L15 47 L8 47 L8 38 Z" />
-    <path d="M7 45 H57 V52 H7 Z" />
-    <path d="M28 34 H36 V44 H28 Z" fill="#1b3d2e" />
+  <!-- Tab icon: the gable lifted straight out of mark.svg, cream on a forest
+       tile. The treeline is dropped, at 16px only the roof survives. -->
+  <rect width="64" height="64" fill="#1b3d2e"/>
+  <g transform="translate(-11.04 6.28) scale(0.4051)">
+    <path fill="#1b3d2e" d="m51.6 89.1 49-39.7 51.3 39.6-100.3 0.1z"/>
+    <path fill="#f2efe6" d="m99.9 66.4h-2.3c-1.2 0.1-4.7 2-5.4 3.6v4.9l0.2 0.2h7.1c0.5 0 0.4-1.1 0.4-1.2v-7.5z"/>
+    <path fill="#f2efe6" d="m109.4 69.6c-0.3-0.7-2.8-3.2-5-3.1h-2.4l-0.4 0.1v8.4l0.3 0.1 7.2 0.1 0.3-0.2v-5.4z"/>
+    <path fill="#f2efe6" d="m92.4 85h6.7c1 0 0.8-0.5 0.8-2.9v-5.1l-0.3-0.1h-6.6c-0.9 0.1-0.7 0.1-0.7 1l0.1 7.1z"/>
+    <path fill="#f2efe6" d="m101.6 84c0 1 0.5 1 1 1l6.3 0.1c0.2 0 0.4 0 0.4-0.5l0.1-6.7c0-1-0.8-1-1.4-1h-6c-0.4 0-0.4 0.2-0.4 0.6v6.5z"/>
+    <path fill="#f2efe6" d="m100.5 37.9-60.9 51.2h12l32.3-25.6-11.5 7 28.2-21.1 32.3 22-15.4-9.3 34.3 27 13.7-0.1-65-51.1z"/>
+    <path fill="#f2efe6" d="m169.6 89h3.3l-14.5-12.1v-18.3l-14.6 0.2 0.1 9.3 25.7 20.9z"/>
   </g>
 </svg>
