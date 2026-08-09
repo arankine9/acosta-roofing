@@ -1,27 +1,51 @@
 ---
 // Repeating fir silhouette, tiled as a background image so it spans any width
-// without stretching the trees. It marks the seam between a cream chapter and
-// a forest one and is always drawn upright, standing on the forest band: cream
-// firs INSIDE the band's bottom edge, forest firs sitting on top of it via
-// `bottom-full`. Never mirror it — upside-down conifers read as a mistake.
+// without stretching the trees. The firs are cut from the logo mark itself
+// (see public/treeline.svg), so the seams between chapters are drawn with the
+// same stand that sits behind the gable.
+//
+// It marks the seam between a cream chapter and a forest one and is always
+// drawn upright, standing on the forest band: cream firs INSIDE the band's
+// bottom edge, forest firs sitting on top of it via `bottom-full`. Never
+// mirror it; upside-down conifers read as a mistake.
 interface Props {
   tone?: "forest" | "cream";
   height?: number;
+  /* Slides the stand sideways. Every seam on the page draws the same tile, so
+     without a distinct offset per seam the identical trees get cut at the
+     identical places each time and the page reads as one repeated strip. */
+  offset?: number;
   class?: string;
 }
 
-const { tone = "forest", height = 56, class: className = "" } = Astro.props;
+const {
+  tone = "forest",
+  height = 56,
+  offset = 0,
+  class: className = "",
+} = Astro.props;
 
-const ink = tone === "cream" ? "%23f2efe6" : "%231b3d2e";
+const src = tone === "cream" ? "/treeline-light.svg" : "/treeline.svg";
+const ink = tone === "cream" ? "var(--color-cream)" : "var(--color-forest)";
 
-// Two fir profiles at different heights, offset — a single repeated tree
-// reads as a fence, and the eye picks up the repeat immediately.
-const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='168' height='72' viewBox='0 0 168 72' preserveAspectRatio='xMidYMax meet'><g fill='${ink}'><path d='M20 6l7 17h-4l6.5 16h-4.5L34 60H6L14.5 39H10l6.5-16h-4Z'/><path d='M56 20l5.5 13h-3l5 12h-3.5L66 60H46l6-15h-3.5l5-12h-3Z'/><path d='M96 2l7.5 18h-4.5L106 37h-5l9 23H83l9-23h-5l7-17h-4.5Z'/><path d='M134 16l6 14h-3.5l5.5 13h-4l7 17h-22l7-17h-4l5.5-13H128Z'/><rect x='0' y='58' width='168' height='14'/></g></svg>`;
+// The tile is 626x72 with its ground band in the bottom 14. Scaled to an
+// arbitrary height the tile width goes fractional, so the repeats land on
+// sub-pixel boundaries and a hairline of the page shows through the band at
+// every seam. Painting the band as a flat layer *behind* the tile closes it:
+// the trees are buried deep enough in the band that the underlay never reads
+// as a separate edge. Ceil so the underlay is never the thinner of the two.
+const band = Math.ceil((height * 14) / 72);
 ---
 
 <div
   class={`w-full ${className}`}
-  style={`height:${height}px;background-image:url("data:image/svg+xml,${svg}");background-repeat:repeat-x;background-position:center bottom;background-size:auto ${height}px`}
+  style={[
+    `height:${height}px`,
+    `background-image:url("${src}"),linear-gradient(to top,${ink} ${band}px,transparent ${band}px)`,
+    `background-repeat:repeat-x,no-repeat`,
+    `background-position:${offset}px bottom,center bottom`,
+    `background-size:auto ${height}px,100% ${height}px`,
+  ].join(";")}
   aria-hidden="true"
 >
 </div>
