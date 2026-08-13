@@ -1,72 +1,382 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
+import { counties } from "../data/site";
+import { serviceMap } from "../data/service-map";
 
-// Hairline table rather than a panel grid — this is reference data, and the
-// system treats reference data as documentation. The header row is the brand
-// board's forest label plate.
-const counties = [
-  {
-    name: "Washington County",
-    towns: "Beaverton, Hillsboro, Tigard, Tualatin, Sherwood, Forest Grove",
-    note: "Home county",
-  },
-  {
-    name: "Multnomah County",
-    towns: "Portland, Gresham, Troutdale, Fairview",
-    note: "Full service",
-  },
-  {
-    name: "Clackamas County",
-    towns: "Lake Oswego, Oregon City, Canby, Wilsonville, Molalla",
-    note: "Full service",
-  },
-  {
-    name: "Marion County",
-    towns: "Woodburn, Salem, Keizer, Mt. Angel, Silverton",
-    note: "Full service",
-  },
-];
+/*
+  Where we work, as a map rather than a table.
+
+  The geometry is real: U.S. Census county boundaries projected into Oregon
+  Statewide Lambert, baked to SVG paths by scripts/build-service-map.mjs off
+  the county list in src/data/site.ts. Nothing here is traced or eyeballed,
+  and nothing is fetched at runtime -- no tile server, no map library, no API
+  key, and no third party watching who reads this page.
+
+  It is drawn as a plat sheet, not as a slippy map, because that is what the
+  rest of the system is: three inks, hairline rules, square corners. A
+  full-colour tile map would be the only photographic surface on the site and
+  the only place with a fourth colour. The cartographic furniture -- neat
+  line, north arrow, scale bar, locator inset, legend -- is the same
+  furniture a printed county map has, so the map reads as part of the signage
+  rather than as an embed.
+
+  The map names counties and one town: the shop. An earlier pass drew a
+  50-mile ring around Beaverton and labelled a dozen towns inside it. Both
+  came out. The ring's northern half lies across the Columbia in Washington
+  state, so the strongest mark on the map was busy claiming Vancouver, and
+  the town labels collided into an unreadable knot over the metro at exactly
+  the size the map is actually rendered. The counties ARE the answer; the map
+  should say the answer once, in large letters, and stop.
+
+  The map is still an illustration, not the record. The county list beside it
+  is the record, and it stays real text: it is what a screen reader gets,
+  what search indexes, and what somebody scanning for their own town reads.
+*/
+const { base, detail, inset, furniture } = serviceMap;
+// Where the north arrow, scale bar, locator inset and the shop's own name
+// sit is decided by the generator, not here: the county names are placed to
+// route around them, and that placement needs the real numbers. Moving a
+// piece of furniture means editing scripts/build-service-map.mjs and
+// re-running it, so the names move out of the way too.
+const { north, scale, locator } = furniture;
+
+const drawn = detail.counties.filter((county) => county.served);
+const unserved = detail.counties.filter((county) => !county.served);
+
+const names = counties.map((county) => county.name);
+const spoken = `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
 ---
 
 <section id="service-area" class="section bg-canvas">
   <div class="container-page">
     <SectionHeading
-      label="Service area"
       title="Where we work"
-      description="Four counties across the greater Portland metro area and south into the valley."
+      description={`${counties.length} counties, from the Columbia south down the Willamette Valley — the greater Portland metro and the north end of the valley, worked out of ${base.name}.`}
       class="mb-14"
     />
 
-    <div class="overflow-x-auto border border-hairline">
-      <table class="w-full min-w-[680px] border-collapse text-left">
-        <thead>
-          <tr class="bg-forest text-on-forest">
-            <th scope="col" class="t-spaced-sm px-5 py-4">County</th>
-            <th scope="col" class="t-spaced-sm px-5 py-4">Towns covered</th>
-            <th scope="col" class="t-spaced-sm px-5 py-4">Status</th>
-          </tr>
-        </thead>
-        <tbody>
+    {/* `items-start` so the plate is only as tall as the sheet it holds.
+        Stretching it to match the county list would leave a band of blank
+        board under the legend. */}
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-start">
+      {/* Capped at the map's own 760-unit width when the layout is one
+          column, so the drawing never renders above 1:1 and the lettering
+          never outgrows the counties it names. */}
+      <figure class="panel m-0 mx-auto flex w-full max-w-[820px] flex-col overflow-hidden lg:max-w-none">
+        <figcaption class="plate-label flex-wrap justify-between gap-y-1 border-b border-hairline">
+          <span class="t-spaced-sm">Service area</span>
+          <span class="t-spaced-sm text-on-forest-mute">Northwest Oregon</span>
+        </figcaption>
+
+        <div class="map-frame">
+          {/*
+            The map's name and description live in hidden prose below rather
+            than in SVG <title>/<desc>, because a <title> child of <svg> is
+            also what the browser draws as a native hover tooltip -- and this
+            one covers the whole sheet, so pointing anywhere on the map popped
+            an OS tooltip over it. `aria-labelledby`/`aria-describedby` reach
+            the paragraphs by id and give assistive tech the same two strings
+            with nothing to hover.
+          */}
+          <svg
+            class="map"
+            viewBox={`0 0 ${detail.width} ${detail.height}`}
+            role="img"
+            aria-labelledby="service-map-title"
+            aria-describedby="service-map-desc"
+          >
+            {/* Ground, in two tones only: water is the mid paper, land is the
+                lightest. Washington is filled the same as Oregon on purpose
+                -- land is land -- so the Columbia and the coast both read as
+                water rather than the state line reading as a shoreline. What
+                separates the two states is the boundary drawn over it below,
+                and the locator inset saying which one this is. */}
+            <rect width={detail.width} height={detail.height} fill="var(--color-cream-deep)"></rect>
+            <path d={detail.neighbours} fill="var(--color-board)"></path>
+            <path d={detail.state} fill="var(--color-board)"></path>
+
+            {/* Coastline and the far bank of the Columbia. */}
+            <path
+              d={detail.neighbours}
+              fill="none"
+              stroke="var(--color-hairline)"
+              stroke-width="1"></path>
+
+            {/* Counties. Unserved ones are hairlines carrying no fill: they
+                are there to make the served block a shape somebody
+                recognises, not to compete with it. */}
+            <g stroke-linejoin="round">
+              {
+                unserved.map((county) => (
+                  <path
+                    d={county.d}
+                    fill="none"
+                    stroke="var(--color-hairline)"
+                    stroke-width="0.9"
+                  />
+                ))
+              }
+              {
+                drawn.map((county) => (
+                  <path
+                    d={county.d}
+                    fill="var(--color-forest)"
+                    fill-opacity="0.22"
+                    stroke="var(--color-forest)"
+                    stroke-width="1.5"
+                  />
+                ))
+              }
+            </g>
+
+            {/* Oregon's own edge, heaviest line on the sheet. */}
+            <path
+              d={detail.state}
+              fill="none"
+              stroke="var(--color-forest)"
+              stroke-width="1.6"
+              stroke-opacity="0.5"></path>
+
+            {/* County names, each at its county's pole of inaccessibility. */}
+            {
+              drawn.map((county) => (
+                <text class="map-county" x={county.label.x} y={county.label.y} text-anchor="middle">
+                  {county.name}
+                </text>
+              ))
+            }
+
+            {/* The shop: a surveyor's crosshair, the one point on the sheet. */}
+            <g>
+              <g stroke="var(--color-forest)" stroke-width="1.6">
+                <line x1={base.xy[0] - 14} y1={base.xy[1]} x2={base.xy[0] - 7} y2={base.xy[1]}></line>
+                <line x1={base.xy[0] + 7} y1={base.xy[1]} x2={base.xy[0] + 14} y2={base.xy[1]}></line>
+                <line x1={base.xy[0]} y1={base.xy[1] - 14} x2={base.xy[0]} y2={base.xy[1] - 7}></line>
+                <line x1={base.xy[0]} y1={base.xy[1] + 7} x2={base.xy[0]} y2={base.xy[1] + 14}></line>
+              </g>
+              <circle cx={base.xy[0]} cy={base.xy[1]} r="4.5" fill="var(--color-forest)"></circle>
+              <text
+                class="map-base"
+                x={base.xy[0]}
+                y={base.xy[1] + furniture.baseLabelDy}
+                text-anchor="middle"
+              >
+                {base.name}
+              </text>
+            </g>
+
+            {/* North arrow. */}
+            <g transform={`translate(${north.x} ${north.y})`}>
+              <path d="M0 -17L6 6L0 1L-6 6Z" fill="var(--color-forest)"></path>
+              <text class="map-furniture" x="0" y="25" text-anchor="middle">N</text>
+            </g>
+
+            {/* Scale bar, checkered in 10-mile steps off the projection's own
+                measured scale rather than a guess. */}
+            <g transform={`translate(${scale.x} ${scale.y})`}>
+              <rect
+                x="0"
+                y="0"
+                width={scale.step}
+                height="6"
+                fill="var(--color-forest)"
+                stroke="var(--color-forest)"
+                stroke-width="1"></rect>
+              <rect
+                x={scale.step}
+                y="0"
+                width={scale.step}
+                height="6"
+                fill="none"
+                stroke="var(--color-forest)"
+                stroke-width="1"></rect>
+              <text class="map-furniture" x="0" y="-7" text-anchor="middle">0</text>
+              <text class="map-furniture" x={scale.step * 2} y="-7" text-anchor="middle">
+                {scale.stepMiles * 2} MI
+              </text>
+            </g>
+
+            {/* Locator inset: which corner of Oregon all of this is. */}
+            <g transform={`translate(${locator.x} ${locator.y})`}>
+              {/* Same two tones as the map it locates: water behind, land in
+                  front. Inverting them here would make the inset read as a
+                  different kind of drawing. */}
+              <rect
+                width={inset.width}
+                height={inset.height}
+                fill="var(--color-cream-deep)"
+                stroke="var(--color-hairline-strong)"
+                stroke-width="1"></rect>
+              <path
+                d={inset.state}
+                fill="var(--color-board)"
+                stroke="var(--color-forest)"
+                stroke-width="1"
+                stroke-opacity="0.55"></path>
+              <path d={inset.served} fill="var(--color-forest)" fill-opacity="0.9"></path>
+              <path d={inset.frame} fill="none" stroke="var(--color-forest)" stroke-width="1.2"
+              ></path>
+              <text
+                class="map-furniture"
+                x={inset.width / 2}
+                y={inset.height - 7}
+                text-anchor="middle">Oregon</text
+              >
+            </g>
+
+            {/* Neat line: the map's own border, inside the plate's. */}
+            <rect
+              x="0.75"
+              y="0.75"
+              width={detail.width - 1.5}
+              height={detail.height - 1.5}
+              fill="none"
+              stroke="var(--color-hairline-strong)"
+              stroke-width="1.5"></rect>
+          </svg>
+
+          <p id="service-map-title" class="sr-only">
+            Map of the {counties.length} Oregon counties we serve
+          </p>
+          <p id="service-map-desc" class="sr-only">
+            {`A map of northwest Oregon with ${spoken} counties shaded, and the shop in ${base.name} marked. The area runs from the Columbia River south down the Willamette Valley past Salem, and from the Coast Range east to the Cascades. The county list beside the map gives the same information as text.`}
+          </p>
+        </div>
+
+        <ul class="flex flex-wrap gap-x-8 gap-y-3 border-t border-hairline px-5 py-4">
+          <li class="flex items-center gap-2.5">
+            <span class="key-swatch key-county" aria-hidden="true"></span>
+            <span class="t-caption text-body">County we serve</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="key-swatch key-base" aria-hidden="true"></span>
+            <span class="t-caption text-body">Our shop</span>
+          </li>
+        </ul>
+      </figure>
+
+      {/* The record. Same counties, as text, at every screen size. */}
+      <div class="mx-auto w-full max-w-[820px] lg:max-w-none">
+        <ul class="divide-y divide-hairline border border-hairline bg-board">
           {
             counties.map((county) => (
-              <tr class="border-t border-hairline bg-board">
-                <th scope="row" class="t-heading-sm px-5 py-5 align-top text-forest">
-                  {county.name}
-                </th>
-                <td class="t-body-sm px-5 py-5 align-top text-body">{county.towns}</td>
-                <td class="px-5 py-5 align-top">
+              <li class="px-5 py-4">
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h3 class="t-heading-sm text-forest">{county.name} County</h3>
                   <span class="badge-tag">{county.note}</span>
-                </td>
-              </tr>
+                </div>
+                <p class="t-body-sm mt-2 text-body">{county.towns}</p>
+              </li>
             ))
           }
-        </tbody>
-      </table>
-    </div>
+        </ul>
 
-    <p class="t-caption mt-4 text-mute">
-      Outside these counties? Call anyway — depending on the season and the job we
-      may still be able to schedule it.
-    </p>
+        <p class="t-caption mt-5 text-mute">
+          Outside these counties? Call anyway; depending on the season and the
+          job we may still be able to schedule it.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
+
+<style>
+  /* The map sits on the mid paper tone so the plate has no white gutter
+     around a sheet that is already bordered by its own neat line. */
+  .map-frame {
+    background-color: var(--color-cream-deep);
+  }
+  .map {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Map lettering is the display cut, same as every other label in the
+     system. Sizes are in map units, so they scale with the viewBox rather
+     than with the page -- see the breakpoints below. */
+  /* No halo. An earlier pass outlined every glyph in cream so names could
+     cross county lines and stay readable; it made the lettering look like
+     stickers laid on the map rather than ink printed into it. The names are
+     sized to fit their counties instead, and the few places a word does
+     touch a boundary are forest ink crossing forest ink, which is what a
+     printed county map looks like anyway. */
+  .map-county,
+  .map-base,
+  .map-furniture {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    fill: var(--color-forest);
+  }
+  /*
+    These three sizes are not free. scripts/build-service-map.mjs places the
+    county names using exactly these numbers -- how wide "WASHINGTON" runs is
+    what decides whether it fits beside "MULTNOMAH" -- so changing one here
+    without changing TYPE there re-introduces the collisions the placement
+    pass exists to prevent. Change both, re-run the script. The numbers the
+    last run assumed are echoed back in the generated data as
+    `serviceMap.furniture.type`, so the two can be compared.
+  */
+  .map-county {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+  .map-base {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+  .map-furniture {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+
+  /*
+    The map is a drawing, so it scales as one: the type holds its size in map
+    units at every width and shrinks with the sheet. That is the only option
+    that keeps the placement above valid -- scaling the names up as the map
+    narrows would make each one wider than the county it names.
+
+    Which leaves the narrow end, where 16 units render at about nine pixels.
+    Rather than show a smear, the names come off and the map falls back to
+    what it can still say clearly at that size: the shaded block, the shop,
+    and which corner of Oregon this is. The county list is immediately below
+    it and names all seven.
+  */
+  @media (max-width: 520px) {
+    .map-county {
+      display: none;
+    }
+    /* With the county names gone, the boxes reserved to keep them apart are
+       not holding anything back, so the type that is left is free to grow
+       to a size worth reading. */
+    .map-base {
+      font-size: 26px;
+    }
+    .map-furniture {
+      font-size: 22px;
+    }
+  }
+
+  /* Legend keys, drawn to match the ink they stand for. */
+  .key-swatch {
+    flex: none;
+    width: 22px;
+    height: 14px;
+  }
+  .key-county {
+    background-color: color-mix(in srgb, var(--color-forest) 16%, var(--color-board));
+    border: 1.5px solid var(--color-forest);
+  }
+  .key-base {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background-color: var(--color-forest);
+    box-shadow:
+      0 0 0 3px var(--color-board),
+      0 0 0 4.5px var(--color-forest);
+  }
+</style>
