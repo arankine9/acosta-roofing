@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { site } from "../data/site";
+import { site, counties } from "../data/site";
 
 interface Props {
   title?: string;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const {
-  title = `${site.legalName} — Roofing Contractor in ${site.address.city}, Oregon`,
+  title = `${site.legalName} | Roofing Contractor in ${site.address.city}, Oregon`,
   description = site.description,
 } = Astro.props;
 
@@ -24,7 +24,7 @@ const schema = {
   url: `https://${site.domain}`,
   address: {
     "@type": "PostalAddress",
-    // Omitted rather than empty while the new street address is unconfirmed —
+    // Omitted rather than empty while the new street address is unconfirmed:
     // an empty streetAddress is a validation error, a missing one is not.
     ...(site.address.street ? { streetAddress: site.address.street } : {}),
     addressLocality: site.address.city,
@@ -32,12 +32,7 @@ const schema = {
     ...(site.address.zip ? { postalCode: site.address.zip } : {}),
     addressCountry: "US",
   },
-  areaServed: [
-    "Washington County, OR",
-    "Multnomah County, OR",
-    "Clackamas County, OR",
-    "Marion County, OR",
-  ],
+  areaServed: counties.map((county) => `${county.name} County, OR`),
   // Weekday hours only: Saturday is by appointment, which has no honest
   // opens/closes pair.
   openingHoursSpecification: {
@@ -90,5 +85,106 @@ const schema = {
       Skip to content
     </a>
     <slot />
+
+    <script>
+      // In-page anchors get an eased scroll whose duration scales with the
+      // distance travelled. The browser's own smooth scroll is a fixed short
+      // duration, so a hero -> contact jump covering several screens blurs past
+      // every section between them. Long trips get more time, short ones stay
+      // snappy, and both ease in and out instead of stopping dead.
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      let cancel: (() => void) | null = null;
+
+      const easeInOutCubic = (t: number) =>
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      function scrollToTarget(target: HTMLElement) {
+        // Same offset the CSS uses, so the JS and no-JS paths agree.
+        const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const start = window.scrollY;
+        const end = Math.min(
+          Math.max(target.getBoundingClientRect().top + start - offset, 0),
+          Math.max(max, 0),
+        );
+        const distance = Math.abs(end - start);
+        if (distance < 2) return;
+
+        // ~450ms for a short hop up to ~1.1s across the whole page.
+        const duration = Math.min(450 + distance * 0.25, 1100);
+        const startTime = performance.now();
+
+        cancel?.();
+        let frame = 0;
+
+        const step = (now: number) => {
+          const t = Math.min((now - startTime) / duration, 1);
+          window.scrollTo({
+            top: start + (end - start) * easeInOutCubic(t),
+            behavior: "instant" as ScrollBehavior,
+          });
+          if (t < 1) frame = requestAnimationFrame(step);
+          else cancel?.();
+        };
+
+        // Any real input from the user wins; nothing worse than fighting a
+        // scroll animation that refuses to let go.
+        const abort = () => cancel?.();
+        cancel = () => {
+          cancelAnimationFrame(frame);
+          window.removeEventListener("wheel", abort);
+          window.removeEventListener("touchstart", abort);
+          window.removeEventListener("keydown", abort);
+          cancel = null;
+        };
+        window.addEventListener("wheel", abort, { passive: true });
+        window.addEventListener("touchstart", abort, { passive: true });
+        window.addEventListener("keydown", abort);
+
+        frame = requestAnimationFrame(step);
+      }
+
+      document.addEventListener("click", (event) => {
+        const mouseEvent = event as MouseEvent;
+        if (
+          mouseEvent.defaultPrevented ||
+          mouseEvent.button !== 0 ||
+          mouseEvent.metaKey ||
+          mouseEvent.ctrlKey ||
+          mouseEvent.shiftKey ||
+          mouseEvent.altKey
+        )
+          return;
+
+        const link = (event.target as Element | null)?.closest?.<HTMLAnchorElement>("a[href]");
+        const hash = link?.getAttribute("href");
+        if (!link || !hash || !hash.startsWith("#") || hash === "#") return;
+        if (link.target && link.target !== "_self") return;
+
+        const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+        if (!target) return;
+
+        event.preventDefault();
+
+        // The mobile drawer is a <details>; leaving it open would cover the
+        // section we just scrolled to.
+        link.closest("details")?.removeAttribute("open");
+
+        if (reduced.matches) {
+          target.scrollIntoView({ behavior: "auto", block: "start" });
+        } else {
+          scrollToTarget(target);
+        }
+
+        // Keep the URL and keyboard focus where a native anchor jump would put
+        // them, without letting the focus call yank the page there instantly.
+        history.pushState(null, "", hash);
+        const hadTabIndex = target.hasAttribute("tabindex");
+        if (!hadTabIndex) target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+        if (!hadTabIndex) target.removeAttribute("tabindex");
+      });
+    </script>
   </body>
 </html>
