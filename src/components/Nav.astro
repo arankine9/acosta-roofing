@@ -1,23 +1,23 @@
 ---
 // 76px cream bar under the utility strip: lockup left, link row center, one
 // forest CTA right. Below 1024px the row collapses into a drawer built from
-// <details> — no framework, and it still opens with JS off.
+// <details>: no framework, and it still opens with JS off.
 import Logo from "./Logo.astro";
 import { site } from "../data/site";
 
 const links = [
   { href: "#services", label: "Services" },
-  { href: "#process", label: "How We Work" },
+  { href: "#emergency", label: "Emergency" },
   { href: "#service-area", label: "Service Area" },
   { href: "#contact", label: "Contact" },
 ];
 ---
 
 <header class="sticky top-0 z-40 border-b border-hairline bg-canvas shadow-[0_1px_0_0_rgba(43,43,43,0.18)]">
-  <nav class="container-page flex h-[76px] items-center justify-between gap-6" aria-label="Main">
+  <nav class="container-page flex h-[76px] items-center justify-between gap-6 max-[340px]:gap-3" aria-label="Main">
     <a href="/" class="shrink-0">
       <Logo />
-      <span class="sr-only">Acosta Roofing home</span>
+      <span class="sr-only">Home</span>
     </a>
 
     <div class="hidden items-center gap-8 lg:flex">
@@ -55,7 +55,7 @@ const links = [
 
       <!-- Drawer hangs off the sticky header so it tracks the 76px bar. -->
       <div
-        class="absolute inset-x-0 top-[76px] h-[calc(100vh-76px)] overflow-y-auto border-t border-hairline bg-canvas px-6 pb-8"
+        class="absolute inset-x-0 top-[76px] max-h-[calc(100dvh-76px)] overflow-y-auto border-t border-hairline bg-canvas px-6 pb-10 pt-2"
       >
         <ul>
           {

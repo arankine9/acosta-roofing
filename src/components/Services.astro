@@ -2,25 +2,27 @@
 import SectionHeading from "./SectionHeading.astro";
 import Icon from "./Icon.astro";
 
-// The five services named on the brand board, in the board's order. Each panel
+// The six services named on the brand board, in the board's order. Each panel
 // is a printed board: hairline keyline, pictogram in the corner, category tag,
-// a 16:9 photo slot and a ruled footer link. Job photos drop into
-// public/images/ under the filenames below; until then the shingle field
-// stands in.
+// a 16:9 photo slot and a ruled footer link. Job photos live in
+// public/images/ under the filenames below; the onerror handler drops the
+// image back to the shingle field if a file is ever missing.
 const services = [
   {
     icon: "roof-install",
     kind: "Residential",
     title: "Roof installation",
-    body: "Full tear-off and re-roof on architectural shingle, with new underlayment, flashing and ventilation — not a fresh layer over old problems.",
+    body: "Full tear-off and re-roof on architectural shingle, with new underlayment, flashing and ventilation, not a fresh layer over old problems.",
     image: "/images/roof-installation.jpg",
+    alt: "Crew nailing new architectural shingles over fresh underlayment",
   },
   {
     icon: "roof-repair",
     kind: "Residential",
     title: "Roof repairs",
-    body: "Leaks traced to the actual source: failed flashing, split boots, lifted ridge, storm damage. Repaired to match, so it isn't obvious work was done.",
+    body: "Leaks traced to the actual source: failed flashing, split boots, lifted ridge, storm damage. Emergency leaks prioritized, and repaired to match, so it isn't obvious work was done.",
     image: "/images/roof-repairs.jpg",
+    alt: "Roofer setting replacement shingles into an existing roof field",
   },
   {
     icon: "roof-maintain",
@@ -28,13 +30,23 @@ const services = [
     title: "Roof maintenance",
     body: "Seasonal inspection, moss treatment and debris clearing. Most of the roofs we replace early were lost to maintenance nobody was doing.",
     image: "/images/roof-maintenance.jpg",
+    alt: "Aerial view of a shingle roof during a seasonal inspection",
   },
   {
     icon: "gutters",
     kind: "Residential",
     title: "Gutter systems",
-    body: "Gutter installation, replacement and cleaning. Water that leaves the roof cleanly is most of what keeps a roof — and a foundation — sound.",
+    body: "Gutter installation, repair, replacement, cleaning and seasonal maintenance. Water that leaves the roof cleanly is most of what keeps a roof, and a foundation, sound.",
     image: "/images/gutter-systems.jpg",
+    alt: "Installer setting a seamless gutter run along a fascia board",
+  },
+  {
+    icon: "metal",
+    kind: "Fabrication",
+    title: "Cap metal & custom flashing",
+    body: "Cap metal and flashing bent to the job instead of forced from stock: chimneys, valleys, wall transitions, odd penetrations. The details that decide whether a roof leaks in five years.",
+    image: "/images/cap-metal.jpg",
+    alt: "New copper step and apron flashing fitted along a brick chimney on a shingle roof",
   },
   {
     icon: "commercial",
@@ -42,6 +54,7 @@ const services = [
     title: "Commercial roofing",
     body: "Single-ply and low-slope systems for shops, warehouses and light-industrial buildings, installed to spec and detailed properly at every penetration.",
     image: "/images/commercial-roofing.jpg",
+    alt: "Crew detailing a curb and rolling out membrane on a low-slope commercial roof",
   },
 ];
 ---
@@ -49,9 +62,8 @@ const services = [
 <section id="services" class="section bg-canvas">
   <div class="container-page">
     <SectionHeading
-      label="Our services"
-      title="Five services, one roofer"
-      description="Residential and commercial work across the Portland metro, quoted in writing and itemized line by line."
+      title="Services"
+      description="Residential and commercial work"
       class="mb-14"
     />
 
@@ -67,7 +79,7 @@ const services = [
             <div class="shingle-field mt-6 aspect-video overflow-hidden border border-hairline">
               <img
                 src={service.image}
-                alt={service.title}
+                alt={service.alt ?? service.title}
                 loading="lazy"
                 decoding="async"
                 class="h-full w-full object-cover"
@@ -80,7 +92,7 @@ const services = [
 
             <a
               href="#contact"
-              class="t-spaced-sm mt-6 flex items-center justify-between border-t border-hairline pt-4 text-forest hover:text-forest-deep"
+              class="t-spaced-sm mt-6 flex min-h-11 items-center justify-between border-t border-hairline pt-4 text-forest hover:text-forest-deep"
             >
               Get a quote
               <Icon name="arrow" size={18} />

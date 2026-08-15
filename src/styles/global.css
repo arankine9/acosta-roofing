@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /*
-  Token layer transcribed from DESIGN.md. Three inks — forest green, cream,
-  charcoal — and nothing else chromatic. The system alternates cream body
+  Token layer transcribed from DESIGN.md. Three inks (forest green, cream,
+  charcoal) and nothing else chromatic. The system alternates cream body
   chapters against solid forest-green bands, builds hierarchy from condensed
   uppercase weight rather than color, and separates content with hairline
   rules instead of shadow. Names match the design doc's token names so the
@@ -28,7 +28,7 @@
   --color-board: #fbfaf6;
 
   /* Rules. `hairline` on cream, `hairline-dark` on forest. Both are the ink
-     they sit on, thinned — never a neutral gray. */
+     they sit on, thinned; never a neutral gray. */
   --color-hairline: rgba(43, 43, 43, 0.22);
   --color-hairline-strong: rgba(43, 43, 43, 0.45);
   --color-hairline-dark: rgba(242, 239, 230, 0.28);
@@ -69,9 +69,18 @@
 
 @layer base {
   html {
+    /* Fallback only. With JS on, Base.astro intercepts in-page anchors and
+       runs its own eased scroll; the native one lands in a fixed ~300ms no
+       matter how far it travels, which reads as a jump cut on hero -> contact. */
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Anchor targets clear the 76px sticky bar, plus room to breathe. The scroll
+     script reads this same value, so both paths land in the same place. */
+  :where([id]) {
+    scroll-margin-top: 100px;
   }
 
   body {
@@ -82,7 +91,7 @@
     line-height: 1.6;
   }
 
-  /* Headings are the condensed cut, uppercase, letterspaced — they inherit
+  /* Headings are the condensed cut, uppercase, letterspaced; they inherit
      color from their surface. Hierarchy is size and tracking, never tint. */
   h1,
   h2,
@@ -165,7 +174,7 @@
   }
 
   /* The spaced-out uppercase line that runs under a mark or across a strip:
-     "LICENSED · BONDED · INSURED". Tracking is the whole effect — do not
+     "LICENSED · BONDED · INSURED". Tracking is the whole effect; do not
      tighten it. */
   .t-spaced {
     font-family: var(--font-display);
@@ -183,15 +192,6 @@
     text-transform: uppercase;
     letter-spacing: 0.26em;
   }
-  .t-eyebrow {
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.2;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-  }
-
   .t-lead {
     font-size: 20px;
     font-weight: 400;
@@ -240,7 +240,7 @@
   }
 
   /*
-    Buttons. Square, condensed, letterspaced — signage, not app chrome. All
+    Buttons. Square, condensed, letterspaced: signage, not app chrome. All
     variants sit at 48px so a row stays optically level and clears WCAG AA.
   */
   .btn {
@@ -274,7 +274,7 @@
   }
 
   /* Secondary on cream: a clear pane bordered in forest. The 2px border is
-     part of the identity — do not thin it to 1px. */
+     part of the identity; do not thin it to 1px. */
   .btn-outline {
     background-color: transparent;
     color: var(--color-forest);
@@ -303,6 +303,13 @@
   .btn-outline-cream:hover {
     background-color: var(--color-cream);
     color: var(--color-forest);
+  }
+
+  /* Phosphor pictograms are filled outlines, not strokes; they carry their
+     own line weight in the path, so they only need a fill. */
+  .icon-glyph {
+    fill: currentColor;
+    stroke: none;
   }
 
   /*
@@ -344,7 +351,7 @@
   }
 
   /*
-    Rule-flanked label — "———— OUR SERVICES ————". The rules are drawn with
+    Rule-flanked label: "---- OUR SERVICES ----". The rules are drawn with
     flex children rather than borders on the text so they center regardless
     of string length.
   */
@@ -361,13 +368,6 @@
     background-color: currentColor;
     opacity: 0.4;
   }
-  .ruled-label-left::before {
-    display: none;
-  }
-  .ruled-label-left::after {
-    flex: 0 0 56px;
-  }
-
   /* Dot-separated trust line. The separator is a real character so it
      survives copy/paste into a quote or a sign order. */
   .dot-list {
@@ -435,7 +435,7 @@
     color: var(--color-forest);
   }
 
-  /* Prose anchor. Underline and inherited ink — there is no link color in a
+  /* Prose anchor. Underline and inherited ink; there is no link color in a
      three-ink system. */
   .link-inline {
     color: var(--color-forest);
@@ -456,6 +456,13 @@
   @media (min-width: 1440px) {
     .container-page {
       padding-inline: 48px;
+    }
+  }
+  /* 24px either side is a seventh of a 320px screen. Small phones get the
+     narrower gutter; nothing above 400px changes. */
+  @media (max-width: 400px) {
+    .container-page {
+      padding-inline: 18px;
     }
   }
 

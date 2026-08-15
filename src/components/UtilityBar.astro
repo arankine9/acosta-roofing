@@ -1,22 +1,31 @@
 ---
 // Forest strip pinned above the nav, present on every page. It carries the
-// licensing line the brand board runs under every lockup — on a contractor's
+// licensing line the brand board runs under every lockup; on a contractor's
 // site that line is regulatory copy, not decoration, so it sits above the
 // fold on its own band rather than being buried in the footer.
 import { site } from "../data/site";
 ---
 
 <div class="on-forest bg-forest text-on-forest">
-  <div class="container-page flex h-9 items-center justify-between gap-6">
+  <div class="container-page flex min-h-9 items-center justify-between gap-6 py-1">
     <p class="t-spaced-sm hidden text-on-forest-mute sm:block">
       Proudly serving Oregon &middot; Licensed &middot; Bonded &middot; Insured
     </p>
-    <div class="dot-list ml-auto">
-      <a href={`mailto:${site.email}`} class="t-spaced-sm text-on-forest-mute hover:text-on-forest">
+    <!-- Below `sm` this strip carries the phone number alone, centred. Both
+         links side by side wrap onto two rows on a 320px screen, and on a
+         phone the number is the only one of the two anybody taps. -->
+    <div class="dot-list mx-auto sm:mr-0 sm:ml-auto">
+      <a
+        href={`mailto:${site.email}`}
+        class="t-spaced-sm hidden min-h-9 items-center text-on-forest-mute hover:text-on-forest sm:inline-flex"
+      >
         {site.email}
       </a>
       <span class="t-spaced-sm hidden text-on-forest-mute md:inline" aria-hidden="true">&middot;</span>
-      <a href={site.phoneHref} class="t-spaced-sm text-on-forest hover:text-on-forest-mute">
+      <a
+        href={site.phoneHref}
+        class="t-spaced-sm inline-flex min-h-11 items-center text-on-forest hover:text-on-forest-mute sm:min-h-9"
+      >
         {site.phone}
       </a>
     </div>

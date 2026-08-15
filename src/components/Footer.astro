@@ -1,7 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import Treeline from "./Treeline.astro";
-import { site, cityLine } from "../data/site";
+import { site, counties, cityLine } from "../data/site";
 
 const year = new Date().getFullYear();
 
@@ -29,17 +29,15 @@ const columns = [
   },
   {
     heading: "Service area",
-    links: [
-      { label: "Washington County", href: "#service-area" },
-      { label: "Multnomah County", href: "#service-area" },
-      { label: "Clackamas County", href: "#service-area" },
-      { label: "Marion County", href: "#service-area" },
-    ],
+    links: counties.map((county) => ({
+      label: `${county.name} County`,
+      href: "#service-area",
+    })),
   },
   {
     heading: "Company",
     links: [
-      { label: "How we work", href: "#process" },
+      { label: "Emergency repair", href: "#emergency" },
       { label: "Service area", href: "#service-area" },
       { label: site.email, href: `mailto:${site.email}` },
       { label: site.phone, href: site.phoneHref },
@@ -49,7 +47,7 @@ const columns = [
 ---
 
 <footer class="on-forest relative bg-forest text-on-forest">
-  <Treeline tone="forest" height={64} class="absolute inset-x-0 bottom-full" />
+  <Treeline tone="forest" height={64} offset={-395} class="absolute inset-x-0 bottom-full" />
 
   <div class="container-page relative pt-24 pb-14">
     <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(4,minmax(0,1fr))]">
@@ -66,14 +64,14 @@ const columns = [
         columns.map((column) => (
           <div>
             <h2 class="t-spaced-sm text-on-forest">{column.heading}</h2>
-            <ul class="mt-5 space-y-3 border-t border-hairline-dark pt-4">
+            <ul class="mt-5 space-y-1 border-t border-hairline-dark pt-2">
               {column.links.map((link) => (
                 <li>
                   <a
                     href={link.href}
                     rel={link.external ? "noopener noreferrer" : undefined}
                     target={link.external ? "_blank" : undefined}
-                    class="t-body-sm text-on-forest-mute hover:text-on-forest"
+                    class="t-body-sm flex min-h-11 items-center text-on-forest-mute hover:text-on-forest"
                   >
                     {link.label}
                   </a>
@@ -93,12 +91,14 @@ const columns = [
         {site.address.street && <>{site.address.street} &middot; </>}{cityLine}
         &middot; {site.email}
       </address>
-      <a href={site.phoneHref} class="t-heading-sm text-on-forest">{site.phone}</a>
+      <a href={site.phoneHref} class="t-heading-sm inline-flex min-h-11 items-center text-on-forest">
+        {site.phone}
+      </a>
     </div>
   </div>
 
   <!-- Legal fine-print band. DESIGN.md calls for `mute` here, but #6b6a63 on
-       #14301f lands at 2.6:1 — on-forest-mute keeps the same read and clears AA. -->
+       #14301f lands at 2.6:1; on-forest-mute keeps the same read and clears AA. -->
   <div class="bg-forest-deep">
     <div
       class="container-page flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between"

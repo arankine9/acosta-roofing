@@ -7,7 +7,6 @@ import { site, cityLine } from "../data/site";
 <section id="contact" class="section bg-cream-deep">
   <div class="container-page">
     <SectionHeading
-      label="Get in touch"
       title="Free estimates, no pressure"
       description="Call during shop hours and you'll get someone who has been on a roof today. Leave a message after hours and you'll hear back the next working morning."
       class="mb-14"
@@ -41,6 +40,10 @@ import { site, cityLine } from "../data/site";
             />
           </div>
           <div class="sm:col-span-2">
+            <label for="email" class="label-field">Email</label>
+            <input id="email" name="email" type="email" class="text-input" placeholder="you@example.com" />
+          </div>
+          <div class="sm:col-span-2">
             <label for="address" class="label-field">Property address</label>
             <input id="address" name="address" type="text" class="text-input" placeholder="Street, city" />
           </div>
@@ -60,9 +63,6 @@ import { site, cityLine } from "../data/site";
           <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
         </div>
 
-        <p class="t-caption mt-5 text-mute">
-          Form delivery isn't connected yet — the phone is the reliable route today.
-        </p>
       </form>
 
       <div class="flex flex-col gap-5">
@@ -73,7 +73,7 @@ import { site, cityLine } from "../data/site";
           <ul class="mt-5 space-y-4">
             <li class="flex items-center gap-3">
               <Icon name="phone" size={20} class="shrink-0 text-on-forest-mute" />
-              <a href={site.phoneHref} class="t-body-strong">{site.phone}</a>
+              <a href={site.phoneHref} class="t-body-strong inline-flex min-h-11 items-center">{site.phone}</a>
             </li>
             <li class="flex items-center gap-3">
               <Icon name="pin" size={20} class="shrink-0 text-on-forest-mute" />
@@ -84,7 +84,10 @@ import { site, cityLine } from "../data/site";
             </li>
             <li class="flex items-center gap-3">
               <Icon name="mail" size={20} class="shrink-0 text-on-forest-mute" />
-              <a href={`mailto:${site.email}`} class="t-body-sm text-on-forest-mute hover:text-on-forest">
+              <a
+                href={`mailto:${site.email}`}
+                class="t-body-sm inline-flex min-h-11 items-center text-on-forest-mute hover:text-on-forest"
+              >
                 {site.email}
               </a>
             </li>
