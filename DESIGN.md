@@ -6,8 +6,8 @@ description: |
   business: three inks (forest green, cream, charcoal), a condensed uppercase
   display cut set with heavy tracking, and page chapters that alternate cream
   paper against solid forest bands. Every surface behaves like something that
-  gets manufactured — a yard sign, a truck door, a business card, an
-  embroidered cap — so corners are square, separation is a hairline rule
+  gets manufactured (a yard sign, a truck door, a business card, an
+  embroidered cap), so corners are square, separation is a hairline rule
   rather than a shadow, and the only ornament in the system is a repeating fir
   treeline marking the seam between chapters. There is no gradient, no
   elevation, no second accent, and no color used to signal hierarchy.
@@ -143,10 +143,10 @@ spacing:
 
 components:
   panel: Flat board on `{colors.board}` with a 1px `{colors.hairline}` border and square corners.
-  panel-keyline: A second 1px rule inset 6px inside the panel edge — the routed groove on a printed sign.
+  panel-keyline: A second 1px rule inset 6px inside the panel edge, the routed groove on a printed sign.
   plate-label: Solid `{colors.forest}` strip with `{typography.spaced}` cream caps, used to title a plate.
   ruled-label: Section eyebrow flanked by 1px rules that fill the remaining width.
-  dot-list: Middot-separated trust line — "Licensed · Bonded · Insured".
+  dot-list: Middot-separated trust line: "Licensed · Bonded · Insured".
   badge-tag: Square outline tag in `{typography.spaced-sm}`, hairline-strong border.
   treeline: Repeating fir silhouette marking the seam between a cream chapter and a forest one.
   yard-sign: Cream panel + keyline + stacked lockup + licence blank, on two forest stakes.
@@ -159,7 +159,7 @@ components:
 
 The system is a brand board rendered as a website. Every component is
 something the business could hand a sign shop: a yard sign, a truck door
-decal, a two-sided business card, a hat patch. That framing decides the rules —
+decal, a two-sided business card, a hat patch. That framing decides the rules:
 square corners, flat fills, hairline rules, no elevation, and no gradient,
 because none of those survive being cut in vinyl or embroidered.
 
@@ -168,7 +168,7 @@ Pages are a stack of chapters that alternate between cream paper
 (`{colors.forest}`). The seam between the two is the one piece of ornament in
 the system: a repeating fir treeline, always upright, always standing on the
 forest band. Cream firs sit inside a band's bottom edge; forest firs sit on top
-of its upper edge. The treeline is never mirrored — upside-down conifers read
+of its upper edge. The treeline is never mirrored; upside-down conifers read
 as a rendering bug.
 
 Hierarchy comes from the type cut and from tracking, never from color. There is
@@ -176,7 +176,7 @@ no link blue, no semantic palette in the marketing surface, and no tinted
 heading: text takes the ink of whatever surface it sits on.
 
 ### Signature moves
-- Three inks only. Forest, cream, charcoal — plus rules made by thinning one of them.
+- Three inks only. Forest, cream, charcoal, plus rules made by thinning one of them.
 - Two type cuts with one job each: condensed uppercase for anything titled, a normal-width grotesque for anything read in sentences.
 - Tracking as an instrument. `{typography.spaced}` at 0.24em and `{typography.eyebrow}` at 0.3em carry the signage feel; tightening them collapses the identity.
 - Chapters, not sections. The page alternates paper and band; there are no decorative dividers between blocks on the same surface.
@@ -186,20 +186,20 @@ heading: text takes the ink of whatever surface it sits on.
 ## Colors
 
 ### Brand
-- **Forest** (`{colors.forest}` — `#1b3d2e`): the brand. Every band, every primary button, every pictogram, the mark itself.
-- **Forest Deep** (`{colors.forest-deep}` — `#14301f`): pressed state, sign stakes, and the footer fine-print band.
-- **Forest Mid** (`{colors.forest-mid}` — `#2f5a44`): the numeral of a ruled step list, where full forest would out-shout the step title. It is the lightest green in the system that still clears AA on `{colors.cream-deep}`.
+- **Forest** (`{colors.forest}`, `#1b3d2e`): the brand. Every band, every primary button, every pictogram, the mark itself.
+- **Forest Deep** (`{colors.forest-deep}`, `#14301f`): pressed state, sign stakes, and the footer fine-print band.
+- **Forest Mid** (`{colors.forest-mid}`, `#2f5a44`): the numeral of a ruled step list, where full forest would out-shout the step title. It is the lightest green in the system that still clears AA on `{colors.cream-deep}`.
 
 ### Surface
-- **Cream / Canvas** (`{colors.cream}` — `#f2efe6`): the page. Also the ink of all text on a forest band.
-- **Cream Deep** (`{colors.cream-deep}` — `#e7e2d3`): alternating body chapters, so two paper sections in a row still separate.
-- **Board** (`{colors.board}` — `#fbfaf6`): the panel fill — a half-step brighter than the page, the way a fresh sign blank is brighter than kraft.
-- **Charcoal** (`{colors.charcoal}` — `#2b2b2b`): text ink. It is never used as a surface; a black band would read as a different brand.
+- **Cream / Canvas** (`{colors.cream}`, `#f2efe6`): the page. Also the ink of all text on a forest band.
+- **Cream Deep** (`{colors.cream-deep}`, `#e7e2d3`): alternating body chapters, so two paper sections in a row still separate.
+- **Board** (`{colors.board}`, `#fbfaf6`): the panel fill, a half-step brighter than the page, the way a fresh sign blank is brighter than kraft.
+- **Charcoal** (`{colors.charcoal}`, `#2b2b2b`): text ink. It is never used as a surface; a black band would read as a different brand.
 
 ### Rules
 - **Hairline** (`{colors.hairline}`): 1px panel border, table rule, list divider on cream.
 - **Hairline Strong** (`{colors.hairline-strong}`): input borders and badge outlines, where a 22% rule disappears against a filled field.
-- **Hairline Dark** (`{colors.hairline-dark}`): the same rules on a forest band. A charcoal rule on forest is invisible — always switch.
+- **Hairline Dark** (`{colors.hairline-dark}`): the same rules on a forest band. A charcoal rule on forest is invisible; always switch.
 
 ### Text
 - **Ink** (`{colors.ink}`) headlines on cream · **Body** (`{colors.body}`) paragraphs · **Mute** (`{colors.mute}`) captions and licence blanks.
@@ -208,7 +208,7 @@ heading: text takes the ink of whatever surface it sits on.
 ## Typography
 
 **Oswald** is the open-source stand-in for the wordmark's condensed cut, at
-weights 500/600/700, and it is used **uppercase only** — it has no sentence-case
+weights 500/600/700, and it is used **uppercase only**; it has no sentence-case
 role anywhere in the system. **Barlow** (400/500/600/700) carries every
 sentence. Fallbacks are Arial Narrow → Arial for the display cut and Arial for
 body, so the page still reads as signage if the webfont never arrives.
@@ -230,7 +230,7 @@ cut with tracking; anything that needs to be read at length is set in Barlow at
 ## Accessibility
 
 - Cream on forest is 10.4:1; charcoal on cream is 12.3:1; body on cream is 9.5:1. All clear AA at every size in the scale.
-- `on-forest-mute` (72% cream) is the floor for secondary text on a band at 6.2:1 — do not thin it further.
+- `on-forest-mute` (72% cream) is the floor for secondary text on a band at 6.2:1; do not thin it further.
 - `mute` (4.7:1 on cream) is cream-surface only. On `{colors.forest-deep}` it lands at 2.6:1; the footer fine print uses `on-forest-mute` for exactly this reason.
-- Focus is a 2px outline at 3px offset — forest on cream, cream on forest via `.on-forest`.
+- Focus is a 2px outline at 3px offset: forest on cream, cream on forest via `.on-forest`.
 - Buttons and inputs are 48px tall; the letterspaced label never reduces the target.
