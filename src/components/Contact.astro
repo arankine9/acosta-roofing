@@ -22,8 +22,9 @@ const placeholder = (name: string) => attrs({ placeholder: `${f}.${name}.placeho
 
     <div class="grid gap-5 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
       <!--
-        Static form. There is no backend yet: it posts nowhere. Wire
-        `action` to a handler before launch.
+        Static form. There is no backend yet: it posts nowhere, and the note
+        under the submit button says so rather than silently swallowing an
+        enquiry. Wire `action` to a handler before launch.
       -->
       <form class="panel p-7 md:p-9" method="post" action="#contact">
         <div class="plate-label -mx-7 -mt-7 mb-8 md:-mx-9 md:-mt-9">
@@ -70,6 +71,7 @@ const placeholder = (name: string) => attrs({ placeholder: `${f}.${name}.placeho
           <a href={site.phoneHref} class="btn btn-outline"><Text k={`${f}.call`} bare /></a>
         </div>
 
+        <Text k={`${f}.note`} class="t-caption mt-5 text-mute" />
       </form>
 
       <div class="flex flex-col gap-5">

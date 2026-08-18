@@ -106,7 +106,8 @@
         "placeholder": "Leak, age of the roof, storm damage, or just due for a look."
       },
       "submit": "Send it over",
-      "call": "Call {{phone}}"
+      "call": "Call {{phone}}",
+      "note": "Form delivery isn't connected yet. The phone is the reliable route today."
     },
     "card": {
       "coverage": "Licensed · Bonded · Insured"
