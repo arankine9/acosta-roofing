@@ -34,7 +34,7 @@ const placeholder = (name: string) => attrs({ placeholder: `${f}.${name}.placeho
         <div class="grid gap-5 sm:grid-cols-2">
           <div>
             <Text k={`${f}.name.label`} as="label" for="name" class="label-field" />
-            <input id="name" name="name" type="text" required class="text-input" {...placeholder("name")} />
+            <input id="name" name="name" type="text" autocomplete="name" required class="text-input" {...placeholder("name")} />
           </div>
           <div>
             <Text k={`${f}.phone.label`} as="label" for="phone" class="label-field" />
@@ -42,6 +42,7 @@ const placeholder = (name: string) => attrs({ placeholder: `${f}.${name}.placeho
               id="phone"
               name="phone"
               type="tel"
+              autocomplete="tel"
               required
               class="text-input"
               {...placeholder("phone")}
@@ -49,11 +50,11 @@ const placeholder = (name: string) => attrs({ placeholder: `${f}.${name}.placeho
           </div>
           <div class="sm:col-span-2">
             <Text k={`${f}.email.label`} as="label" for="email" class="label-field" />
-            <input id="email" name="email" type="email" class="text-input" {...placeholder("email")} />
+            <input id="email" name="email" type="email" autocomplete="email" class="text-input" {...placeholder("email")} />
           </div>
           <div class="sm:col-span-2">
             <Text k={`${f}.address.label`} as="label" for="address" class="label-field" />
-            <input id="address" name="address" type="text" class="text-input" {...placeholder("address")} />
+            <input id="address" name="address" type="text" autocomplete="street-address" class="text-input" {...placeholder("address")} />
           </div>
           <div class="sm:col-span-2">
             <Text k={`${f}.detail.label`} as="label" for="detail" class="label-field" />
