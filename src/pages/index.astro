@@ -26,9 +26,11 @@ const description = plain(get(`${k}:seo.description`));
 
 <Base title={title} description={description} socialTitle={site.name} cmsFile={k}>
   <Nav />
-  <Hero />
-  {/* Cream body chapters alternate canvas / cream-deep between forest bands. */}
+  {/* The hero holds the page's h1, so it sits inside main, where "Skip to
+      content" lands, as every inner page's hero does. Cream body chapters
+      alternate canvas / cream-deep between forest bands. */}
   <main id="main">
+    <Hero />
     <TrustStrip />
     <Services />
     <Materials />
