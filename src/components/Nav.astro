@@ -5,9 +5,10 @@ import { asset, home, isCurrent } from "../lib/url";
 // <details>: no framework, and it still opens with JS off.
 //
 // Services opens a menu plate on hover and on keyboard focus (focus-within),
-// so it needs no script either. The Services label is itself a link to the
-// services index, which lists everything the menu does; a tablet that can't
-// hover still gets there in one tap.
+// so it needs no script to open. The one script below lets Escape close the
+// plate and the drawer, as any pop-up over the page must. The Services label
+// is itself a link to the services index, which lists everything the menu
+// does; a tablet that can't hover still gets there in one tap.
 import Logo from "./Logo.astro";
 import Icon from "./Icon.astro";
 import Text from "./Text.astro";
@@ -260,6 +261,42 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
   </nav>
 </header>
 
+<script>
+  // Escape closes the drawer, or the Services plate, and leaves focus on
+  // what opened it. The plate opens on hover and focus-within, so closing it
+  // means holding it shut (.menu-closed) until the pointer and the focus
+  // have both left it.
+  const header = document.querySelector("header");
+  const drawer = header?.querySelector("details");
+  const menus = [...(header?.querySelectorAll<HTMLElement>(".group\\/menu") ?? [])];
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (drawer?.open) {
+      drawer.open = false;
+      drawer.querySelector("summary")?.focus();
+      return;
+    }
+    const menu = menus.find((li) => li.contains(document.activeElement) || li.matches(":hover"));
+    if (!menu) return;
+    menu.classList.add("menu-closed");
+    if (menu.contains(document.activeElement)) menu.querySelector("a")?.focus();
+  });
+
+  for (const li of menus) {
+    li.addEventListener("mouseleave", () => li.classList.remove("menu-closed"));
+    li.addEventListener("focusout", (event) => {
+      if (!li.contains(event.relatedTarget as Node | null)) li.classList.remove("menu-closed");
+    });
+  }
+
+  // Coming back with the Back button restores the page as it was left,
+  // drawer open over it; start closed instead.
+  window.addEventListener("pageshow", () => {
+    if (drawer) drawer.open = false;
+  });
+</script>
+
 <style>
   /* Open: fade in and settle, at once. Close: hold for 120ms, then fade
      (the delays on the base state), so a pointer that grazes the edge on
@@ -282,6 +319,15 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
   :global(.group\/menu:hover) .nav-menu__plate,
   :global(.group\/menu:focus-within) .nav-menu__plate {
     transform: none;
+  }
+  /* Closed with Escape: stays shut while still hovered or focused. */
+  :global(.group\/menu.menu-closed) .nav-menu {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    transition: none;
+  }
+  :global(.group\/menu.menu-closed) svg {
+    rotate: none !important;
   }
   @media (prefers-reduced-motion: reduce) {
     .nav-menu,
