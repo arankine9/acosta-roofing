@@ -210,8 +210,9 @@ const schema = {
         event.preventDefault();
 
         // The mobile drawer is a <details>; leaving it open would cover the
-        // section we just scrolled to.
-        link.closest("details")?.removeAttribute("open");
+        // section we just scrolled to. Only the drawer: a #link inside an FAQ
+        // answer must not fold the answer up.
+        link.closest("header details")?.removeAttribute("open");
 
         if (reduced.matches) {
           target.scrollIntoView({ behavior: "auto", block: "start" });
@@ -225,7 +226,9 @@ const schema = {
         const hadTabIndex = target.hasAttribute("tabindex");
         if (!hadTabIndex) target.setAttribute("tabindex", "-1");
         target.focus({ preventScroll: true });
-        if (!hadTabIndex) target.removeAttribute("tabindex");
+        // Dropping tabindex while the target still has focus makes the browser
+        // move focus back to <body>; wait until focus moves on.
+        if (!hadTabIndex) target.addEventListener("blur", () => target.removeAttribute("tabindex"), { once: true });
       });
     </script>
   </body>
