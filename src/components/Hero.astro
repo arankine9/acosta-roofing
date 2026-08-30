@@ -33,9 +33,11 @@ const c = file("pages/home").hero;
       <dl class="mt-14 grid max-w-xl grid-cols-3 items-start border-t border-hairline-dark">
         {
           c.proof.map((_: unknown, i: number) => (
-            <div class="flex flex-col border-l border-hairline-dark py-5 pr-3 pl-3 first:border-l-0 first:pl-0 min-[400px]:pr-5 min-[400px]:pl-5">
-              <Text k={`${k}.proof.${i}.value`} as="dd" class="t-display-lg leading-none" />
+            /* The label is the <dt> and comes first in the markup; the row
+               shows the figure above it. */
+            <div class="flex flex-col-reverse border-l border-hairline-dark py-5 pr-3 pl-3 first:border-l-0 first:pl-0 min-[400px]:pr-5 min-[400px]:pl-5">
               <Text k={`${k}.proof.${i}.label`} as="dt" class="t-spaced-sm mt-3 text-balance text-on-forest-mute" />
+              <Text k={`${k}.proof.${i}.value`} as="dd" class="t-display-lg leading-none" />
             </div>
           ))
         }
