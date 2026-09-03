@@ -26,7 +26,7 @@ colors:
   hairline-dark: "rgba(245,244,239,0.28)"
   ink: "#2b2b2b"
   body: "#3d3d3d"
-  mute: "#6b6a63"
+  mute: "#66655e"
   on-forest: "#f5f4ef"
   on-forest-mute: "rgba(245,244,239,0.72)"
   error: "#8c2f22"
@@ -231,6 +231,6 @@ cut with tracking; anything that needs to be read at length is set in Barlow at
 
 - Cream on forest is 8.3:1; charcoal on cream is 12.9:1; body on cream is 9.9:1. All clear AA at every size in the scale.
 - `on-forest-mute` (72% cream) is the floor for secondary text on a band at 5.2:1; do not thin it further.
-- `mute` (4.9:1 on cream) is cream-surface only. On `{colors.forest-deep}` it lands at 2.6:1; the footer fine print uses `on-forest-mute` for exactly this reason.
+- `mute` (5.3:1 on cream, 4.7:1 on cream-deep) is cream-surface only. On `{colors.forest-deep}` it lands at 2.0:1; the footer fine print uses `on-forest-mute` for exactly this reason.
 - Focus is a 2px outline at 3px offset: forest on cream, cream on forest via `.on-forest`.
 - Buttons and inputs are 48px tall; the letterspaced label never reduces the target.

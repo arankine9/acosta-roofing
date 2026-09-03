@@ -47,7 +47,7 @@ hierarchy table in that document.
 Two deliberate deviations, both documented in comments where they occur:
 
 - The footer's legal fine-print uses `on-forest-mute` rather than `mute`; the
-  specified color lands at 2.6:1 on the deep forest panel.
+  specified color lands at 2.0:1 on the deep forest panel.
 - The footer runs four link columns, not six. There aren't six columns of real
   pages, and inventing them to satisfy the grid would be worse than the grid.
 
