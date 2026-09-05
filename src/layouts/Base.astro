@@ -1,7 +1,7 @@
 ---
 import { asset } from "../lib/url";
 import "../styles/global.css";
-import { site, counties } from "../data/site";
+import { site, counties, businessId } from "../data/site";
 import { EDIT, tokens } from "../lib/cms";
 
 interface Props {
@@ -38,15 +38,20 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 // Crawlers need an absolute URL for the preview image.
 const ogImage = new URL(asset("/og-image.png"), Astro.site);
 const ogImageAlt = `${site.name} logo`;
+const logo = new URL(asset("/logo-lockup.png"), Astro.site);
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "RoofingContractor",
+  "@id": businessId,
   name: site.legalName,
   description: site.description,
-  telephone: site.phone,
+  // E.164, the form the schema asks for: "+19712809253".
+  telephone: site.phoneHref.replace("tel:", ""),
   email: site.email,
-  url: `https://${site.domain}`,
+  url: `https://${site.domain}/`,
+  image: ogImage.toString(),
+  logo: logo.toString(),
   address: {
     "@type": "PostalAddress",
     // Omitted rather than empty while the new street address is unconfirmed:

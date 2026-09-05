@@ -17,6 +17,10 @@ export const site = {
   domain: "acostaroofingpnw.com",
 };
 
+// The JSON-LD id of the business, so a page's Service block can name it as
+// provider instead of describing a second, partial contractor.
+export const businessId = `https://${site.domain}/#business`;
+
 /*
   Counties the service area reaches, north to south.
 
