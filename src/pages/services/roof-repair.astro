@@ -8,7 +8,7 @@ import Treeline from "../../components/Treeline.astro";
 import LeakPath from "../../components/roof-repair/LeakPath.astro";
 import Text from "../../components/Text.astro";
 import Img from "../../components/Img.astro";
-import { site } from "../../data/site";
+import { counties, businessId } from "../../data/site";
 import { pages } from "../../data/nav";
 import { serviceHref } from "../../data/services";
 import { file, list, item, credit } from "../../lib/cms";
@@ -45,8 +45,9 @@ const schema = {
   serviceType: "Roof repair",
   description:
     "Residential roof repair: leaks traced to the source, missing and lifted shingles, pipe boots, chimney, wall and skylight flashing, valleys, ridge caps, nail pops, storm and tree-limb damage.",
-  provider: { "@type": "RoofingContractor", name: site.legalName, telephone: site.phone },
-  areaServed: "Portland metro, Oregon",
+  url: new URL(serviceHref("roof-repair"), Astro.site).toString(),
+  provider: { "@id": businessId },
+  areaServed: counties.map((county) => `${county.name} County, OR`),
 };
 
 // Every word on this page is in src/content/pages/services-roof-repair.json;

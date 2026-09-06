@@ -9,7 +9,7 @@ import Text from "../../components/Text.astro";
 import Img from "../../components/Img.astro";
 import { pages } from "../../data/nav";
 import { serviceHref } from "../../data/services";
-import { site, counties } from "../../data/site";
+import { counties, businessId } from "../../data/site";
 import { file, list, item } from "../../lib/cms";
 
 // Commercial roofing: single-ply membrane and low-slope roofs for shops,
@@ -40,12 +40,7 @@ const schema = {
   description:
     "TPO and PVC single-ply membrane and low-slope roofing for shops, warehouses, offices and light-industrial buildings: replacement, repair, condition reports and maintenance.",
   url: new URL(serviceHref("commercial"), Astro.site).toString(),
-  provider: {
-    "@type": "RoofingContractor",
-    name: site.legalName,
-    telephone: site.phone,
-    url: `https://${site.domain}`,
-  },
+  provider: { "@id": businessId },
   areaServed: counties.map((county) => `${county.name} County, OR`),
 };
 

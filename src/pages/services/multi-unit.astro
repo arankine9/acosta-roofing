@@ -9,7 +9,7 @@ import Text from "../../components/Text.astro";
 import Img from "../../components/Img.astro";
 import { pages } from "../../data/nav";
 import { serviceHref, serviceKey } from "../../data/services";
-import { site, counties } from "../../data/site";
+import { site, counties, businessId } from "../../data/site";
 import { file, list, item } from "../../lib/cms";
 
 // Multi-unit roofing: apartments, condos and townhome rows. Written for
@@ -40,12 +40,7 @@ const schema = {
   description:
     "Roof replacement, repair, maintenance and gutter work for apartments, condos and townhome rows, planned building by building or in phases, with roof-by-roof condition assessments for capital planning.",
   url: new URL(serviceHref("multi-unit"), Astro.site).toString(),
-  provider: {
-    "@type": "RoofingContractor",
-    name: site.legalName,
-    telephone: site.phone,
-    url: `https://${site.domain}`,
-  },
+  provider: { "@id": businessId },
   areaServed: counties.map((county) => `${county.name} County, OR`),
 };
 

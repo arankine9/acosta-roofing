@@ -9,7 +9,7 @@ import Text from "../../components/Text.astro";
 import Img from "../../components/Img.astro";
 import { pages } from "../../data/nav";
 import { serviceHref } from "../../data/services";
-import { site } from "../../data/site";
+import { counties, businessId } from "../../data/site";
 import { file, list, item } from "../../lib/cms";
 
 // Gutter systems: how water should leave the roof (the eave diagram), how
@@ -46,8 +46,9 @@ const schema = {
   serviceType: "Seamless gutter and downspout installation",
   description:
     "Seamless K-style gutters formed on site, sized downspouts, hidden hangers, drip edge and gutter apron, and downspout extensions, for homes across the Portland metro.",
-  provider: { "@type": "RoofingContractor", name: site.legalName, telephone: site.phone },
-  areaServed: "Portland metro, Oregon",
+  url: new URL(serviceHref("gutters"), Astro.site).toString(),
+  provider: { "@id": businessId },
+  areaServed: counties.map((county) => `${county.name} County, OR`),
 };
 
 // Every word on this page is in src/content/pages/services-gutters.json;

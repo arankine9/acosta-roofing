@@ -8,7 +8,7 @@ import Icon from "../../components/Icon.astro";
 import RoofLayers from "../../components/roof-replacement/RoofLayers.astro";
 import Text from "../../components/Text.astro";
 import Img from "../../components/Img.astro";
-import { site } from "../../data/site";
+import { counties, businessId } from "../../data/site";
 import { pages } from "../../data/nav";
 import { serviceHref } from "../../data/services";
 import { file, list, item, credit } from "../../lib/cms";
@@ -46,8 +46,9 @@ const schema = {
   serviceType: "Roof replacement",
   description:
     "Residential roof replacement: tear-off to the deck, deck repair, drip edge, ice-and-water shield, synthetic underlayment, flashing, shingles and ridge ventilation.",
-  provider: { "@type": "RoofingContractor", name: site.legalName, telephone: site.phone },
-  areaServed: "Portland metro, Oregon",
+  url: new URL(serviceHref("roof-replacement"), Astro.site).toString(),
+  provider: { "@id": businessId },
+  areaServed: counties.map((county) => `${county.name} County, OR`),
 };
 
 // Every word on this page is in src/content/pages/services-roof-replacement.json;

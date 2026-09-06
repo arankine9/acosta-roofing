@@ -8,7 +8,7 @@ import Text from "../../components/Text.astro";
 import Img from "../../components/Img.astro";
 import { pages } from "../../data/nav";
 import { serviceHref } from "../../data/services";
-import { site } from "../../data/site";
+import { counties, businessId } from "../../data/site";
 import { file, list, item } from "../../lib/cms";
 
 // Roof maintenance: the Portland case for it. Moss and lichen (why they grow,
@@ -39,8 +39,9 @@ const schema = {
   serviceType: "Roof maintenance, moss treatment and roof inspection",
   description:
     "Moss removal and treatment, debris and gutter clearing, and a close roof and attic inspection with photos and written findings, for homes across the Portland metro.",
-  provider: { "@type": "RoofingContractor", name: site.legalName, telephone: site.phone },
-  areaServed: "Portland metro, Oregon",
+  url: new URL(serviceHref("roof-maintenance"), Astro.site).toString(),
+  provider: { "@id": businessId },
+  areaServed: counties.map((county) => `${county.name} County, OR`),
 };
 
 // Every word on this page is in src/content/pages/services-roof-maintenance.json;
