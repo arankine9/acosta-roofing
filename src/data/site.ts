@@ -85,6 +85,40 @@ export const counties = [
   },
 ] as const;
 
+// The hours as schema.org OpeningHoursSpecification, read from the same
+// site.json rows the contact block shows, so an edit in the portal reaches
+// both. A row reads "Monday – Friday" or "Saturday" with "7:00 AM – 6:00 PM";
+// one that isn't a day range and a time range ("By appointment", "Closed")
+// has no honest opens/closes pair and is left out.
+const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const RANGE = /\s*[–—-]\s*|\s+to\s+/i;
+
+// "Monday", "Mon" or "mon.": three letters or more of a day's name.
+const dayIndex = (text: string) => {
+  const t = text.trim().replace(/\.$/, "").toLowerCase();
+  return t.length < 3 ? -1 : DAYS.findIndex((day) => day.toLowerCase().startsWith(t));
+};
+
+function dayRange(text: string) {
+  const [from, to = from] = text.split(RANGE).map(dayIndex);
+  if (from < 0 || to < from) return null;
+  return DAYS.slice(from, to + 1);
+}
+
+function clock(text: string) {
+  const m = /^(\d{1,2})(?::(\d{2}))?\s*([ap])\.?m\.?$/i.exec(text.trim());
+  if (!m) return null;
+  const hour = (Number(m[1]) % 12) + (m[3].toLowerCase() === "p" ? 12 : 0);
+  return `${String(hour).padStart(2, "0")}:${m[2] ?? "00"}`;
+}
+
+export const openingHours = site.hours.flatMap((entry) => {
+  const days = dayRange(entry.days);
+  const [opens, closes] = entry.time.split(RANGE).map(clock);
+  if (!days || !opens || !closes) return [];
+  return [{ "@type": "OpeningHoursSpecification", dayOfWeek: days, opens, closes }];
+});
+
 // City line, always present. The street sits above it and the ZIP after it,
 // each only when set.
 export const cityLine = [

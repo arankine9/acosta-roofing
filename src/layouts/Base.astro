@@ -1,7 +1,7 @@
 ---
 import { asset } from "../lib/url";
 import "../styles/global.css";
-import { site, counties, businessId } from "../data/site";
+import { site, counties, businessId, openingHours } from "../data/site";
 import { EDIT, tokens } from "../lib/cms";
 
 interface Props {
@@ -63,14 +63,8 @@ const schema = {
     addressCountry: "US",
   },
   areaServed: counties.map((county) => `${county.name} County, OR`),
-  // Weekday hours only: Saturday is by appointment, which has no honest
-  // opens/closes pair.
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    opens: "07:00",
-    closes: "18:00",
-  },
+  // From the hours in site.json; rows like "By appointment" are left out.
+  ...(openingHours.length ? { openingHoursSpecification: openingHours } : {}),
 };
 ---
 
