@@ -77,7 +77,9 @@ const schema = {
         portal's editor to render {{tokens}} the same way. */}
     {EDIT && <script type="application/json" id="cms-tokens" set:html={JSON.stringify(tokens)} />}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="canonical" href={canonical} />
+    {/* A noindex page (the 404) has no canonical URL of its own: it is
+        served at whatever address was asked for. */}
+    {!noindex && <link rel="canonical" href={canonical} />}
     {(noindex || EDIT) && <meta name="robots" content="noindex" />}
 
     <title>{title}</title>
@@ -86,7 +88,7 @@ const schema = {
     <meta property="og:type" content="website" />
     <meta property="og:title" content={socialTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!noindex && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content={site.name} />
     <!-- Rendered by scripts/build-og-image.mjs; re-run it when the card's facts change. -->
     <meta property="og:image" content={ogImage} />
