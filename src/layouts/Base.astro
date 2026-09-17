@@ -40,6 +40,11 @@ const ogImage = new URL(asset("/og-image.png"), Astro.site);
 const ogImageAlt = `${site.name} logo`;
 const logo = new URL(asset("/logo-lockup.png"), Astro.site);
 
+// JSON for an inline <script>. Escaping "<" keeps editable text (an FAQ
+// question, a business detail) from closing the tag early with "</script>";
+// JSON.parse reads \u003c back as "<".
+const json = (value: unknown) => JSON.stringify(value).replace(/</g, "\\u003c");
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "RoofingContractor",
@@ -75,7 +80,7 @@ const schema = {
     {EDIT && cmsFile && <meta name="cms-file" content={cmsFile} />}
     {/* Edit build only: the token values this page was built with, for the
         portal's editor to render {{tokens}} the same way. */}
-    {EDIT && <script type="application/json" id="cms-tokens" set:html={JSON.stringify(tokens)} />}
+    {EDIT && <script type="application/json" id="cms-tokens" set:html={json(tokens)} />}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {/* A noindex page (the 404) has no canonical URL of its own: it is
         served at whatever address was asked for. */}
@@ -117,8 +122,8 @@ const schema = {
       href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap"
     />
 
-    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-    {extraSchema.map((block) => <script type="application/ld+json" set:html={JSON.stringify({ "@context": "https://schema.org", ...block })} />)}
+    <script type="application/ld+json" set:html={json(schema)} />
+    {extraSchema.map((block) => <script type="application/ld+json" set:html={json({ "@context": "https://schema.org", ...block })} />)}
   </head>
   <body class="antialiased bg-canvas text-body">
     <a
