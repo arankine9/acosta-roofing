@@ -386,16 +386,6 @@
   }
 
   /*
-    Stand-in for job photography: staggered shingle courses drawn in forest
-    ink on cream. Reads as roof material rather than as an empty placeholder,
-    so cards look deliberate before the real photos are shot.
-  */
-  .shingle-field {
-    background-color: var(--color-cream-deep);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='36' viewBox='0 0 96 36'%3E%3Cg fill='none' stroke='%2324503c'%3E%3Cpath d='M0 18H96M0 36H96' stroke-opacity='0.26'/%3E%3Cpath d='M0 21V18M32 21V18M64 21V18M16 39V36M48 39V36M80 39V36M16 3V0M48 3V0M80 3V0' stroke-opacity='0.3' stroke-width='3'/%3E%3Cpath d='M0 15H96M0 33H96' stroke-opacity='0.08'/%3E%3C/g%3E%3C/svg%3E");
-  }
-
-  /*
     Service tiles: a full-bleed photo with its title. On hover or keyboard
     focus the photo eases in a touch, a forest shade fades up over it, the
     plus turns into an arrow, a rule draws in under the title and the

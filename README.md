@@ -62,9 +62,6 @@ cream/forest seam is `src/components/Treeline.astro`.
 - [ ] **Street address and ZIP**: not on the brand board. They render only when
       set, so the site currently shows "Beaverton, OR".
 - [ ] **Confirm the hours** in `src/data/site.ts`; they are a placeholder.
-- [ ] **Job photos**: drop into `public/images/` using the filenames in
-      `src/components/Services.astro`. Until then the cards show a shingle
-      texture rather than a broken image.
 - [ ] **Replace the material pictures.** The three files in
       `public/images/materials/` are Roofscapes NW's icons, in as
       placeholders to judge the look. Drop in Acosta's own under the same
