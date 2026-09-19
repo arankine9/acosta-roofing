@@ -77,11 +77,10 @@ cream/forest seam is `src/components/Treeline.astro`.
 - [ ] **Privacy notice** (`/privacy/`): plain-English draft; have the owner
       review it.
 - [ ] **Home page photos.** The files behind the home service tiles
-      (`roof-maintenance.jpg`, `commercial-roofing.jpg`) and the unused
-      `roof-installation.jpg`, `roof-repairs.jpg`, `gutter-systems.jpg` and
-      `cap-metal.jpg` appear to come from other contractors' sites (see
-      `src/assets/photos-src/`), and `commercial-roofing.jpg` shows a logo.
-      Replace them with Acosta's own or licensed photos. Every inner-page
+      (`roof-maintenance.jpg`, `commercial-roofing.jpg`) appear to come from
+      other contractors' sites (see `src/assets/photos-src/`), and
+      `commercial-roofing.jpg` shows a logo. Replace them with Acosta's own
+      or licensed photos. Every inner-page
       photo is licensed and credited in `src/data/photo-credits.ts`.
 - [ ] **Wire up the contact form.** `src/components/Contact.astro` posts
       nowhere; the note under the submit button says so rather than silently
