@@ -1,4 +1,5 @@
 ---
+import { asset } from "../lib/url";
 // Repeating fir silhouette, tiled as a background image so it spans any width
 // without stretching the trees. The firs are cut from the logo mark itself
 // (see public/treeline.svg), so the seams between chapters are drawn with the
@@ -25,7 +26,7 @@ const {
   class: className = "",
 } = Astro.props;
 
-const src = tone === "cream" ? "/treeline-light.svg" : "/treeline.svg";
+const src = asset(tone === "cream" ? "/treeline-light.svg" : "/treeline.svg");
 const ink = tone === "cream" ? "var(--color-cream)" : "var(--color-forest)";
 
 // The tile is 626x72 with its ground band in the bottom 14. Scaled to an

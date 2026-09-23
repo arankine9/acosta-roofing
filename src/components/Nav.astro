@@ -1,4 +1,5 @@
 ---
+import { home } from "../lib/url";
 // 76px cream bar under the utility strip: lockup left, link row center, one
 // forest CTA right. Below 1024px the row collapses into a drawer built from
 // <details>: no framework, and it still opens with JS off.
@@ -15,7 +16,7 @@ const links = [
 
 <header class="sticky top-0 z-40 border-b border-hairline bg-canvas shadow-[0_1px_0_0_rgba(43,43,43,0.18)]">
   <nav class="container-page flex h-[76px] items-center justify-between gap-6 max-[340px]:gap-3" aria-label="Main">
-    <a href="/" class="shrink-0">
+    <a href={home} class="shrink-0">
       <Logo />
       <span class="sr-only">Home</span>
     </a>

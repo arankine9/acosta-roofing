@@ -1,4 +1,5 @@
 ---
+import { asset } from "../lib/url";
 // The lockup. Two arrangements of the same parts, because the brand board
 // specifies both: `stacked` is the full sign (mark over wordmark, "ROOFING"
 // flanked by rules, tagline under), and `inline` is the horizontal cut used
@@ -24,7 +25,7 @@ const {
 
 // Both cuts use the real mark (firs + gable, 196.8x90). Its roof face is
 // canvas-cream, so on a forest band it swaps to the inverted cream cut.
-const mark = tone === "cream" ? "/mark-light.svg" : "/mark.svg";
+const mark = asset(tone === "cream" ? "/mark-light.svg" : "/mark.svg");
 const ink = tone === "cream" ? "text-on-forest" : "text-forest";
 const sub = tone === "cream" ? "text-on-forest-mute" : "text-mute";
 ---

@@ -1,4 +1,5 @@
 ---
+import { asset } from "../lib/url";
 import SectionHeading from "./SectionHeading.astro";
 import Icon from "./Icon.astro";
 
@@ -78,7 +79,7 @@ const services = [
 
             <div class="shingle-field mt-6 aspect-video overflow-hidden border border-hairline">
               <img
-                src={service.image}
+                src={asset(service.image)}
                 alt={service.alt ?? service.title}
                 loading="lazy"
                 decoding="async"
