@@ -16,6 +16,8 @@ const BLOCK_LEVEL = new Set(["p", "h2", "h3", "ul", "ol", "li", "div", "h1", "h4
 const DROP = new Set(["script", "style", "template", "noscript", "iframe", "object", "embed", "svg", "math", "head", "title", "meta", "link", "img", "video", "audio", "canvas", "input", "textarea", "select", "button"]);
 const ATTRS = { a: new Set(["href", "class", "target", "rel"]) };
 const allowedAttr = (tag, attr) => attr === "class" || !!ATTRS[tag]?.has(attr);
+// Web, mail and phone links, site paths and #anchors only, as in cms.ts.
+export const safeHref = (href) => /^(?:https?:|mailto:|tel:|\/|#)/i.test(href);
 
 export const escape = (value) =>
   String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -60,7 +62,7 @@ function sanitizeString(html, allowed) {
     for (const [, attr, , v1, v2] of rest.matchAll(/([\w-]+)\s*=\s*("([^"]*)"|'([^']*)')/g)) {
       const value = v1 ?? v2 ?? "";
       if (!allowedAttr(name, attr)) continue;
-      if (attr === "href" && /^\s*javascript:/i.test(value)) continue;
+      if (attr === "href" && !safeHref(value)) continue;
       const out = attr === "href" ? withBase(value) : value;
       // Tokens in an attribute (href="mailto:{{email}}") stay as written,
       // braces encoded so the chip pass below leaves them alone.

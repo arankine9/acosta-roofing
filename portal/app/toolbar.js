@@ -5,7 +5,7 @@
 // selection when clicked.
 
 import { ICONS } from "./ui.js";
-import { BASE, stripBase, withBase } from "./render.js";
+import { BASE, safeHref, stripBase, withBase } from "./render.js";
 
 export function createToolbar(shadow, frame) {
   const style = document.createElement("style");
@@ -241,7 +241,8 @@ export function createToolbar(shadow, frame) {
       const href = linkinfo.dataset.href;
       if (btn.dataset.link === "go") {
         if (isInternal(href)) frame.navigate(href);
-        else window.open(href, "_blank", "noopener");
+        // Only a link the sanitizer would keep; never script in a new tab.
+        else if (safeHref(href)) window.open(href, "_blank", "noopener");
       } else if (btn.dataset.link === "edit") api.editLink();
       else if (btn.dataset.link === "remove") {
         restore();

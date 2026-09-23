@@ -131,6 +131,10 @@ const ATTRS: Record<string, Set<string>> = {
   a: new Set(["href", "class", "target", "rel"]),
 };
 const allowedAttr = (tag: string, attr: string) => attr === "class" || !!ATTRS[tag]?.has(attr);
+// Links may only be web, mail and phone links, site paths and #anchors. An
+// allowlist rather than a "javascript:" check, which an encoded
+// "&#106;avascript:" or a leading control character slips past.
+const safeHref = (href: string) => /^(?:https?:|mailto:|tel:|\/|#)/i.test(href);
 
 function sanitize(html: string, allowed: Set<string>): string {
   return html.replace(/<(\/?)([a-zA-Z][\w-]*)([^>]*)>/g, (_, close: string, tag: string, rest: string) => {
@@ -141,7 +145,7 @@ function sanitize(html: string, allowed: Set<string>): string {
     for (const [, attr, , v1, v2] of rest.matchAll(/([\w-]+)\s*=\s*("([^"]*)"|'([^']*)')/g)) {
       const value = v1 ?? v2 ?? "";
       if (!allowedAttr(name, attr)) continue;
-      if (attr === "href" && /^\s*javascript:/i.test(value)) continue;
+      if (attr === "href" && !safeHref(value)) continue;
       // Internal links are written root-relative ("/about/") and pick up the
       // base path here, so they work under the portal's /site/ prefix too.
       const out = attr === "href" && value.startsWith("/") && !value.startsWith("//") ? page(value) : value;
