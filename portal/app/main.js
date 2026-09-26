@@ -190,12 +190,13 @@ async function save() {
   }
   if (!(await checkBeforeSave())) return false;
   setBusy("Saving…");
+  const files = {};
+  const oldHead = model.draft.exists ? model.draft.head : null;
+  let res;
   try {
-    const files = {};
     for (const id of ids) files[id] = structuredClone(model.working[id]);
     const names = ids.map(labelOf);
     const message = names.length ? `Edit ${names.join(", ")}` : "Add photos";
-    const oldHead = model.draft.exists ? model.draft.head : null;
     // The server takes at most 20 uploads and 40 MB per save: send photos in
     // batches, the words with the first one.
     const batches = [[]];
@@ -211,7 +212,6 @@ async function save() {
       size += blob.size;
     }
     let head = oldHead;
-    let res;
     for (let b = 0; b < batches.length; b++) {
       const uploads = [];
       for (const path of batches[b]) uploads.push({ path, base64: await blobToBase64(model.uploads.get(path)) });
@@ -226,6 +226,14 @@ async function save() {
     toast("Draft saved. Nothing on the website changes until you publish.");
     return true;
   } catch (err) {
+    // Photo batches that went through are on the draft already. Take them
+    // in, so trying again sends only the photos still waiting, against the
+    // draft as it now is, rather than being turned away as stale.
+    if (res) {
+      autosave.clear(oldHead ?? "none");
+      model.saved(res, files);
+      autosave.write();
+    }
     await showError(err, "save");
     return false;
   } finally {
@@ -328,20 +336,31 @@ async function publish() {
   });
   if (!ok) return;
   setBusy("Publishing…");
+  const head = model.draft.head;
   try {
-    const head = model.draft.head;
     await api.publish({ draftHead: head, message: changed.length ? `Publish: ${changed.join(", ")}` : undefined });
-    autosave.clear(head);
-    const content = await api.content();
-    model.load(content);
-    setBusy(null);
-    await alert("Published", "<p>Published. The live site updates in about a minute.</p>");
   } catch (err) {
     setBusy(null);
     await showError(err, "publish");
+    return;
+  }
+  autosave.clear(head);
+  // The publish went through. Failing to reload afterwards is not a failed
+  // publish, and saying so would send the owner to retry one that is done.
+  let reloaded = true;
+  try {
+    model.load(await api.content());
+  } catch {
+    reloaded = false;
   } finally {
     setBusy(null);
   }
+  await alert(
+    "Published",
+    reloaded
+      ? "<p>Published. The live site updates in about a minute.</p>"
+      : "<p>Published. The live site updates in about a minute.</p><p>The editor couldn't load the latest version; reload the page before editing again.</p>",
+  );
 }
 
 async function discard() {
