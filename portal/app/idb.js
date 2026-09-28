@@ -23,6 +23,8 @@ function tx(mode, fn) {
         const req = fn(t.objectStore("kv"));
         t.oncomplete = () => resolve(req?.result);
         t.onerror = () => reject(t.error);
+        // A full disk aborts the transaction without an error event.
+        t.onabort = () => reject(t.error);
       }),
   );
 }

@@ -142,6 +142,16 @@ export function createListControls(shadow, frame) {
   let current = null; // the item the bar is for
   let hideTimer = null;
   const gen = new Map(); // list key -> change count, so a stale undo can't run
+  // Any other change inside a list (a word typed in one of its items, a
+  // nested list's add or delete) moves its count on too, so Undo can't lay
+  // the old list back over it.
+  model.on((e) => {
+    if (e.type === "load" || e.type === "restore") return gen.clear();
+    if (e.type !== "set") return;
+    for (const [k, n] of gen) {
+      if (e.key === k || e.key.startsWith(k + ".") || k.startsWith(e.key + ".")) gen.set(k, n + 1);
+    }
+  });
 
   const itemFor = (node) => {
     let el = node?.nodeType === 1 ? node : node?.parentElement;
