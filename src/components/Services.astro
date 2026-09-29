@@ -3,104 +3,93 @@ import { asset } from "../lib/url";
 import SectionHeading from "./SectionHeading.astro";
 import Icon from "./Icon.astro";
 
-// The six services named on the brand board, in the board's order. Each panel
-// is a printed board: hairline keyline, pictogram in the corner, category tag,
-// a 16:9 photo slot and a ruled footer link. Job photos live in
-// public/images/ under the filenames below; the onerror handler drops the
-// image back to the shingle field if a file is ever missing.
+// Three full-photo service tiles. At rest each shows its photo and title;
+// on hover (or keyboard focus) the photo settles under a forest shade, the
+// title's plus turns into an arrow, a rule draws in beneath it and the
+// description opens up from below. The whole tile is the link. The motion
+// lives in global.css under `.service-tile`.
+//
+// `href` is where a tile goes. There are no service pages yet, so all three
+// open the estimate form; point them at their pages when those exist.
+//
+// Photos live in public/images/ under the filenames below; swap a photo by
+// replacing the file. multi-unit.jpg is Eric Dahm's "Aerial view of new
+// townhouses with gray roofs" from Unsplash (Unsplash License: free for
+// commercial use, no attribution required).
 const services = [
   {
-    icon: "roof-install",
-    kind: "Residential",
-    title: "Roof installation",
-    body: "Full tear-off and re-roof on architectural shingle, with new underlayment, flashing and ventilation, not a fresh layer over old problems.",
-    image: "/images/roof-installation.jpg",
-    alt: "Crew nailing new architectural shingles over fresh underlayment",
-  },
-  {
-    icon: "roof-repair",
-    kind: "Residential",
-    title: "Roof repairs",
-    body: "Leaks traced to the actual source: failed flashing, split boots, lifted ridge, storm damage. Emergency leaks prioritized, and repaired to match, so it isn't obvious work was done.",
-    image: "/images/roof-repairs.jpg",
-    alt: "Roofer setting replacement shingles into an existing roof field",
-  },
-  {
-    icon: "roof-maintain",
-    kind: "Residential",
-    title: "Roof maintenance",
-    body: "Seasonal inspection, moss treatment and debris clearing. Most of the roofs we replace early were lost to maintenance nobody was doing.",
+    title: "Residential",
+    body: "Roof replacement, leak repairs and seasonal maintenance for homes across the Portland metro, plus the gutters and custom flashing that keep water moving off the roof and away from the house.",
     image: "/images/roof-maintenance.jpg",
-    alt: "Aerial view of a shingle roof during a seasonal inspection",
+    alt: "Aerial view of a brick house with a new architectural shingle roof",
+    href: "#contact",
   },
   {
-    icon: "gutters",
-    kind: "Residential",
-    title: "Gutter systems",
-    body: "Gutter installation, repair, replacement, cleaning and seasonal maintenance. Water that leaves the roof cleanly is most of what keeps a roof, and a foundation, sound.",
-    image: "/images/gutter-systems.jpg",
-    alt: "Installer setting a seamless gutter run along a fascia board",
-  },
-  {
-    icon: "metal",
-    kind: "Fabrication",
-    title: "Cap metal & custom flashing",
-    body: "Cap metal and flashing bent to the job instead of forced from stock: chimneys, valleys, wall transitions, odd penetrations. The details that decide whether a roof leaks in five years.",
-    image: "/images/cap-metal.jpg",
-    alt: "New copper step and apron flashing fitted along a brick chimney on a shingle roof",
-  },
-  {
-    icon: "commercial",
-    kind: "Commercial",
-    title: "Commercial roofing",
-    body: "Single-ply and low-slope systems for shops, warehouses and light-industrial buildings, installed to spec and detailed properly at every penetration.",
+    title: "Commercial",
+    body: "Single-ply and low-slope systems for shops, warehouses and light-industrial buildings, installed to spec and detailed properly at every curb, drain and penetration.",
     image: "/images/commercial-roofing.jpg",
-    alt: "Crew detailing a curb and rolling out membrane on a low-slope commercial roof",
+    alt: "Crew rolling out and detailing white membrane on a low-slope commercial roof",
+    href: "#contact",
+  },
+  {
+    title: "Multi-unit",
+    body: "Apartments, condos and townhome rows: replacement, repair and scheduled maintenance, planned building by building around the people living underneath.",
+    image: "/images/multi-unit.jpg",
+    alt: "Aerial view of rows of townhomes with gray shingle roofs",
+    href: "#contact",
   },
 ];
 ---
 
-<section id="services" class="section bg-canvas">
+{/* Extra bottom padding: the Materials band's treeline stands 64px into
+    this section. */}
+<section id="services" class="section bg-canvas pb-28 lg:pb-36">
   <div class="container-page">
-    <SectionHeading
-      title="Services"
-      description="Residential and commercial work"
-      class="mb-14"
-    />
+    <SectionHeading title="Our services" align="center" class="mb-12" />
+  </div>
 
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  {/* The photos are landscape, so from 1024px the row runs wider than the
+      page container (up to 1720px) and the tiles get shorter as the screen
+      widens. Below that they stack, held to a comfortable width. */}
+  <div class="mx-auto max-w-[1720px] px-6 min-[1440px]:px-12">
+    <div class="mx-auto grid max-w-2xl grid-cols-1 gap-2 lg:max-w-none lg:grid-cols-3">
       {
         services.map((service) => (
-          <article class="panel panel-keyline flex flex-col p-7">
-            <div class="flex items-start justify-between gap-4">
-              <Icon name={service.icon} size={38} class="text-forest" />
-              <span class="badge-tag mt-1">{service.kind}</span>
+          <a href={service.href} class="service-tile">
+            <img
+              src={asset(service.image)}
+              alt={service.alt}
+              loading="lazy"
+              decoding="async"
+              class="service-tile__photo"
+            />
+            <span class="service-tile__scrim" aria-hidden="true" />
+            <span class="service-tile__shade" aria-hidden="true" />
+
+            <div class="service-tile__body">
+              <h3 class="service-tile__title t-display-lg">
+                <span>{service.title}</span>
+                <span class="service-tile__icon" aria-hidden="true">
+                  <svg class="service-tile__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square">
+                    <path d="M12 4v16M4 12h16" />
+                  </svg>
+                  <Icon name="arrow" size={24} class="service-tile__arrow" />
+                </span>
+              </h3>
+              <span class="service-tile__rule" aria-hidden="true" />
+              <div class="service-tile__reveal">
+                <div class="service-tile__clip">
+                  <p class="service-tile__text t-body-md">{service.body}</p>
+                </div>
+              </div>
             </div>
-
-            <div class="shingle-field mt-6 aspect-video overflow-hidden border border-hairline">
-              <img
-                src={asset(service.image)}
-                alt={service.alt ?? service.title}
-                loading="lazy"
-                decoding="async"
-                class="h-full w-full object-cover"
-                onerror="this.remove()"
-              />
-            </div>
-
-            <h3 class="t-heading-md mt-6 text-ink">{service.title}</h3>
-            <p class="t-body-sm mt-3 grow text-body">{service.body}</p>
-
-            <a
-              href="#contact"
-              class="t-spaced-sm mt-6 flex min-h-11 items-center justify-between border-t border-hairline pt-4 text-forest hover:text-forest-deep"
-            >
-              Get a quote
-              <Icon name="arrow" size={18} />
-            </a>
-          </article>
+          </a>
         ))
       }
+    </div>
+
+    <div class="mt-12 flex justify-center">
+      <a href="#contact" class="btn btn-primary">Request an Appointment</a>
     </div>
   </div>
 </section>

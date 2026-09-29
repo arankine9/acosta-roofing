@@ -2,9 +2,10 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
+import sitemap from "@astrojs/sitemap";
 
-// TODO: confirm the domain is registered: it drives canonical URLs, the
-// sitemap and the Open Graph tags in Base.astro.
+// `site` drives canonical URLs, the sitemap and the Open Graph tags in
+// Base.astro.
 //
 // GH_PAGES=1 builds for the GitHub Pages project site, which lives under a
 // /acosta-roofing/ subpath. Asset paths go through src/lib/url.ts so they
@@ -12,9 +13,9 @@ import icon from "astro-icon";
 const ghPages = process.env.GH_PAGES === "1";
 
 export default defineConfig({
-  site: ghPages ? "https://arankine9.github.io" : "https://acostaroofing.com",
+  site: ghPages ? "https://arankine9.github.io" : "https://acostaroofingpnw.com",
   base: ghPages ? "/acosta-roofing" : undefined,
-  integrations: [icon()],
+  integrations: [icon(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },

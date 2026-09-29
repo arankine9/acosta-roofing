@@ -13,7 +13,8 @@ npm run build    # -> dist/
 
 Every business fact on the site is from the Acosta Roofing brand board: the
 wordmark, the three-ink palette, the licensing line, the five services, the
-"proudly serving Oregon" line, and the placeholder phone number and CCB blank.
+"proudly serving Oregon" line. The phone number, email and CCB number were
+supplied by the business.
 Anything the board does not state (street address, hours, founding year) is
 either empty in `src/data/site.ts` or marked as a placeholder there. Nothing is
 inherited from any other contractor's records, and the site makes no rating,
@@ -51,24 +52,20 @@ cream/forest seam is `src/components/Treeline.astro`.
 
 ## Before this goes live
 
-- [ ] **Phone number**: `(503) 123-4567` is the placeholder printed on the
-      brand board, not a working line. Set `phone` and `phoneHref` in
-      `src/data/site.ts`; they drive the nav, hero sign, CTA band, footer and
-      the JSON-LD.
-- [ ] **CCB licence number**: set `ccb` in `src/data/site.ts`. Oregon requires
-      it in contractor advertising. The hero sign and footer render the printed
-      blank until it is set.
 - [ ] **Street address and ZIP**: not on the brand board. They render only when
       set, so the site currently shows "Beaverton, OR".
 - [ ] **Confirm the hours** in `src/data/site.ts`; they are a placeholder.
 - [ ] **Job photos**: drop into `public/images/` using the filenames in
       `src/components/Services.astro`. Until then the cards show a shingle
       texture rather than a broken image.
+- [ ] **Replace the material pictures.** The three files in
+      `public/images/materials/` are Roofscapes NW's icons, in as
+      placeholders to judge the look. Drop in Acosta's own under the same
+      filenames (`asphalt-shingle.png`, `architectural-shingle.png`,
+      `single-ply-membrane.png`) before this ships.
 - [ ] **Wire up the contact form.** `src/components/Contact.astro` posts
       nowhere; the note under the submit button says so rather than silently
       dropping enquiries. Point `action` at a handler and delete that note.
-- [ ] **Domain**: `acostaroofing.com` is set in `astro.config.mjs` and printed
-      on the business card; confirm it is registered.
 
 ## Structure
 
@@ -81,4 +78,24 @@ cream/forest seam is `src/components/Treeline.astro`.
 | `public/mark.svg` | Mark (firs + gable) as supplied, for cream surfaces. |
 | `public/mark-light.svg` | Same mark inverted to cream, for forest bands (footer). |
 | `src/components/Wordmark.astro` | Wordmark as supplied, inlined so `currentColor` drives tone. |
+| `scripts/build-service-map.mjs` | Draws the service-area map: Oregon within 75 min drive of the shop. Run by hand; see below. |
+| `public/images/materials/` | The three roofing-material pictures. Swap one by replacing the file under the same name. |
 | `public/favicon.svg` | Forest tile with a cream gable; the treeline is dropped at 16px. |
+
+## Service area map
+
+The map shows everywhere in Oregon within 75 minutes' off-peak drive of the
+Beaverton shop, built from real road-network drive times (OpenStreetMap data,
+via the public Valhalla routing server) and cut at the Washington state line.
+The result is committed, so the site builds with no network. To rebuild it
+(only needed if the shop moves or the drive time changes), run the three
+steps in order:
+
+```bash
+node scripts/sample-drive-times.mjs   # ~15 min: drive times on a 3 km grid
+node scripts/build-drive-area.mjs     # ~5 min: stitch the 75-minute area
+node scripts/build-service-map.mjs    # seconds: smooth, clip, draw, check
+```
+
+The last step prints which counties and towns fall inside the line; the
+county list in `src/data/site.ts` is written from that report.

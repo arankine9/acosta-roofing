@@ -1,0 +1,96 @@
+---
+import Treeline from "./Treeline.astro";
+import { asset } from "../lib/url";
+
+// Forest band between Services and the leak call-out: the three roofing systems
+// Acosta installs, each with a picture of the material. Headline and lead
+// share a row on desktop; the materials run three-up between hairline rules
+// from 768px and stack below that.
+//
+// The pictures are plain files in public/images/materials/. To swap one,
+// replace the file under the same name; nothing here needs to change. Any
+// square-ish image works (it is fitted inside a 160px box, not cropped),
+// ideally a PNG or SVG with a transparent background so it sits on the band.
+//
+// TODO: the current three are Roofscapes NW's icons, dropped in to judge the
+// direction. They are another company's artwork; replace all three before
+// this section is committed or deployed.
+//
+// `life` is the typical service life for each material with proper
+// installation and upkeep, as published across manufacturer and industry
+// guides: 3-tab 15-20 years, architectural 25-30, TPO/PVC 20-30. They are
+// industry ranges, not a warranty or a promise about any one roof.
+const materials = [
+  {
+    image: "/images/materials/asphalt-shingle.png",
+    fit: "Steep slope",
+    title: "Asphalt shingle",
+    life: "15–20",
+    body: "Flat, single-layer 3-tab shingle. The most economical way to put a sound, clean-looking roof on a house, garage or outbuilding.",
+  },
+  {
+    image: "/images/materials/architectural-shingle.png",
+    fit: "Steep slope",
+    title: "Architectural shingle",
+    life: "25–30",
+    body: "Thicker, laminated shingle with a dimensional profile that reads like shake. Heavier, longer-lasting and better in wind than 3-tab, in a wide range of colors.",
+  },
+  {
+    image: "/images/materials/single-ply-membrane.png",
+    fit: "Flat & low slope",
+    title: "Single-ply membrane (TPO / PVC)",
+    life: "20–30",
+    body: "Heat-welded membrane for flat and low-slope roofs, residential or commercial. Seams are fused into one continuous, watertight sheet.",
+  },
+];
+---
+
+<section id="materials" class="on-forest relative bg-forest text-on-forest">
+  <Treeline tone="forest" height={64} offset={-470} class="absolute inset-x-0 bottom-full" />
+
+  <div class="container-page pt-24 pb-20 md:pt-28 md:pb-24">
+    <div class="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+      <h2 class="t-display-lg max-w-xl">Roofing materials for every roof and budget</h2>
+      <p class="t-lead max-w-xl text-on-forest-mute">
+        Three systems, from economical 3-tab shingle to low-slope membrane.
+        We'll recommend the one that suits the pitch, the budget and an Oregon
+        winter, and tell you why.
+      </p>
+    </div>
+
+    <ul class="mt-12 grid md:grid-cols-3">
+      {
+        materials.map((material, index) => (
+          <li
+            class:list={[
+              // Two rules in all, between the three materials and nowhere else:
+              // under the first two when stacked, beside them three-up.
+              "flex flex-col border-hairline-dark py-10 first:pt-0 last:pb-0 md:py-0",
+              index < materials.length - 1 && "border-b md:border-b-0 md:border-r md:pr-8",
+              index > 0 && "md:pl-8",
+            ]}
+          >
+            <img
+              src={asset(material.image)}
+              alt=""
+              width="160"
+              height="160"
+              loading="lazy"
+              decoding="async"
+              class="size-40 object-contain object-left"
+            />
+            <p class="t-spaced-sm mt-7 text-on-forest-mute">{material.fit}</p>
+            <h3 class="t-heading-md mt-3">{material.title}</h3>
+            <p class="t-body-sm mt-3 grow text-on-forest-mute">{material.body}</p>
+
+            {/* Pinned to the foot of the column so the three figures share a line. */}
+            <dl class="mt-8 flex flex-col-reverse">
+              <dt class="t-spaced-sm mt-3 text-on-forest-mute">Years expected life</dt>
+              <dd class="t-display-lg leading-none">{material.life}</dd>
+            </dl>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

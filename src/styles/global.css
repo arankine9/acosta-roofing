@@ -401,6 +401,236 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='36' viewBox='0 0 96 36'%3E%3Cg fill='none' stroke='%231b3d2e'%3E%3Cpath d='M0 18H96M0 36H96' stroke-opacity='0.26'/%3E%3Cpath d='M0 21V18M32 21V18M64 21V18M16 39V36M48 39V36M80 39V36M16 3V0M48 3V0M80 3V0' stroke-opacity='0.3' stroke-width='3'/%3E%3Cpath d='M0 15H96M0 33H96' stroke-opacity='0.08'/%3E%3C/g%3E%3C/svg%3E");
   }
 
+  /*
+    Service tiles: a full-bleed photo with its title. On hover or keyboard
+    focus the photo eases in a touch, a forest shade fades up over it, the
+    plus turns into an arrow, a rule draws in under the title and the
+    description opens from below.
+
+    Everything animates something the browser can interpolate: opacity and
+    transform, and the description's height through grid rows (0fr -> 1fr),
+    which tracks the text's real height in both directions instead of a
+    guessed max-height.
+
+    Opening and closing each get their own curve. Hover only swaps two
+    variables, and a transition runs on the timing of the state it is heading
+    into, so opening uses a long ease-out (quick to respond, soft to land) and
+    closing a gentler ease-in-out that doesn't snap shut. The description's
+    text arrives a beat after its space opens and leaves without waiting.
+  */
+  .service-tile {
+    --tile-curve: cubic-bezier(0.45, 0, 0.2, 1);
+    --tile-dur: 460ms;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background-color: var(--color-forest-deep);
+    color: var(--color-cream);
+  }
+  .service-tile:is(:hover, :focus-visible) {
+    --tile-curve: cubic-bezier(0.22, 1, 0.36, 1);
+    --tile-dur: 580ms;
+  }
+  /* Shape by width: landscape when stacked (the photo has the full row),
+     then, three across, as wide as the opened description still fits. */
+  @media (min-width: 640px) and (max-width: 1023.98px) {
+    .service-tile {
+      aspect-ratio: 4 / 3;
+    }
+  }
+  @media (min-width: 1280px) {
+    .service-tile {
+      aspect-ratio: 1 / 1;
+    }
+  }
+  @media (min-width: 1536px) {
+    .service-tile {
+      aspect-ratio: 5 / 4;
+    }
+  }
+  @media (min-width: 1800px) {
+    .service-tile {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  .service-tile__photo {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.001);
+    transition: transform calc(var(--tile-dur) * 2.4) var(--tile-curve);
+  }
+
+  /* Always-on scrim so the title reads over any photo. */
+  .service-tile__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(
+      to top,
+      rgb(20 48 31 / 0.82) 0%,
+      rgb(20 48 31 / 0.34) 34%,
+      rgb(20 48 31 / 0) 60%
+    );
+  }
+
+  /* The hover shade: a separate layer whose opacity animates, because a
+     gradient swapped for another gradient cannot. */
+  .service-tile__shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      to top,
+      rgb(20 48 31 / 0.93) 0%,
+      rgb(20 48 31 / 0.74) 50%,
+      rgb(20 48 31 / 0.32) 100%
+    );
+    opacity: 0;
+    transition: opacity var(--tile-dur) var(--tile-curve);
+  }
+
+  .service-tile__body {
+    padding: 28px 28px 30px;
+  }
+  @media (min-width: 1024px) {
+    .service-tile__body {
+      padding: 32px 32px 34px;
+    }
+  }
+
+  .service-tile__title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--color-cream);
+  }
+
+  /* Plus and arrow share one box; one turns away as the other slides in. */
+  .service-tile__icon {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    width: 26px;
+    height: 26px;
+  }
+  .service-tile__plus,
+  .service-tile__arrow {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition:
+      opacity var(--tile-dur) var(--tile-curve),
+      transform var(--tile-dur) var(--tile-curve);
+  }
+  .service-tile__arrow {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  .service-tile__rule {
+    display: block;
+    width: 64px;
+    height: 2px;
+    margin-top: 16px;
+    background-color: var(--color-cream);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--tile-dur) var(--tile-curve);
+  }
+
+  .service-tile__reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--tile-dur) var(--tile-curve);
+  }
+  .service-tile__clip {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .service-tile__text {
+    max-width: 34rem;
+    padding-top: 16px;
+    color: var(--color-on-forest);
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity calc(var(--tile-dur) * 0.55) ease-out,
+      transform var(--tile-dur) var(--tile-curve);
+  }
+
+  /* Open. */
+  .service-tile:is(:hover, :focus-visible) .service-tile__photo {
+    transform: scale(1.05);
+  }
+  .service-tile:is(:hover, :focus-visible) .service-tile__shade {
+    opacity: 1;
+  }
+  .service-tile:is(:hover, :focus-visible) .service-tile__plus {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+  .service-tile:is(:hover, :focus-visible) .service-tile__arrow {
+    opacity: 1;
+    transform: none;
+    transition-delay: 60ms;
+  }
+  .service-tile:is(:hover, :focus-visible) .service-tile__rule {
+    transform: scaleX(1);
+    transition-delay: 40ms;
+  }
+  .service-tile:is(:hover, :focus-visible) .service-tile__reveal {
+    grid-template-rows: 1fr;
+  }
+  .service-tile:is(:hover, :focus-visible) .service-tile__text {
+    opacity: 1;
+    transform: none;
+    transition-delay: 120ms, 60ms;
+  }
+
+  /* Keyboard focus sits inside the tile, in cream, so it shows on the photo. */
+  .service-tile:focus-visible {
+    outline: 2px solid var(--color-cream);
+    outline-offset: -8px;
+  }
+
+  /* Touch screens can't hover: show the open state from the start. */
+  @media (hover: none) {
+    .service-tile .service-tile__shade,
+    .service-tile .service-tile__text,
+    .service-tile .service-tile__arrow {
+      opacity: 1;
+      transform: none;
+    }
+    .service-tile .service-tile__plus {
+      opacity: 0;
+    }
+    .service-tile .service-tile__rule {
+      transform: scaleX(1);
+    }
+    .service-tile .service-tile__reveal {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  /* Reduced motion: state changes stay, movement goes. */
+  @media (prefers-reduced-motion: reduce) {
+    .service-tile *,
+    .service-tile:is(:hover, :focus-visible) * {
+      transition-duration: 1ms !important;
+      transition-delay: 0ms !important;
+    }
+  }
+
   /* Form fields are ruled lines on the board, like the blank after "CCB #".
      Resting state is a hairline box; focus swaps it for 2px forest. */
   .text-input {

@@ -11,6 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "@iconify-json/ph": "^1.2.2",
     "@tailwindcss/vite": "4.2.2",
     "astro": "6.1.1",
@@ -18,7 +19,9 @@
     "tailwindcss": "4.2.2"
   },
   "devDependencies": {
+    "d3-contour": "^4.0.2",
     "d3-geo": "^3.1.1",
+    "polygon-clipping": "^0.15.7",
     "topojson-client": "^3.1.0",
     "vite": "7.3.6"
   }

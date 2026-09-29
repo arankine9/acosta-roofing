@@ -1,8 +1,7 @@
 // Single source of truth for business facts. Everything here comes from the
-// Acosta Roofing brand board. The phone number, the CCB blank and the email
-// on that board are placeholders, and they are marked as such below. Nothing
-// in this file is inherited from any other contractor: if a detail is not on
-// the brand board and has not been confirmed, it is empty rather than guessed.
+// Acosta Roofing brand board or was supplied by the business (phone, email,
+// CCB number). Nothing in this file is inherited from any other contractor:
+// if a detail is not confirmed, it is empty rather than guessed.
 export const site = {
   name: "Acosta Roofing",
   legalName: "Acosta Roofing LLC",
@@ -10,15 +9,12 @@ export const site = {
   description:
     "Residential and commercial roofing in Beaverton, Oregon. Roof installation, repairs, maintenance and gutter systems from a licensed, bonded and insured contractor.",
 
-  // TODO: 503-123-4567 is the placeholder printed on the brand board, not a
-  // working line. Replace it here; it drives the nav, the hero sign, the
-  // yard-sign CTA, the footer and the JSON-LD.
-  phone: "(503) 123-4567",
-  phoneHref: "tel:+15031234567",
-  phoneIsPlaceholder: true,
+  // Drives the nav, the hero sign, the CTA strip, the footer and the JSON-LD.
+  phone: "(971) 280-9253",
+  phoneHref: "tel:+19712809253",
 
-  email: "info@acostaroofing.com",
-  domain: "acostaroofing.com",
+  email: "Christian@acostaroofingpnw.com",
+  domain: "acostaroofingpnw.com",
 
   // TODO: street address not on the brand board. It renders only when set, so
   // the site shows "Beaverton, OR" until it is confirmed.
@@ -29,11 +25,10 @@ export const site = {
     zip: "",
   },
 
-  // TODO: Oregon law requires the CCB licence number to appear in contractor
-  // advertising, including the website. The brand board leaves it blank, and
-  // so does the site; the hero sign and the footer render the printed blank
-  // until this is set.
-  ccb: "",
+  // Oregon CCB licence number. State law requires it in contractor
+  // advertising, including the website; it prints on the hero sign and in
+  // the footer.
+  ccb: "263343",
 
   serviceArea: "the Portland metro",
 
@@ -46,63 +41,66 @@ export const site = {
 } as const;
 
 /*
-  Counties served, north to south -- the same order they appear on the map.
+  Counties the service area reaches, north to south.
 
-  This is the single list behind the "Where we work" map, the footer's
-  service-area column, the counties-served figure in the hero and the
-  JSON-LD `areaServed`. It used to be written out separately in all four,
-  which is how the hero could go on saying "4" after a fifth county was
-  added.
+  The service area is a drive time -- anywhere in Oregon within 75 minutes'
+  drive of the Beaverton shop, off-peak (see scripts/build-drive-area.mjs) --
+  so most of these counties are reached only in part. This list is written
+  from the coverage report scripts/build-service-map.mjs prints: every
+  county with a town inside the line, and only the towns that are. Tillamook
+  and Clatsop are left off; the line crosses into each only over forest,
+  with no town on the near side of it.
 
-  TODO: Columbia, Yamhill and Polk are unconfirmed. The brand board and the
-  original copy list four counties -- Washington, Multnomah, Clackamas and
-  Marion -- and these three were added because they complete the block
-  geographically, not because anyone confirmed a crew goes there. Confirm or
-  delete them before launch; deleting one here removes it from the map, the
-  footer, the hero figure and the structured data at once.
+  This is the single list behind the county list beside the map, the
+  footer's service-area column, the counties figure in the hero and the
+  JSON-LD `areaServed`. Re-run the map script after changing it: it flags a
+  listed county the area barely reaches and a well-covered one left out.
 */
 export const counties = [
   {
     name: "Columbia",
-    towns: "St. Helens, Scappoose, Columbia City, Rainier, Vernonia",
-    note: "Full service",
-    confirmed: false,
+    towns: "St. Helens, Scappoose, Rainier, Vernonia",
+    note: "Most of the county",
   },
   {
     name: "Washington",
-    towns: "Beaverton, Hillsboro, Tigard, Tualatin, Sherwood, Forest Grove",
+    towns: "Beaverton, Hillsboro, Tigard, Tualatin, Sherwood, Forest Grove, Banks, Gaston",
     note: "Home county",
-    confirmed: true,
   },
   {
     name: "Multnomah",
-    towns: "Portland, Gresham, Troutdale, Fairview",
-    note: "Full service",
-    confirmed: true,
+    towns: "Portland, Gresham, Troutdale, Corbett",
+    note: "Most of the county",
+  },
+  {
+    name: "Hood River",
+    towns: "Cascade Locks, Hood River",
+    note: "Gorge towns",
   },
   {
     name: "Yamhill",
-    towns: "McMinnville, Newberg, Dundee, Dayton, Carlton",
-    note: "Full service",
-    confirmed: false,
+    towns: "Newberg, Dundee, Carlton, McMinnville, Sheridan, Willamina",
+    note: "Most of the county",
   },
   {
     name: "Clackamas",
-    towns: "Lake Oswego, Oregon City, Canby, Wilsonville, Molalla",
-    note: "Full service",
-    confirmed: true,
+    towns: "Lake Oswego, West Linn, Oregon City, Wilsonville, Canby, Molalla, Sandy, Estacada, Welches",
+    note: "West & central",
   },
   {
     name: "Polk",
-    towns: "Dallas, Independence, Monmouth, West Salem",
-    note: "Full service",
-    confirmed: false,
+    towns: "Dallas, Independence, Monmouth",
+    note: "Valley towns",
   },
   {
     name: "Marion",
-    towns: "Woodburn, Salem, Keizer, Mt. Angel, Silverton",
-    note: "Full service",
-    confirmed: true,
+    towns: "Salem, Keizer, Woodburn, Mt. Angel, Silverton, Stayton, Aumsville",
+    note: "Valley towns",
+  },
+  {
+    name: "Linn",
+    towns: "Albany, Jefferson",
+    note: "North edge",
   },
 ] as const;
 

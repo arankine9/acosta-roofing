@@ -1,0 +1,30 @@
+---
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+
+// Call-to-action for a roof that is leaking now. Worded as an invitation to
+// call rather than as an emergency-repair service: for insurance reasons the
+// site doesn't advertise emergency repair, and the response line promises
+// only what may be possible, depending on the job. Keep that wording as is.
+---
+
+<section id="leak" class="section bg-cream-deep">
+  <div class="container-page">
+    <div class="panel panel-keyline mx-auto max-w-3xl px-6 py-12 text-center max-[360px]:px-4 sm:px-12 sm:py-14">
+      <h2 class="t-display-lg text-ink">Roof leaking right now?</h2>
+      <p class="t-lead mt-5 text-body">Call us directly at</p>
+      {/* One line at every width: a phone number broken after the area code
+          is harder to read back and to tap. */}
+      <a
+        href={site.phoneHref}
+        class="t-display-xl mt-3 inline-flex items-center justify-center gap-3 whitespace-nowrap text-forest hover:text-forest-deep max-[420px]:text-[32px] max-[360px]:text-[26px] sm:gap-4"
+      >
+        <Icon name="phone" size={44} class="size-8 shrink-0 sm:size-11" />
+        {site.phone}
+      </a>
+      <p class="t-body-sm mt-6 text-mute">
+        Same-day emergency response may be available depending on scope.
+      </p>
+    </div>
+  </div>
+</section>
