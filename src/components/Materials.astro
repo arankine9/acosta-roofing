@@ -43,6 +43,17 @@ const materials = [
     body: "Heat-welded membrane for flat and low-slope roofs, residential or commercial. Seams are fused into one continuous, watertight sheet.",
   },
 ];
+
+// Manufacturer logos, recoloured to the band's cream, in public/images/brands/.
+// Sources: GAF from Wikimedia Commons (File:GAF_logo.svg); CertainTeed,
+// Malarkey and Duro-Last from each manufacturer's own website. `height` is
+// the rendered height in px; `width` keeps the aspect ratio for layout.
+const brands = [
+  { name: "GAF", logo: "/images/brands/gaf.svg", height: 56, width: 56 },
+  { name: "CertainTeed", logo: "/images/brands/certainteed.svg", height: 36, width: 156 },
+  { name: "Malarkey Roofing Products", logo: "/images/brands/malarkey.svg", height: 40, width: 190 },
+  { name: "Duro-Last", logo: "/images/brands/duro-last.svg", height: 30, width: 210 },
+];
 ---
 
 <section id="materials" class="on-forest relative bg-forest text-on-forest">
@@ -92,5 +103,34 @@ const materials = [
         ))
       }
     </ul>
+
+    {/* The manufacturers whose products these three systems come from. One
+        ink, like everything else on the band: full-colour marks in four
+        brand palettes would read as a sponsor wall. Each file is the
+        manufacturer's own logo recoloured cream (GAF's letters are cut
+        through its tile), and the heights are set by eye so the four sit at
+        the same optical weight. Worded as brands we install, not as
+        certifications: the site claims none. */}
+    <div class="mt-16 flex flex-col gap-8 border-t border-hairline-dark pt-10 lg:flex-row lg:items-center lg:gap-16">
+      <p class="t-spaced-sm shrink-0 text-on-forest-mute lg:max-w-[11rem]">Brands we install</p>
+      <ul class="grid grow grid-cols-2 items-center gap-x-8 gap-y-10 lg:flex lg:justify-between lg:gap-10">
+        {
+          brands.map((brand) => (
+            <li class="flex items-center justify-center">
+              <img
+                src={asset(brand.logo)}
+                alt={brand.name}
+                width={brand.width}
+                height={brand.height}
+                loading="lazy"
+                decoding="async"
+                style={`height:${brand.height}px`}
+                class="w-auto max-w-full opacity-90"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 </section>
