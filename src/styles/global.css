@@ -368,15 +368,6 @@
     background-color: currentColor;
     opacity: 0.4;
   }
-  /* Dot-separated trust line. The separator is a real character so it
-     survives copy/paste into a quote or a sign order. */
-  .dot-list {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-md) var(--space-lg);
-  }
-
   .badge-tag {
     display: inline-block;
     border: 1px solid var(--color-hairline-strong);
