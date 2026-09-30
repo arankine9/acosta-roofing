@@ -1,13 +1,13 @@
 ---
 import Logo from "./Logo.astro";
 import Treeline from "./Treeline.astro";
-import { site, counties, cityLine } from "../data/site";
+import { site, cityLine } from "../data/site";
 
 const year = new Date().getFullYear();
 
-// Four link columns, not six. A four-person roofing company does not have six
+// Three link columns, not six. A four-person roofing company does not have six
 // columns of real pages, and inventing them to satisfy a grid would be worse
-// than the grid.
+// than the grid. The county list lives in the Service Area section, not here.
 const columns = [
   {
     heading: "Residential",
@@ -28,13 +28,6 @@ const columns = [
     ],
   },
   {
-    heading: "Service area",
-    links: counties.map((county) => ({
-      label: `${county.name} County`,
-      href: "#service-area",
-    })),
-  },
-  {
     heading: "Company",
     links: [
       { label: "Roof leaking?", href: "#leak" },
@@ -50,7 +43,7 @@ const columns = [
   <Treeline tone="forest" height={64} offset={-395} class="absolute inset-x-0 bottom-full" />
 
   <div class="container-page relative pt-24 pb-14">
-    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(4,minmax(0,1fr))]">
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))]">
       <div class="max-w-xs">
         <Logo tone="cream" />
         <p class="t-body-sm mt-6 text-on-forest-mute">
@@ -98,7 +91,7 @@ const columns = [
   </div>
 
   <!-- Legal fine-print band. DESIGN.md calls for `mute` here, but #6b6a63 on
-       #14301f lands at 2.6:1; on-forest-mute keeps the same read and clears AA. -->
+       #1b3d2e lands at 2.6:1; on-forest-mute keeps the same read and clears AA. -->
   <div class="bg-forest-deep">
     <div
       class="container-page flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between"

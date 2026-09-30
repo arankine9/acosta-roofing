@@ -31,7 +31,7 @@ with yet.
 ## Design system
 
 The visual system is a full implementation of `DESIGN.md`, a printed-signage
-system in three inks: forest green (`#1b3d2e`), cream (`#f2efe6`) and charcoal
+system in three inks: forest green (`#24503c`), cream (`#f5f4ef`) and charcoal
 (`#2b2b2b`), with cream body chapters alternating against solid forest bands, a
 condensed uppercase display cut carrying every title, and hairline rules
 instead of shadows. Nothing is rounded past 2px and nothing is elevated,

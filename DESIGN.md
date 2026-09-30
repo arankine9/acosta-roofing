@@ -13,22 +13,22 @@ description: |
   elevation, no second accent, and no color used to signal hierarchy.
 
 colors:
-  forest: "#1b3d2e"
-  forest-deep: "#14301f"
-  forest-mid: "#2f5a44"
-  cream: "#f2efe6"
-  cream-deep: "#e7e2d3"
-  board: "#fbfaf6"
+  forest: "#24503c"
+  forest-deep: "#1b3d2e"
+  forest-mid: "#3a6a52"
+  cream: "#f5f4ef"
+  cream-deep: "#e9e6dc"
+  board: "#fcfbf8"
   charcoal: "#2b2b2b"
-  canvas: "#f2efe6"
+  canvas: "#f5f4ef"
   hairline: "rgba(43,43,43,0.22)"
   hairline-strong: "rgba(43,43,43,0.45)"
-  hairline-dark: "rgba(242,239,230,0.28)"
+  hairline-dark: "rgba(245,244,239,0.28)"
   ink: "#2b2b2b"
   body: "#3d3d3d"
   mute: "#6b6a63"
-  on-forest: "#f2efe6"
-  on-forest-mute: "rgba(242,239,230,0.72)"
+  on-forest: "#f5f4ef"
+  on-forest-mute: "rgba(245,244,239,0.72)"
   error: "#8c2f22"
 
 typography:
@@ -186,14 +186,14 @@ heading: text takes the ink of whatever surface it sits on.
 ## Colors
 
 ### Brand
-- **Forest** (`{colors.forest}`, `#1b3d2e`): the brand. Every band, every primary button, every pictogram, the mark itself.
-- **Forest Deep** (`{colors.forest-deep}`, `#14301f`): pressed state, sign stakes, and the footer fine-print band.
-- **Forest Mid** (`{colors.forest-mid}`, `#2f5a44`): the numeral of a ruled step list, where full forest would out-shout the step title. It is the lightest green in the system that still clears AA on `{colors.cream-deep}`.
+- **Forest** (`{colors.forest}`, `#24503c`): the brand. Every band, every primary button, every pictogram, the mark itself.
+- **Forest Deep** (`{colors.forest-deep}`, `#1b3d2e`): pressed state, sign stakes, and the footer fine-print band.
+- **Forest Mid** (`{colors.forest-mid}`, `#3a6a52`): the numeral of a ruled step list, where full forest would out-shout the step title. It is the lightest green in the system that still clears AA on `{colors.cream-deep}`.
 
 ### Surface
-- **Cream / Canvas** (`{colors.cream}`, `#f2efe6`): the page. Also the ink of all text on a forest band.
-- **Cream Deep** (`{colors.cream-deep}`, `#e7e2d3`): alternating body chapters, so two paper sections in a row still separate.
-- **Board** (`{colors.board}`, `#fbfaf6`): the panel fill, a half-step brighter than the page, the way a fresh sign blank is brighter than kraft.
+- **Cream / Canvas** (`{colors.cream}`, `#f5f4ef`): the page. Also the ink of all text on a forest band.
+- **Cream Deep** (`{colors.cream-deep}`, `#e9e6dc`): alternating body chapters, so two paper sections in a row still separate.
+- **Board** (`{colors.board}`, `#fcfbf8`): the panel fill, a half-step brighter than the page, the way a fresh sign blank is brighter than kraft.
 - **Charcoal** (`{colors.charcoal}`, `#2b2b2b`): text ink. It is never used as a surface; a black band would read as a different brand.
 
 ### Rules
@@ -229,8 +229,8 @@ cut with tracking; anything that needs to be read at length is set in Barlow at
 
 ## Accessibility
 
-- Cream on forest is 10.4:1; charcoal on cream is 12.3:1; body on cream is 9.5:1. All clear AA at every size in the scale.
-- `on-forest-mute` (72% cream) is the floor for secondary text on a band at 6.2:1; do not thin it further.
-- `mute` (4.7:1 on cream) is cream-surface only. On `{colors.forest-deep}` it lands at 2.6:1; the footer fine print uses `on-forest-mute` for exactly this reason.
+- Cream on forest is 8.3:1; charcoal on cream is 12.9:1; body on cream is 9.9:1. All clear AA at every size in the scale.
+- `on-forest-mute` (72% cream) is the floor for secondary text on a band at 5.2:1; do not thin it further.
+- `mute` (4.9:1 on cream) is cream-surface only. On `{colors.forest-deep}` it lands at 2.6:1; the footer fine print uses `on-forest-mute` for exactly this reason.
 - Focus is a 2px outline at 3px offset: forest on cream, cream on forest via `.on-forest`.
 - Buttons and inputs are 48px tall; the letterspaced label never reduces the target.

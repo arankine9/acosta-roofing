@@ -198,7 +198,7 @@ function tile(ink, note) {
 `;
 }
 
-writeFileSync(`${pub}/treeline.svg`, tile("#1b3d2e", "Forest treeline, for the seam above a forest band."));
-writeFileSync(`${pub}/treeline-light.svg`, tile("#f2efe6", "Cream cut of treeline.svg, for the seam inside a forest band."));
+writeFileSync(`${pub}/treeline.svg`, tile("#24503c", "Forest treeline, for the seam above a forest band."));
+writeFileSync(`${pub}/treeline-light.svg`, tile("#f5f4ef", "Cream cut of treeline.svg, for the seam inside a forest band."));
 console.log(`treeline ${W}x${H}, ${stand.length} firs + ${front.length} front`);
 for (const [k, f] of Object.entries(FIRS)) console.log(`  ${k}  x${f.x} y${f.y} ${f.w}x${f.h}`);
