@@ -9,6 +9,13 @@ npm run dev      # http://localhost:4321
 npm run build    # -> dist/
 ```
 
+## Deploys
+
+Cloudflare Pages builds and deploys every push to `main` to
+https://acostaroofingpnw.com (project `acosta-roofing` in the owner's
+Cloudflare account; Node version from `.node-version`). Other branches get
+preview URLs on `acosta-roofing-eb8.pages.dev`.
+
 ## Where the content comes from
 
 Every business fact on the site is from the Acosta Roofing brand board: the
