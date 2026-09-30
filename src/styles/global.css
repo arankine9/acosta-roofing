@@ -703,3 +703,321 @@
     }
   }
 }
+
+/*
+  Inner-page kit. The home page is a stack of bespoke sections; the inner
+  pages share these few building blocks so they read as one site. They are
+  the same objects the home page uses (rules, plates, the display cut),
+  arranged for pages you read rather than scan.
+*/
+@layer components {
+  /* The eyebrow over a title: small, very widely tracked caps. */
+  .t-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+  }
+
+  /*
+    Long-form copy. Barlow at reading size, the display cut for headings,
+    square forest bullets, and rules rather than boxes. Set it on the element
+    that wraps the copy; everything inside is styled by position, so the
+    source stays plain HTML.
+  */
+  .prose-page {
+    max-width: 68ch;
+    color: var(--color-body);
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  .prose-page > * + * {
+    margin-top: 1.1em;
+  }
+  .prose-page h2 {
+    font-size: 30px;
+    line-height: 1.12;
+    letter-spacing: 0.03em;
+    color: var(--color-ink);
+    margin-top: 2.2em;
+  }
+  .prose-page h3 {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.045em;
+    color: var(--color-ink);
+    margin-top: 1.9em;
+  }
+  .prose-page h2 + *,
+  .prose-page h3 + * {
+    margin-top: 0.7em;
+  }
+  .prose-page > :first-child {
+    margin-top: 0;
+  }
+  .prose-page strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .prose-page a {
+    color: var(--color-forest);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 600;
+  }
+  .prose-page ul > li,
+  .prose-page ol > li {
+    position: relative;
+    padding-left: 1.6em;
+  }
+  .prose-page li + li {
+    margin-top: 0.5em;
+  }
+  .prose-page ul > li::before {
+    content: "";
+    position: absolute;
+    left: 0.2em;
+    top: 0.68em;
+    width: 7px;
+    height: 7px;
+    background-color: var(--color-forest);
+  }
+  .prose-page ol {
+    counter-reset: prose-ol;
+  }
+  .prose-page ol > li {
+    counter-increment: prose-ol;
+  }
+  .prose-page ol > li::before {
+    content: counter(prose-ol);
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-forest-mid);
+  }
+  @media (max-width: 640px) {
+    .prose-page h2 {
+      font-size: 25px;
+    }
+  }
+  .on-forest .prose-page,
+  .prose-page.on-forest {
+    color: var(--color-on-forest-mute);
+  }
+  .on-forest .prose-page :is(h2, h3, strong, a) {
+    color: var(--color-on-forest);
+  }
+  .on-forest .prose-page ul > li::before {
+    background-color: var(--color-cream);
+  }
+
+  /*
+    Ruled step list: a numbered process where each step is a row between
+    hairlines, the numeral in the display cut at forest-mid so it sits behind
+    the step title rather than competing with it. Markup:
+      <ol class="step-list"><li><h3>Title</h3><p>Body</p></li></ol>
+  */
+  .step-list {
+    counter-reset: step;
+    border-top: 1px solid var(--color-hairline);
+  }
+  .step-list > li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    column-gap: 20px;
+    padding-block: 24px;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .step-list > li::before {
+    content: counter(step, decimal-leading-zero);
+    grid-row: span 3;
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-forest-mid);
+  }
+  .step-list > li > :not(:first-child) {
+    margin-top: 8px;
+  }
+  .on-forest .step-list {
+    border-color: var(--color-hairline-dark);
+  }
+  .on-forest .step-list > li {
+    border-color: var(--color-hairline-dark);
+  }
+  .on-forest .step-list > li::before {
+    color: var(--color-on-forest-mute);
+  }
+  @media (max-width: 560px) {
+    .step-list > li {
+      grid-template-columns: 44px minmax(0, 1fr);
+      column-gap: 14px;
+    }
+    .step-list > li::before {
+      font-size: 28px;
+    }
+  }
+
+  /* Checked list: each line led by a forest check, for "what's included"
+     and "signs to look for" lists. */
+  .check-list > li {
+    position: relative;
+    padding-left: 32px;
+  }
+  .check-list > li + li {
+    margin-top: 12px;
+  }
+  .check-list > li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.3em;
+    width: 18px;
+    height: 18px;
+    background-color: var(--color-forest);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='square'%3E%3Cpath d='M4 12.5 9.5 18 20 6.5'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+  .on-forest .check-list > li::before {
+    background-color: var(--color-cream);
+  }
+
+  /*
+    Reference table: ruled rows with a forest header row, the way the
+    design system sets reference data. Wrap it in `.table-scroll` so a wide
+    table scrolls inside itself on a phone instead of the page.
+  */
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-board);
+    border: 1px solid var(--color-hairline);
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+  .data-table th,
+  .data-table td {
+    padding: 14px 18px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .data-table thead th {
+    background-color: var(--color-forest);
+    color: var(--color-on-forest);
+    font-family: var(--font-display);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    border-bottom: 0;
+  }
+  .data-table tbody th {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-ink);
+  }
+  .data-table tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+
+  /* A photograph set like a mounted print: square corners, a hairline edge,
+     and a caption under a rule. Use <figure class="photo-plate"><img>
+     <figcaption>. The img takes its own aspect-[..] utility. */
+  .photo-plate {
+    margin: 0;
+  }
+  .photo-plate img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    background-color: var(--color-cream-deep);
+    border: 1px solid var(--color-hairline);
+  }
+  .photo-plate figcaption {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-hairline);
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--color-mute);
+  }
+  .on-forest .photo-plate img {
+    border-color: var(--color-hairline-dark);
+  }
+  .on-forest .photo-plate figcaption {
+    border-color: var(--color-hairline-dark);
+    color: var(--color-on-forest-mute);
+  }
+
+  /* Question-and-answer rows built on <details>: ruled, with a plus that
+     turns to a minus. No script; the answer is in the page for search. */
+  .qa-list {
+    border-top: 1px solid var(--color-hairline);
+  }
+  .qa-list > details {
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .qa-list summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 20px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+    color: var(--color-ink);
+  }
+  .qa-list summary::-webkit-details-marker {
+    display: none;
+  }
+  .qa-list summary:hover {
+    color: var(--color-forest);
+  }
+  .qa-list summary::after {
+    content: "";
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    background-color: var(--color-forest);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='square'%3E%3Cpath d='M12 4v16M4 12h16'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    transition: transform 200ms ease;
+  }
+  .qa-list details[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .qa-list .qa-answer {
+    padding-bottom: 24px;
+    padding-right: 42px;
+  }
+  @media (max-width: 560px) {
+    .qa-list summary {
+      font-size: 17px;
+    }
+    .qa-list .qa-answer {
+      padding-right: 0;
+    }
+  }
+}

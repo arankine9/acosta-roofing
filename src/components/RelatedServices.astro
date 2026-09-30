@@ -1,0 +1,57 @@
+---
+// A row of the other services, as the same photo tiles the home page uses,
+// so a reader who landed on the wrong page is one click from the right one.
+import SectionHeading from "./SectionHeading.astro";
+import Icon from "./Icon.astro";
+import { asset } from "../lib/url";
+import { services, serviceHref } from "../data/services";
+
+interface Props {
+  /* Slugs to show, in order. Defaults to every service except `current`. */
+  slugs?: string[];
+  current?: string;
+  title?: string;
+  surface?: "canvas" | "cream-deep";
+}
+
+const { slugs, current, title = "Other work we do", surface = "canvas" } = Astro.props;
+
+const list = (slugs
+  ? slugs.map((slug) => services.find((service) => service.slug === slug))
+  : services.filter((service) => service.slug !== current)
+).filter((service): service is (typeof services)[number] => Boolean(service)).slice(0, 3);
+---
+
+<section class:list={["section", surface === "canvas" ? "bg-canvas" : "bg-cream-deep"]}>
+  <div class="container-page">
+    <SectionHeading title={title} class="mb-10" />
+    <div class="grid grid-cols-1 gap-2 md:grid-cols-3">
+      {
+        list.map((service) => (
+          <a href={serviceHref(service.slug)} class="service-tile aspect-[4/3]! md:aspect-[4/5]! xl:aspect-[5/4]!">
+            <img src={asset(service.image)} alt={service.alt} loading="lazy" decoding="async" class="service-tile__photo" />
+            <span class="service-tile__scrim" aria-hidden="true" />
+            <span class="service-tile__shade" aria-hidden="true" />
+            <div class="service-tile__body">
+              <h3 class="service-tile__title t-heading-xl">
+                <span>{service.title}</span>
+                <span class="service-tile__icon" aria-hidden="true">
+                  <svg class="service-tile__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square">
+                    <path d="M12 4v16M4 12h16" />
+                  </svg>
+                  <Icon name="arrow" size={24} class="service-tile__arrow" />
+                </span>
+              </h3>
+              <span class="service-tile__rule" aria-hidden="true" />
+              <div class="service-tile__reveal">
+                <div class="service-tile__clip">
+                  <p class="service-tile__text t-body-sm">{service.summary}</p>
+                </div>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

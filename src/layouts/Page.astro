@@ -1,0 +1,57 @@
+---
+// Shell for every inner page: head, nav, main, footer. The page supplies its
+// own hero (usually PageHero) and chapters inside the slot.
+//
+// `title` is the page's own name; the site name is appended here, so pass
+// "Roof repair", not "Roof repair | Acosta Roofing". `crumbs` is the trail
+// from Home to this page (Home is implied), rendered by PageHero and
+// published here as BreadcrumbList JSON-LD.
+import Base from "./Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../data/site";
+import { home } from "../lib/url";
+
+export interface Crumb {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  crumbs?: Crumb[];
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+}
+
+const { title, description, crumbs = [], schema, noindex } = Astro.props;
+
+const absolute = (href: string) => new URL(href, Astro.site).toString();
+const trail = [{ label: "Home", href: home }, ...crumbs];
+const breadcrumbSchema =
+  crumbs.length > 0
+    ? {
+        "@type": "BreadcrumbList",
+        itemListElement: trail.map((crumb, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: crumb.label,
+          item: absolute(crumb.href),
+        })),
+      }
+    : null;
+
+const extra = [
+  ...(breadcrumbSchema ? [breadcrumbSchema] : []),
+  ...(schema ? (Array.isArray(schema) ? schema : [schema]) : []),
+];
+---
+
+<Base title={`${title} | ${site.name}`} description={description} schema={extra} noindex={noindex}>
+  <Nav />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+</Base>

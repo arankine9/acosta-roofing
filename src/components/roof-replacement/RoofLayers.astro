@@ -1,0 +1,101 @@
+---
+// Cross-section of a shingle roof at the eave, drawn in the house inks:
+// hairline charcoal, forest for the metal and membranes, cream-deep for the
+// deck. Layer thickness is exaggerated so each one reads; the numbers match
+// the legend on the roof-replacement page, which carries the words (so the
+// drawing stays legible at phone width, where labels would shrink to
+// nothing). Generated from a small script, so the geometry is plain
+// coordinates rather than transforms.
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  viewBox="-10 50 840 470"
+  class={className}
+  role="img"
+  aria-labelledby="roof-layers-title"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <title id="roof-layers-title">
+    Cross-section of a shingle roof from the eave to the ridge: rafters, roof deck, drip edge, ice-and-water shield, synthetic underlayment, starter course, shingles, a pipe boot and a ridge vent, with attic air drawn in at the soffit and out at the ridge.
+  </title>
+  <defs>
+  <pattern id="rl-deck" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(25)"><line x1="0" y1="0" x2="0" y2="10" stroke="var(--color-charcoal)" stroke-opacity="0.35" stroke-width="1"/></pattern>
+  <pattern id="rl-under" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)"><line x1="0" y1="0" x2="0" y2="7" stroke="var(--color-forest)" stroke-opacity="0.55" stroke-width="1.2"/></pattern>
+  <marker id="rl-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="var(--color-forest)"/></marker>
+  </defs>
+  <polygon points="113.5,427.0 718.6,206.8 740.7,267.5 135.6,487.8" fill="var(--color-board)" stroke="var(--color-charcoal)" stroke-opacity="0.5" stroke-width="1" stroke-dasharray="5 4"/>
+  <polygon points="805.7,243.7 704.2,206.8 682.1,267.5 783.6,304.4" fill="var(--color-board)" stroke="var(--color-charcoal)" stroke-opacity="0.5" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="92.4" y="401.1" width="12" height="58" fill="var(--color-board)" stroke="var(--color-charcoal)" stroke-width="1.2"/>
+  <polygon points="104.4,402.1 687.0,190.0 696.1,215.0 113.5,427.0" fill="var(--color-cream-deep)" stroke="var(--color-charcoal)" stroke-width="1.2"/>
+  <polygon points="104.4,402.1 687.0,190.0 696.1,215.0 113.5,427.0" fill="url(#rl-deck)"/>
+  <polygon points="814.8,218.7 735.8,190.0 726.7,215.0 805.7,243.7" fill="var(--color-cream-deep)" stroke="var(--color-charcoal)" stroke-width="1.2"/>
+  <polygon points="814.8,218.7 735.8,190.0 726.7,215.0 805.7,243.7" fill="url(#rl-deck)"/>
+  <polyline points="141.2,386.2 88.6,405.4 88.6,429.9 82.6,435.9" fill="none" stroke="var(--color-forest)" stroke-width="3.2" stroke-linejoin="miter"/>
+  <polygon points="98.6,392.0 341.0,303.8 343.9,311.8 101.5,400.1" fill="var(--color-forest)"/>
+  <polygon points="138.1,377.7 341.0,303.8 344.9,314.5 141.9,388.4" fill="var(--color-forest)"/>
+  <polygon points="303.9,307.2 341.5,293.5 351.1,302.1 683.7,181.1 687.0,190.0 344.9,314.5 341.0,303.8 307.2,316.1" fill="var(--color-cream)" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <polygon points="303.9,307.2 341.5,293.5 351.1,302.1 683.7,181.1 687.0,190.0 344.9,314.5 341.0,303.8 307.2,316.1" fill="url(#rl-under)"/>
+  <polygon points="818.0,209.8 739.1,181.1 735.8,190.0 814.8,218.7" fill="var(--color-cream)" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <polygon points="818.0,209.8 739.1,181.1 735.8,190.0 814.8,218.7" fill="url(#rl-under)"/>
+  <polygon points="83.5,397.5 75.1,374.3 110.9,373.4 106.4,360.9 142.9,361.7 138.3,349.2 174.8,350.1 170.3,337.6 206.8,338.5 202.2,326.0 238.7,326.9 234.2,314.4 270.7,315.2 266.1,302.7 279.4,310.0 284.6,324.3" fill="var(--color-charcoal)"/>
+  <line x1="106.4" y1="360.9" x2="114.2" y2="382.3" stroke="var(--color-cream)" stroke-opacity="0.5" stroke-width="1"/>
+  <line x1="138.3" y1="349.2" x2="146.1" y2="370.7" stroke="var(--color-cream)" stroke-opacity="0.5" stroke-width="1"/>
+  <line x1="170.3" y1="337.6" x2="178.1" y2="359.0" stroke="var(--color-cream)" stroke-opacity="0.5" stroke-width="1"/>
+  <line x1="202.2" y1="326.0" x2="210.0" y2="347.4" stroke="var(--color-cream)" stroke-opacity="0.5" stroke-width="1"/>
+  <line x1="234.2" y1="314.4" x2="242.0" y2="335.8" stroke="var(--color-cream)" stroke-opacity="0.5" stroke-width="1"/>
+  <line x1="266.1" y1="302.7" x2="273.9" y2="324.2" stroke="var(--color-cream)" stroke-opacity="0.5" stroke-width="1"/>
+  <polygon points="83.5,397.5 143.7,375.6 140.4,366.7 80.3,388.6" fill="var(--color-forest-mid)" stroke="var(--color-cream)" stroke-opacity="0.6" stroke-width="0.8"/>
+  <rect x="484.0" y="188.8" width="16" height="156.6" fill="var(--color-board)" stroke="var(--color-charcoal)" stroke-width="1.2"/>
+  <polygon points="454.4,264.5 529.6,237.2 527.0,230.0 451.8,257.4" fill="var(--color-forest)"/>
+  <polygon points="481.0,246.8 497.9,240.6 502.0,220.8 482.0,220.8" fill="var(--color-forest)"/>
+  <polygon points="627.3,201.6 620.2,182.0 711.4,141.1 802.6,182.0 795.5,201.6 711.4,159.1" fill="var(--color-board)" stroke="var(--color-charcoal)" stroke-width="1.4" stroke-linejoin="miter"/>
+  <line x1="639.8" y1="195.0" x2="634.6" y2="180.7" stroke="var(--color-charcoal)" stroke-opacity="0.45" stroke-width="1"/>
+  <line x1="783.0" y1="195.0" x2="788.2" y2="180.7" stroke="var(--color-charcoal)" stroke-opacity="0.45" stroke-width="1"/>
+  <line x1="653.0" y1="190.2" x2="647.8" y2="175.9" stroke="var(--color-charcoal)" stroke-opacity="0.45" stroke-width="1"/>
+  <line x1="769.8" y1="190.2" x2="775.0" y2="175.9" stroke="var(--color-charcoal)" stroke-opacity="0.45" stroke-width="1"/>
+  <line x1="666.2" y1="185.4" x2="661.0" y2="171.2" stroke="var(--color-charcoal)" stroke-opacity="0.45" stroke-width="1"/>
+  <line x1="756.6" y1="185.4" x2="761.8" y2="171.2" stroke="var(--color-charcoal)" stroke-opacity="0.45" stroke-width="1"/>
+  <line x1="679.3" y1="180.7" x2="674.1" y2="166.4" stroke="var(--color-charcoal)" stroke-opacity="0.45" stroke-width="1"/>
+  <line x1="743.5" y1="180.7" x2="748.7" y2="166.4" stroke="var(--color-charcoal)" stroke-opacity="0.45" stroke-width="1"/>
+  <path d="M170.5,580.1 L152.8,453.2 L677.1,262.3 L709.9,218.0 L709.4,167.1" fill="none" stroke="var(--color-forest)" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#rl-arrow)"/>
+  <line x1="396.5" y1="309.9" x2="436.5" y2="429.9" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <circle cx="396.5" cy="309.9" r="3" fill="var(--color-charcoal)"/>
+  <rect x="419.5" y="412.9" width="34" height="34" fill="var(--color-forest)"/>
+  <text x="436.5" y="437.9" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="23" fill="var(--color-cream)">1</text>
+  <line x1="88.6" y1="419.9" x2="33.6" y2="447.9" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <circle cx="88.6" cy="419.9" r="3" fill="var(--color-charcoal)"/>
+  <rect x="16.6" y="430.9" width="34" height="34" fill="var(--color-forest)"/>
+  <text x="33.6" y="455.9" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="23" fill="var(--color-cream)">2</text>
+  <line x1="324.2" y1="316.0" x2="293.4" y2="231.4" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <circle cx="324.2" cy="316.0" r="3" fill="var(--color-charcoal)"/>
+  <rect x="276.4" y="214.4" width="34" height="34" fill="var(--color-forest)"/>
+  <text x="293.4" y="239.4" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="23" fill="var(--color-cream)">3</text>
+  <line x1="418.1" y1="281.8" x2="394.2" y2="216.0" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <circle cx="418.1" cy="281.8" r="3" fill="var(--color-charcoal)"/>
+  <rect x="377.2" y="199.0" width="34" height="34" fill="var(--color-forest)"/>
+  <text x="394.2" y="224.0" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="23" fill="var(--color-cream)">4</text>
+  <line x1="112.3" y1="383.0" x2="81.5" y2="298.4" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <circle cx="112.3" cy="383.0" r="3" fill="var(--color-charcoal)"/>
+  <rect x="64.5" y="281.4" width="34" height="34" fill="var(--color-forest)"/>
+  <text x="81.5" y="306.4" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="23" fill="var(--color-cream)">5</text>
+  <line x1="203.0" y1="333.8" x2="175.6" y2="258.6" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <circle cx="203.0" cy="333.8" r="3" fill="var(--color-charcoal)"/>
+  <rect x="158.6" y="241.6" width="34" height="34" fill="var(--color-forest)"/>
+  <text x="175.6" y="266.6" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="23" fill="var(--color-cream)">6</text>
+  <line x1="492.0" y1="206.8" x2="428.0" y2="172.8" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <circle cx="492.0" cy="206.8" r="3" fill="var(--color-charcoal)"/>
+  <rect x="411.0" y="155.8" width="34" height="34" fill="var(--color-forest)"/>
+  <text x="428.0" y="180.8" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="23" fill="var(--color-cream)">7</text>
+  <line x1="685.4" y1="153.1" x2="615.4" y2="111.1" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <circle cx="685.4" cy="153.1" r="3" fill="var(--color-charcoal)"/>
+  <rect x="598.4" y="94.1" width="34" height="34" fill="var(--color-forest)"/>
+  <text x="615.4" y="119.1" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="23" fill="var(--color-cream)">8</text>
+  <line x1="573.8" y1="300.0" x2="603.8" y2="400.0" stroke="var(--color-charcoal)" stroke-width="1"/>
+  <circle cx="573.8" cy="300.0" r="3" fill="var(--color-charcoal)"/>
+  <rect x="586.8" y="383.0" width="34" height="34" fill="var(--color-forest)"/>
+  <text x="603.8" y="408.0" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="23" fill="var(--color-cream)">9</text>
+</svg>

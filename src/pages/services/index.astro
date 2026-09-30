@@ -1,0 +1,109 @@
+---
+import Page from "../../layouts/Page.astro";
+import PageHero from "../../components/PageHero.astro";
+import ClosingCta from "../../components/ClosingCta.astro";
+import Icon from "../../components/Icon.astro";
+import { asset } from "../../lib/url";
+import { pages } from "../../data/nav";
+import { residentialHref, serviceHref, servicesByGroup, getService } from "../../data/services";
+
+// The services index: everything Acosta does, grouped the way people arrive
+// at it (a house, a commercial building, a multi-unit property). Each group
+// is a ruled plate; each service is a row with its photo, a line on what it
+// covers and a link to its page.
+const crumbs = [{ label: "Services", href: pages.services }];
+
+const groups = [
+  {
+    id: "residential",
+    title: "Residential",
+    intro:
+      "Houses, garages and outbuildings. Most of what we do is here: replacing roofs that are done, repairing the ones that aren't, and keeping gutters and roofs clear through a Northwest winter.",
+    href: residentialHref,
+    hrefLabel: "Residential overview",
+    items: servicesByGroup("residential"),
+  },
+  {
+    id: "commercial",
+    title: "Commercial & multi-unit",
+    intro:
+      "Low-slope and single-ply roofs for shops, warehouses and light-industrial buildings, and replacement or repair across apartment, condo and townhome properties.",
+    items: [getService("commercial"), getService("multi-unit")],
+  },
+];
+---
+
+<Page
+  title="Roofing Services"
+  description="Roof replacement, roof repair, roof maintenance, gutter systems, commercial low-slope roofing and multi-unit roofing across the Portland metro, from Acosta Roofing in Beaverton."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="What we do"
+    title="Roofing services"
+    lead="Six kinds of work, one crew. Whatever the building, the person who walks your roof for the estimate is the person accountable for the job."
+    treelineOffset={-120}
+  />
+
+  {
+    groups.map((group, groupIndex) => (
+      <section
+        id={group.id}
+        class:list={["section", groupIndex % 2 === 0 ? "bg-canvas" : "bg-cream-deep"]}
+      >
+        <div class="container-page">
+          <div class="grid gap-6 border-b border-hairline pb-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
+            {/* No break inside "multi-unit": the hyphen is a legal break point and
+                "MULTI-" alone on a line reads as a typo. */}
+            <h2 class="t-display-lg text-ink" set:html={group.title.replace("multi-unit", '<span class="whitespace-nowrap">multi-unit</span>')} />
+            <div class="flex flex-col items-start gap-5 lg:flex-row lg:items-end lg:justify-between">
+              <p class="t-body-md max-w-xl text-body">{group.intro}</p>
+              {group.href && (
+                <a href={group.href} class="t-spaced-sm inline-flex shrink-0 items-center gap-2 text-forest hover:text-forest-deep">
+                  {group.hrefLabel}
+                  <Icon name="arrow" size={16} />
+                </a>
+              )}
+            </div>
+          </div>
+
+          <ul>
+            {group.items.map((service, index) => (
+              <li class="border-b border-hairline">
+                <a
+                  href={serviceHref(service.slug)}
+                  class="group grid gap-6 py-8 sm:grid-cols-[220px_minmax(0,1fr)] sm:items-center md:grid-cols-[280px_minmax(0,1fr)_auto] md:gap-10"
+                >
+                  <div class="overflow-hidden border border-hairline bg-cream-deep">
+                    <img
+                      src={asset(service.image)}
+                      alt={service.alt}
+                      loading={groupIndex === 0 && index < 2 ? "eager" : "lazy"}
+                      decoding="async"
+                      class="aspect-[3/2] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <div>
+                    <h3 class="t-heading-xl text-ink group-hover:text-forest">{service.title}</h3>
+                    <p class="t-body-md mt-3 max-w-xl text-body">{service.summary}</p>
+                  </div>
+                  <span class="btn btn-outline hidden group-hover:bg-forest group-hover:text-cream md:inline-flex">
+                    Details
+                    <Icon name="arrow" size={18} />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+
+  <ClosingCta
+    surface="canvas"
+    title="Not sure which one you need?"
+    body="Describe what you're seeing, or just tell us the roof's age, and we'll come look. The estimate is free and it's written down."
+  />
+</Page>

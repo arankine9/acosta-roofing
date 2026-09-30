@@ -2,38 +2,38 @@
 import Logo from "./Logo.astro";
 import Treeline from "./Treeline.astro";
 import { site, cityLine } from "../data/site";
+import { pages, estimateHref } from "../data/nav";
+import { serviceHref, servicesByGroup } from "../data/services";
 
 const year = new Date().getFullYear();
 
 // Three link columns, not six. A four-person roofing company does not have six
 // columns of real pages, and inventing them to satisfy a grid would be worse
-// than the grid. The county list lives in the Service Area section, not here.
+// than the grid. The county list lives on the service-area page, not here.
 const columns = [
   {
     heading: "Residential",
-    links: [
-      { label: "Roof installation", href: "#services" },
-      { label: "Roof repairs", href: "#services" },
-      { label: "Roof maintenance", href: "#services" },
-      { label: "Gutter systems", href: "#services" },
-    ],
+    links: servicesByGroup("residential").map((service) => ({
+      label: service.title,
+      href: serviceHref(service.slug),
+    })),
   },
   {
     heading: "Commercial",
     links: [
-      { label: "Flat & single-ply", href: "#services" },
-      { label: "Low-slope systems", href: "#services" },
-      { label: "Light-industrial roofs", href: "#services" },
-      { label: "Maintenance calls", href: "#contact" },
+      { label: "Flat & single-ply", href: `${serviceHref("commercial")}#single-ply` },
+      { label: "Low-slope systems", href: `${serviceHref("commercial")}#low-slope` },
+      { label: "Multi-unit buildings", href: serviceHref("multi-unit") },
+      { label: "Roofing materials", href: pages.materials },
     ],
   },
   {
     heading: "Company",
     links: [
-      { label: "Roof leaking?", href: "#leak" },
-      { label: "Service area", href: "#service-area" },
-      { label: site.email, href: `mailto:${site.email}` },
-      { label: site.phone, href: site.phoneHref },
+      { label: "About us", href: pages.about },
+      { label: "Service area", href: pages.serviceArea },
+      { label: "Questions & answers", href: pages.faq },
+      { label: "Contact", href: pages.contact },
     ],
   },
 ];
@@ -50,7 +50,7 @@ const columns = [
           {site.tagline} Residential and commercial roofing across
           {" "}{site.serviceArea}, from Beaverton.
         </p>
-        <a href="#contact" class="btn btn-cream mt-6">Free Estimate</a>
+        <a href={estimateHref} class="btn btn-cream mt-6">Free Estimate</a>
       </div>
 
       {
@@ -62,8 +62,6 @@ const columns = [
                 <li>
                   <a
                     href={link.href}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                    target={link.external ? "_blank" : undefined}
                     class="t-body-sm flex min-h-11 items-center text-on-forest-mute hover:text-on-forest"
                   >
                     {link.label}
@@ -82,7 +80,7 @@ const columns = [
       <p class="t-spaced text-on-forest">Licensed &middot; Bonded &middot; Insured</p>
       <address class="t-body-sm not-italic text-on-forest-mute">
         {site.address.street && <>{site.address.street} &middot; </>}{cityLine}
-        &middot; {site.email}
+        &middot; <a href={`mailto:${site.email}`} class="hover:text-on-forest">{site.email}</a>
       </address>
       <a href={site.phoneHref} class="t-heading-sm inline-flex min-h-11 items-center text-on-forest">
         {site.phone}
@@ -98,6 +96,8 @@ const columns = [
     >
       <p class="t-spaced-sm text-on-forest-mute">
         &copy; {year} {site.legalName} All rights reserved.
+        <a href={pages.privacy} class="ml-3 underline underline-offset-4 hover:text-on-forest">Privacy</a>
+        <a href={pages.photoCredits} class="ml-3 underline underline-offset-4 hover:text-on-forest">Photo credits</a>
       </p>
       <p class="t-spaced-sm text-on-forest-mute">
         Bonded and insured in the State of Oregon.{site.ccb && <> &middot; CCB #{site.ccb}</>}

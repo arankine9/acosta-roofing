@@ -1,0 +1,108 @@
+---
+// Opening band for every inner page: the same solid forest plate as the home
+// hero, cut shorter. Breadcrumb, eyebrow, the page's one <h1>, a lead, the
+// two contact buttons, and, when the page has one, a photograph mounted on
+// the right. The cream treeline at the foot hands off to the first cream
+// chapter, exactly as on the home page.
+//
+// Anything passed in the default slot renders under the buttons (a short
+// proof row, a fact list). Keep it short; the hero is not the page.
+import Breadcrumbs from "./Breadcrumbs.astro";
+import Treeline from "./Treeline.astro";
+import { site } from "../data/site";
+import { estimateHref } from "../data/nav";
+import { asset } from "../lib/url";
+import type { Crumb } from "../layouts/Page.astro";
+
+interface Props {
+  title: string;
+  lead?: string;
+  eyebrow?: string;
+  crumbs: Crumb[];
+  /* Path under public/, e.g. "/images/roof-repair/hero.jpg". */
+  image?: string;
+  imageAlt?: string;
+  imageCaption?: string;
+  /* Photo shape. Landscape suits most roof shots. */
+  imageAspect?: "landscape" | "portrait" | "square";
+  /* Set false on pages where the buttons would be redundant (Contact). */
+  actions?: boolean;
+  /* Slide the treeline so this page's seam isn't cut where every other
+     page's is. Any number; see Treeline.astro. */
+  treelineOffset?: number;
+}
+
+const {
+  title,
+  lead,
+  eyebrow,
+  crumbs,
+  image,
+  imageAlt = "",
+  imageCaption,
+  imageAspect = "landscape",
+  actions = true,
+  treelineOffset = 0,
+} = Astro.props;
+
+const aspect = {
+  landscape: "aspect-[4/3]",
+  portrait: "aspect-[4/5]",
+  square: "aspect-square",
+}[imageAspect];
+---
+
+<section class="on-forest relative bg-forest text-on-forest">
+  <div class="container-page pt-8 pb-28 lg:pt-10 lg:pb-32">
+    <Breadcrumbs crumbs={crumbs} />
+
+    <div
+      class:list={[
+        "mt-10 grid gap-12 lg:mt-14",
+        image && "lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-16",
+      ]}
+    >
+      <div class="min-w-0">
+        {eyebrow && <p class="t-eyebrow mb-5 text-on-forest-mute">{eyebrow}</p>}
+        <h1 class:list={["t-display-xl text-balance", image ? "max-w-[16ch]" : "max-w-[20ch]"]}>{title}</h1>
+        {lead && <p class="t-lead mt-6 max-w-2xl text-on-forest-mute">{lead}</p>}
+
+        {
+          actions && (
+            <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+              <a href={site.phoneHref} class="btn btn-cream">
+                Call {site.phone}
+              </a>
+              <a href={estimateHref} class="btn btn-outline-cream">
+                Request a Free Estimate
+              </a>
+            </div>
+          )
+        }
+
+        <slot />
+      </div>
+
+      {
+        image && (
+          <figure class="photo-plate relative mx-auto w-full max-w-[560px] lg:max-w-none">
+            {/* A keyline standing off the photo's edge, the routed groove of
+                the panels, drawn as a frame the photo sits inside. */}
+            <div class="relative p-2 outline outline-1 outline-hairline-dark">
+              <img
+                src={asset(image)}
+                alt={imageAlt}
+                class={`${aspect} border-0!`}
+                fetchpriority="high"
+                decoding="async"
+              />
+            </div>
+            {imageCaption && <figcaption>{imageCaption}</figcaption>}
+          </figure>
+        )
+      }
+    </div>
+  </div>
+
+  <Treeline tone="cream" height={64} offset={treelineOffset} class="absolute inset-x-0 bottom-0" />
+</section>

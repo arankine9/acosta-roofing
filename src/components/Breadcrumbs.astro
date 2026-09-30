@@ -1,0 +1,42 @@
+---
+// Trail from Home to the current page, set in spaced caps. Home is implied;
+// the last crumb is the current page and is not a link.
+import { home } from "../lib/url";
+import type { Crumb } from "../layouts/Page.astro";
+
+interface Props {
+  crumbs: Crumb[];
+  tone?: "forest" | "cream";
+  class?: string;
+}
+
+const { crumbs, tone = "cream", class: className = "" } = Astro.props;
+const trail = [{ label: "Home", href: home }, ...crumbs];
+const mute = tone === "cream" ? "text-on-forest-mute hover:text-on-forest" : "text-mute hover:text-forest";
+const current = tone === "cream" ? "text-on-forest" : "text-ink";
+---
+
+<nav aria-label="Breadcrumb" class={className}>
+  <ol class="t-spaced-sm flex flex-wrap items-center gap-x-3 gap-y-1">
+    {
+      trail.map((crumb, index) => (
+        <li class="flex items-center gap-3">
+          {index > 0 && (
+            <span aria-hidden="true" class={tone === "cream" ? "text-on-forest-mute" : "text-mute"}>
+              /
+            </span>
+          )}
+          {index === trail.length - 1 ? (
+            <span aria-current="page" class={current}>
+              {crumb.label}
+            </span>
+          ) : (
+            <a href={crumb.href} class={`${mute} inline-flex min-h-8 items-center`}>
+              {crumb.label}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

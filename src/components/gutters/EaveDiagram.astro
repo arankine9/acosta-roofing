@@ -1,0 +1,111 @@
+---
+// Section through the eave of a shingle roof, from the roof plane to the
+// ground, drawn in the house inks: hairline charcoal for the framing, forest
+// for the metal. It follows one path of water: off the shingles, over the
+// drip edge and gutter apron, into a K-style gutter, down the downspout and
+// out along an extension onto ground that falls away from the foundation.
+//
+// The numbers match the legend on the gutters page, which carries the words
+// so the drawing stays legible at phone width. Scale is roughly 16 units to
+// the inch at the gutter (a 6" K-style is 96 units across); the drop from
+// the eave to the ground is shortened at the break.
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+// Numbered callouts: the point on the drawing and where the tag sits.
+const callouts = [
+  { n: 1, at: [568, 361], tag: [622, 300] },
+  { n: 2, at: [558, 392], tag: [500, 398] },
+  { n: 3, at: [571, 403], tag: [722, 350] },
+  { n: 4, at: [606, 394], tag: [722, 410] },
+  { n: 5, at: [634, 432], tag: [722, 470] },
+  { n: 6, at: [497, 569], tag: [566, 640] },
+  { n: 7, at: [610, 789], tag: [650, 716] },
+  { n: 8, at: [548, 440], tag: [528, 498] },
+];
+
+// The roof plane: y = 120 + 0.5 (x - 60), a 6-in-12 pitch.
+const courseTicks = [140, 220, 300, 380, 460, 540].map((x) => ({ x, y: 100 + 0.5 * (x - 60) }));
+const downspout = "M588,466 L588,504 L402,634 L402,752 L432,782 L700,792";
+---
+
+<svg
+  viewBox="236 196 552 674"
+  class={className}
+  role="img"
+  aria-labelledby="eave-diagram-title"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <title id="eave-diagram-title">
+    Section through a roof eave showing how rainwater should travel: down the shingles, over the drip edge and gutter apron into a K-style gutter hung on hidden hangers, down the downspout, and out along an extension onto ground that slopes away from the foundation.
+  </title>
+  <defs>
+    <pattern id="ed-deck" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(25)">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="var(--color-charcoal)" stroke-opacity="0.35" stroke-width="1" />
+    </pattern>
+    <pattern id="ed-ground" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(-40)">
+      <line x1="0" y1="0" x2="0" y2="12" stroke="var(--color-charcoal)" stroke-opacity="0.3" stroke-width="1" />
+    </pattern>
+    <marker id="ed-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="var(--color-forest)" />
+    </marker>
+  </defs>
+
+  {/* Framing: rafter, wall, soffit, fascia. */}
+  <polygon points="60,136 540,376 540,436 60,196" fill="var(--color-board)" stroke="var(--color-charcoal)" stroke-opacity="0.5" stroke-width="1" stroke-dasharray="5 4" />
+  <polygon points="300,316 380,356 380,800 300,800" fill="var(--color-cream-deep)" stroke="var(--color-charcoal)" stroke-width="1.2" />
+  <rect x="380" y="436" width="160" height="8" fill="var(--color-board)" stroke="var(--color-charcoal)" stroke-width="1" />
+  <rect x="540" y="378" width="16" height="70" fill="var(--color-board)" stroke="var(--color-charcoal)" stroke-width="1.2" />
+
+  {/* Ground falling away from the foundation. */}
+  <polygon points="384,800 790,816 790,868 384,868" fill="url(#ed-ground)" />
+  <line x1="384" y1="800" x2="790" y2="816" stroke="var(--color-charcoal)" stroke-width="1.4" />
+  <rect x="292" y="796" width="92" height="72" fill="var(--color-cream-deep)" stroke="var(--color-charcoal)" stroke-width="1.2" />
+  <rect x="292" y="796" width="92" height="72" fill="url(#ed-deck)" />
+
+  {/* Downspout: a charcoal outline stroke under a board-colored one gives a
+      pipe of constant width through every elbow. */}
+  <path d={downspout} fill="none" stroke="var(--color-charcoal)" stroke-width="40" stroke-linejoin="miter" />
+  <path d={downspout} fill="none" stroke="var(--color-board)" stroke-width="37.6" stroke-linejoin="miter" />
+
+  {/* Break: the drop from eave to ground is shortened here. */}
+  <polygon points="286,696 432,678 432,694 286,712" fill="var(--color-board)" />
+  <line x1="286" y1="696" x2="432" y2="678" stroke="var(--color-charcoal)" stroke-width="1" />
+  <line x1="286" y1="712" x2="432" y2="694" stroke="var(--color-charcoal)" stroke-width="1" />
+
+  {/* Roof deck, underlayment, drip edge, shingles. */}
+  <polygon points="60,120 556,368 556,384 60,136" fill="var(--color-cream-deep)" stroke="var(--color-charcoal)" stroke-width="1.2" />
+  <polygon points="60,120 556,368 556,384 60,136" fill="url(#ed-deck)" />
+  <polygon points="60,114 548,358 548,364 60,120" fill="var(--color-forest-mid)" fill-opacity="0.45" />
+  <polyline points="468,323 558,368 558,396 564,402" fill="none" stroke="var(--color-forest)" stroke-width="3.2" stroke-linejoin="miter" />
+  <polygon points="60,100 572,356 572,366 60,110" fill="var(--color-charcoal)" />
+  {courseTicks.map(({ x, y }) => <line x1={x} y1={y} x2={x} y2={y + 10} stroke="var(--color-cream)" stroke-opacity="0.5" stroke-width="1" />)}
+
+  {/* Gutter apron: under the shingles, over the drip edge, down into the trough. */}
+  <polyline points="486,325 564,364 572,406" fill="none" stroke="var(--color-forest)" stroke-width="2.6" stroke-linejoin="miter" />
+
+  {/* K-style gutter with water in the trough, and its hidden hanger. */}
+  <polygon points="565,440 565,463 615,463 626,451 630,440" fill="var(--color-forest)" fill-opacity="0.2" />
+  <path d="M562,384 L562,466 L616,466 L628,452 L632,436 C634,428 642,426 644,418 L648,408 C651,401 657,400 658,394 L650,394" fill="none" stroke="var(--color-forest)" stroke-width="3" stroke-linejoin="miter" />
+  <line x1="562" y1="391" x2="651" y2="397" stroke="var(--color-charcoal)" stroke-width="2.4" />
+  <line x1="540" y1="391" x2="568" y2="391" stroke="var(--color-charcoal)" stroke-width="2.2" />
+  <rect x="566" y="386" width="4" height="10" fill="var(--color-charcoal)" />
+
+  {/* The path of the water. */}
+  <path d="M150,131 L556,334 Q586,350 592,428" fill="none" stroke="var(--color-forest)" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ed-arrow)" />
+  <path d="M588,480 L588,504 L402,634 L402,752 L432,782 L700,792 Q730,794 752,808" fill="none" stroke="var(--color-forest)" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#ed-arrow)" />
+
+  {/* Numbered callouts, matched to the legend beside the drawing. */}
+  {
+    callouts.map(({ n, at, tag }) => (
+      <g>
+        <line x1={at[0]} y1={at[1]} x2={tag[0]} y2={tag[1]} stroke="var(--color-charcoal)" stroke-width="1" />
+        <circle cx={at[0]} cy={at[1]} r="3" fill="var(--color-charcoal)" />
+        <rect x={tag[0] - 15} y={tag[1] - 15} width="30" height="30" fill="var(--color-forest)" />
+        <text x={tag[0]} y={tag[1] + 7} text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="20" fill="var(--color-cream)">{n}</text>
+      </g>
+    ))
+  }
+</svg>

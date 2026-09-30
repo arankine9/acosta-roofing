@@ -1,0 +1,90 @@
+---
+import Page from "../layouts/Page.astro";
+import PageHero from "../components/PageHero.astro";
+import { asset, page } from "../lib/url";
+import { photoCredits, licenseInfo } from "../data/photo-credits";
+
+// Photo credits: every sourced photograph on the site, by page, with its
+// photographer, source and licence. The data is src/data/photo-credits.ts;
+// this page only lays it out. Each page is a ruled block, each photo a row
+// with a thumbnail so the credit can be matched to the picture.
+const crumbs = [{ label: "Photo credits", href: page("/photo-credits/") }];
+const groups = photoCredits.filter((group) => group.credits.length > 0);
+const total = groups.reduce((sum, group) => sum + group.credits.length, 0);
+---
+
+<Page
+  title="Photo Credits"
+  description="Credits and licences for the photographs used on the Acosta Roofing website."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Photo credits"
+    title="Photo credits"
+    lead={`The ${total} photographs on this site that we didn't take ourselves, who took them, and the licence each one is used under.`}
+    actions={false}
+    treelineOffset={-445}
+  />
+
+  <section class="section bg-canvas pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28">
+    <div class="container-page">
+      <p class="t-body-md max-w-2xl text-body">
+        Photos marked CC BY or CC BY-SA are used under Creative Commons licences that ask for
+        this credit. Unsplash and Pexels photos are free to use without credit; they're listed
+        anyway. Every photo is resized and recompressed for the web; any other change is noted.
+        Captions describe the kind of work shown, not whose crew is in the picture.
+      </p>
+
+      <div class="mt-14 space-y-14">
+        {
+          groups.map((group) => (
+            <div class="grid gap-6 border-t border-hairline pt-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,9fr)] lg:gap-12">
+              <h2 class="t-heading-md text-ink">
+                <a href={group.href} class="hover:text-forest">
+                  {group.page}
+                </a>
+              </h2>
+              <ul class="border-t border-hairline lg:border-t-0">
+                {group.credits.map((credit) => {
+                  const license = licenseInfo(credit.license);
+                  return (
+                    <li class="grid grid-cols-[96px_minmax(0,1fr)] gap-5 border-b border-hairline py-5 first:pt-0 max-lg:first:pt-5 sm:grid-cols-[128px_minmax(0,1fr)]">
+                      <img
+                        src={asset(credit.file)}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        class="aspect-[4/3] w-full border border-hairline bg-cream-deep object-cover"
+                      />
+                      <div class="min-w-0">
+                        <p class="t-body-strong text-ink">{credit.subject}</p>
+                        <p class="t-body-sm mt-1 text-body">
+                          Photo: {credit.author}
+                          {credit.source && (
+                            <>
+                              {" "}&middot;{" "}
+                              <a href={credit.source} class="link-inline font-medium" rel="noopener" target="_blank">
+                                Source
+                              </a>
+                            </>
+                          )}
+                        </p>
+                        <p class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                          <a href={license.url} class="badge-tag hover:border-forest" rel="noopener license" target="_blank">
+                            {license.name}
+                          </a>
+                          {credit.changes && <span class="t-caption text-mute">{credit.changes}</span>}
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Page>

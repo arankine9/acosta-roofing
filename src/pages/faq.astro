@@ -1,0 +1,316 @@
+---
+import Page from "../layouts/Page.astro";
+import PageHero from "../components/PageHero.astro";
+import ClosingCta from "../components/ClosingCta.astro";
+import CtaStrip from "../components/CtaStrip.astro";
+import Icon from "../components/Icon.astro";
+import { site, counties } from "../data/site";
+import { serviceMap } from "../data/service-map";
+import { pages, estimateHref } from "../data/nav";
+import { serviceHref } from "../data/services";
+import { page } from "../lib/url";
+
+// Questions & answers. One data array drives the topic index, the <details>
+// rows and the FAQPage JSON-LD, so the page and the structured data can't
+// drift apart. Answers are HTML strings (for the links); the schema gets the
+// same text with the tags stripped.
+//
+// House rules for answers: no prices, no warranty lengths, no job counts,
+// nothing about the business that isn't in src/data/site.ts. Lifespans are
+// the same industry ranges the home page's Materials section uses. Permits
+// and insurance are described as "depends", because they do.
+const crumbs = [{ label: "Questions & answers", href: pages.faq }];
+
+const link = (href: string, text: string) => `<a href="${href}">${text}</a>`;
+const ccbSearch = "https://search.ccb.state.or.us/search/";
+
+interface Topic {
+  id: string;
+  title: string;
+  intro: string;
+  more?: { href: string; label: string };
+  items: { q: string; a: string }[];
+}
+
+const topics: Topic[] = [
+  {
+    id: "estimates",
+    title: "Estimates & scheduling",
+    intro: "What happens when you call, what you get on paper, and how the calendar works in a wet climate.",
+    more: { href: estimateHref, label: "Request an estimate" },
+    items: [
+      {
+        q: "Is the estimate really free?",
+        a: `<p>Yes. On-site estimates are free anywhere in our ${link(pages.serviceArea, "service area")}, with no obligation. We walk the roof when it's safe to, look in the attic if there's access, and put what we found and what we'd do in writing.</p>`,
+      },
+      {
+        q: "What's in a written estimate?",
+        a: `<p>The scope in plain words (tear-off, overlay or repair, and which slopes), materials by type and color, underlayment and ice-and-water shield, which flashing gets replaced, ventilation changes, how damaged decking is handled, cleanup and disposal, whether a permit is needed, and the schedule and payment terms. There's a longer version of that list on our ${link(page("/about/#estimate"), "about page")}.</p>`,
+      },
+      {
+        q: "Do I need to be home for the estimate?",
+        a: `<p>Not always. If the job can be judged from outside, like a gutter run or a repair visible from the ground and the roof, we can do it while you're at work. If we need the attic, or you want to walk it with us and ask questions, we'll find a time you're there. Most people like to be.</p>`,
+      },
+      {
+        q: "How far out are you booking?",
+        a: `<p>It changes with the season. Late summer and early fall fill up fastest, because everyone wants the roof done before the rain settles in. Call and we'll give you a real date rather than a guess.</p>`,
+      },
+      {
+        q: "Can you replace a roof during the rainy season?",
+        a: `<p>Often, yes. Replacement work happens through fall and spring in dry windows. We don't tear off in the rain, we watch the forecast closely, and we only open as much roof as we can dry in the same day. In cold weather, shingles are slower to seal, and manufacturers call for extra steps such as hand-sealing, which we follow.</p>`,
+      },
+      {
+        q: "How long does a roof replacement take?",
+        a: `<p>Many single-family roofs take one to a few working days on site. Steep, cut-up roofs, more than one layer to remove, deck repairs and weather all add time. Your estimate gives you the expected window for your house.</p>`,
+      },
+    ],
+  },
+  {
+    id: "repair-or-replace",
+    title: "Repair or replace",
+    intro: "A roof that looks tired often needs a repair, not a replacement. Here's how to tell the difference.",
+    more: { href: serviceHref("roof-repair"), label: "Roof repair" },
+    items: [
+      {
+        q: "How do I know if my roof needs a repair or a replacement?",
+        a: `<p>A repair makes sense when the problem is local: one leak at a pipe boot or chimney, a few shingles gone after a windstorm, a valley that's worn through. Replacement is worth talking about when the trouble is everywhere at once: shingles curling or cracking across several slopes, heavy granule loss (look in the gutters and at the downspout outlets), more than one leak, or a roof near the end of its expected life. We'll tell you which one you're looking at. See ${link(serviceHref("roof-repair"), "roof repair")} and ${link(serviceHref("roof-replacement"), "roof replacement")}.</p>`,
+      },
+      {
+        q: "Can you fix just the leak?",
+        a: `<p>Usually, if the rest of the roof is sound. Most leaks start at a detail, not in the open field of shingles: pipe boots, step flashing where a roof meets a wall, chimney flashing, skylights and valleys. Water also runs along the deck and rafters before it shows on a ceiling, so the stain is rarely under the hole. We trace it back to where it gets in and fix that.</p>`,
+      },
+      {
+        q: "Will a repair match my existing shingles?",
+        a: `<p>We match as closely as we can, but shingles weather and colors get discontinued, so a patch on an older roof often shows at first. We'll tell you before we start how close we expect to get.</p>`,
+      },
+      {
+        q: "Can you put new shingles over the old ones?",
+        a: `<p>Some jurisdictions allow a second layer of asphalt shingles in some conditions. We almost always recommend a tear-off instead. With the old roof in place nobody sees the deck, the flashing usually gets reused when it shouldn't, and the roof carries extra weight. A tear-off costs more up front and gives the new roof a clean start.</p>`,
+      },
+      {
+        q: "My roof is covered in moss. Does it need replacing?",
+        a: `<p>Not necessarily. Moss holds water against the shingles and can lift their edges, but caught early it can be treated and cleared and the roof keeps going. Years of thick moss can damage the shingles underneath, and then the conversation changes. ${link(serviceHref("roof-maintenance"), "Roof maintenance")} is how you stay on the right side of that line.</p>`,
+      },
+    ],
+  },
+  {
+    id: "materials",
+    title: "Materials & lifespan",
+    intro: "Three roofing systems, what's under them, and how long they typically last here.",
+    more: { href: pages.materials, label: "Roofing materials" },
+    items: [
+      {
+        q: "What's the difference between 3-tab and architectural shingles?",
+        a: `<p>3-tab is a flat, single-layer shingle: the most economical way to a sound roof. Architectural shingle is laminated from two layers, so it's thicker and heavier, with a dimensional look and better wind resistance. Most homeowners choose architectural now. Our ${link(pages.materials, "materials page")} compares them side by side.</p>`,
+      },
+      {
+        q: "How long will a new roof last?",
+        a: `<p>As general industry ranges, with proper installation and upkeep: 3-tab asphalt shingle around 15–20 years, architectural shingle around 25–30, and single-ply membrane (TPO/PVC) around 20–30. In the Northwest, shade, moss, north-facing slopes that stay damp, and attic ventilation push a roof toward one end of its range or the other. These are typical figures, not a promise about any one roof.</p>`,
+      },
+      {
+        q: "What does the warranty cover?",
+        a: `<p>There are usually two: the manufacturer's warranty on the materials, and the contractor's warranty on the workmanship. Terms depend on the product and, for some manufacturer warranties, on registering the roof. We'll put the warranty that applies to your job in writing with the estimate, so you know exactly what's covered before you sign.</p>`,
+      },
+      {
+        q: "Can I use shingles on a low-slope roof or porch?",
+        a: `<p>Only down to a point. Asphalt shingles need enough pitch to shed water; manufacturers set a minimum slope, and extra underlayment is required near it. Below that, a porch roof, flat addition or dormer needs a membrane. We install single-ply (TPO/PVC) on residential low-slope sections as well as on ${link(serviceHref("commercial"), "commercial roofs")}.</p>`,
+      },
+      {
+        q: "Why does attic ventilation matter so much here?",
+        a: `<p>Warm, damp air from the house rises into the attic. In a long wet winter, if it can't get out, it condenses on the cold underside of the deck, and over time that means mold, rusted nails and soft sheathing, with the roof looking fine from the street. Balanced ventilation, with intake at the soffits and exhaust at or near the ridge, keeps the attic close to outside conditions. We check it on every estimate.</p>`,
+      },
+    ],
+  },
+  {
+    id: "weather",
+    title: "Oregon weather, moss & gutters",
+    intro: "Long wet seasons, fir needles, north slopes that never quite dry, and the odd ice storm.",
+    more: { href: serviceHref("gutters"), label: "Gutter systems" },
+    items: [
+      {
+        q: "Why does moss grow so well on Oregon roofs?",
+        a: `<p>Months of rain, mild temperatures and shade. Moss takes hold where a roof stays damp longest: north-facing slopes, under firs and big maples, and anywhere needles and debris pile up in the valleys and behind chimneys. Once it's established it traps more debris and more water, and it spreads.</p>`,
+      },
+      {
+        q: "Should I pressure-wash the moss off?",
+        a: `<p>No. A pressure washer strips the granules that protect shingles from the sun, and it can drive water up under the courses. Moss comes off with a treatment and gentle hand removal, and debris is cleared from the valleys so it doesn't come straight back. That's part of ${link(serviceHref("roof-maintenance"), "roof maintenance")}.</p>`,
+      },
+      {
+        q: "How often should gutters be cleaned?",
+        a: `<p>At least once a year in late fall after the leaves are down, and again in spring if you're under firs, which drop needles all year. A house under big trees may need more. Clogged gutters overflow at the fascia, and that water ends up in the fascia board, the siding and sometimes the foundation.</p>`,
+      },
+      {
+        q: "My gutters overflow even when they're clean. Why?",
+        a: `<p>Usually the gutters are too small for the roof area feeding them, there aren't enough downspouts, the pitch is wrong so water sits, or the hangers have sagged. A long, steep roof in a Northwest downpour can put more water into a gutter than a 5-inch profile with small downspouts can carry. Bigger gutters, larger or additional downspouts, and hidden hangers on tighter spacing usually fix it. See ${link(serviceHref("gutters"), "gutter systems")}.</p>`,
+      },
+      {
+        q: "What should I check after a windstorm or ice storm?",
+        a: `<p>From the ground, not the roof: look for missing or folded shingles along the edges and ridge, lifted flashing, branches on the roof, and gutters pulled away from the fascia. Inside, check ceilings and the attic for new stains. Don't climb an icy or wet roof. If you find damage, call us at ${site.phone}. Same-day emergency response may be available depending on scope, and where the situation allows we may be able to tarp or dry in the damaged area until it can be repaired.</p>`,
+      },
+    ],
+  },
+  {
+    id: "insurance",
+    title: "Insurance claims",
+    intro: "We can help you document and explain the damage. The decision is always your insurer's.",
+    items: [
+      {
+        q: "Will my homeowner's insurance pay for a new roof?",
+        a: `<p>It depends on your policy and on what caused the damage. Many policies cover sudden damage, such as a tree coming down or wind tearing shingles off, and exclude wear, age and lack of maintenance. Only your insurer can tell you what's covered. We don't promise a claim outcome, and you should be wary of anyone who does.</p>`,
+      },
+      {
+        q: "Can you help with my claim?",
+        a: `<p>Yes, within what a roofer should do. We can inspect the roof, document the damage with photos and a written description, give you an estimate for the repair or replacement, and meet the adjuster on site to show them what we found. We're a roofing contractor, not a public adjuster, so we don't negotiate your claim for you.</p>`,
+      },
+      {
+        q: "Should I call my insurer or a roofer first?",
+        a: `<p>If water is coming in, first limit the damage: move belongings, catch the drip, and call us about temporary protection. Most policies expect you to take reasonable steps to prevent further damage. Then report the claim to your insurer. Having the roof inspected before the adjuster visits means you know what's up there when you talk to them.</p>`,
+      },
+    ],
+  },
+  {
+    id: "licensing",
+    title: "Licensing, permits & commercial work",
+    intro: "How to check us, when a permit comes into it, and the buildings besides houses that we roof.",
+    more: { href: serviceHref("commercial"), label: "Commercial roofing" },
+    items: [
+      {
+        q: "Are you licensed, bonded and insured?",
+        a: `<p>Yes. ${site.legalName} holds Oregon CCB license #${site.ccb}. You can check it, with the bond and insurance on file, on the <a href="${ccbSearch}" target="_blank" rel="noopener">Oregon CCB license search</a>. Our ${link(page("/about/#licensed"), "about page")} explains what each of those words means.</p>`,
+      },
+      {
+        q: "Does my roof job need a permit?",
+        a: `<p>It depends on your city or county and on the job. Some jurisdictions require a permit for a re-roof, others only when sheathing or structure is replaced, and a repair often needs none. We check with the jurisdiction the house is in, and the estimate says whether a permit is needed and who pulls it.</p>`,
+      },
+      {
+        q: "Do you work outside Portland?",
+        a: `<p>Yes. We work anywhere in Oregon within about ${serviceMap.drive.minutes} minutes' drive of our ${site.address.city} shop, which takes in parts of ${counties.length} counties from ${counties[0].name} down to ${counties[counties.length - 1].name}. The ${link(pages.serviceArea, "service area page")} has the map and the town list. Just past the line? Call anyway.</p>`,
+      },
+      {
+        q: "What kinds of commercial roofs do you work on?",
+        a: `<p>Low-slope and single-ply membrane roofs (TPO and PVC) on shops, warehouses and light-industrial buildings: replacement, repair, and detailing at curbs, drains, scuppers and rooftop units, where most commercial leaks start. See ${link(serviceHref("commercial"), "commercial roofing")}.</p>`,
+      },
+      {
+        q: "Can you roof an apartment or condo building with people living in it?",
+        a: `<p>Yes. Multi-unit work is planned building by building around the residents: notice before work starts, where the trucks and debris container go, working hours, and keeping entries and walkways clear and safe. We work with property managers and HOA boards on scope and scheduling. See ${link(serviceHref("multi-unit"), "multi-unit roofing")}.</p>`,
+      },
+    ],
+  },
+];
+
+// The strip sits between the first half of the topics and the second.
+const firstHalf = topics.slice(0, 3);
+const secondHalf = topics.slice(3);
+
+const stripTags = (html: string) =>
+  html
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const schema = {
+  "@type": "FAQPage",
+  mainEntity: topics.flatMap((topic) =>
+    topic.items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: stripTags(item.a) },
+    })),
+  ),
+};
+
+const questionCount = topics.reduce((sum, topic) => sum + topic.items.length, 0);
+---
+
+<Page
+  title="Roofing Questions & Answers"
+  description="Straight answers on roof estimates, repair or replacement, shingle lifespans, moss and gutters in Oregon, insurance claims, permits and commercial roofing, from Acosta Roofing in Beaverton."
+  crumbs={crumbs}
+  schema={schema}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Questions & answers"
+    title="What people ask us on the roof"
+    lead={`${questionCount} questions we hear most, answered the way we'd answer them on site. If yours isn't here, call ${site.phone} and ask.`}
+    actions={false}
+    treelineOffset={-95}
+  >
+    <nav aria-label="Topics" class="mt-10 max-w-3xl">
+      <p class="t-spaced-sm text-on-forest-mute">Jump to a topic</p>
+      <ol class="mt-4 grid border-t border-hairline-dark sm:grid-cols-2 sm:gap-x-10">
+        {
+          topics.map((topic, index) => (
+            <li class="border-b border-hairline-dark">
+              <a href={`#${topic.id}`} class="group flex min-h-12 items-center gap-4 py-3 hover:text-on-forest">
+                <span class="t-heading-sm w-7 shrink-0 text-on-forest-mute">{String(index + 1).padStart(2, "0")}</span>
+                <span class="t-heading-sm flex-1">{topic.title}</span>
+                <span class="t-spaced-sm text-on-forest-mute">{topic.items.length}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+  </PageHero>
+
+  {
+    [firstHalf, secondHalf].map((group, groupIndex) => (
+      <>
+        {group.map((topic, index) => {
+          const number = groupIndex * firstHalf.length + index + 1;
+          const beforeStrip = groupIndex === 0 && index === group.length - 1;
+          return (
+            <section
+              id={topic.id}
+              class:list={[
+                "section",
+                index % 2 === 0 ? "bg-canvas" : "bg-cream-deep",
+                beforeStrip && "pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28",
+              ]}
+            >
+              <div class="container-page grid gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
+                <div class="min-w-0 lg:sticky lg:top-28 lg:self-start">
+                  <p class="t-eyebrow text-forest-mid">Topic {String(number).padStart(2, "0")}</p>
+                  <h2 class="t-heading-xl mt-3 text-ink">{topic.title}</h2>
+                  <p class="t-body-md mt-4 max-w-md text-body">{topic.intro}</p>
+                  {topic.more && (
+                    <a
+                      href={topic.more.href}
+                      class="t-spaced-sm mt-6 inline-flex min-h-11 items-center gap-2 text-forest hover:text-forest-deep"
+                    >
+                      {topic.more.label}
+                      <Icon name="arrow" size={16} />
+                    </a>
+                  )}
+                </div>
+                <div class="qa-list min-w-0">
+                  {topic.items.map((item) => (
+                    <details>
+                      <summary>{item.q}</summary>
+                      <div class="qa-answer prose-page max-w-none" set:html={item.a} />
+                    </details>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })}
+        {groupIndex === 0 && (
+          <CtaStrip
+            href={estimateHref}
+            offset={-305}
+            title="Rather ask in person?"
+            body="We'll answer it on your roof. Estimates are free, on site and in writing."
+          />
+        )}
+      </>
+    ))
+  }
+
+  <ClosingCta
+    surface="cream-deep"
+    title="Didn't find your question?"
+    body={`Call ${site.phone} during shop hours and ask. If it needs eyes on the roof, we'll set up a free estimate.`}
+  />
+</Page>

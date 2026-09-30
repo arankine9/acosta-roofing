@@ -70,6 +70,22 @@ cream/forest seam is `src/components/Treeline.astro`.
       placeholders to judge the look. Drop in Acosta's own under the same
       filenames (`asphalt-shingle.png`, `architectural-shingle.png`,
       `single-ply-membrane.png`) before this ships.
+- [ ] **Owner read-through of the inner pages.** They describe how jobs run
+      (drying in every night, photos with every estimate, stopping to agree
+      changes before extra work, hose-testing gutters, no pressure washing).
+      These are standard good practice, but the owner should confirm each one
+      is how Acosta actually works.
+- [ ] **About page founder story.** A hidden TODO in `src/pages/about.astro`
+      marks where it goes; nothing is invented in its place.
+- [ ] **Privacy notice** (`/privacy/`): plain-English draft; have the owner
+      review it.
+- [ ] **Home page photos.** The files behind the home service tiles
+      (`roof-maintenance.jpg`, `commercial-roofing.jpg`) and the unused
+      `roof-installation.jpg`, `roof-repairs.jpg`, `gutter-systems.jpg` and
+      `cap-metal.jpg` appear to come from other contractors' sites (see
+      `src/assets/photos-src/`), and `commercial-roofing.jpg` shows a logo.
+      Replace them with Acosta's own or licensed photos. Every inner-page
+      photo is licensed and credited in `src/data/photo-credits.ts`.
 - [ ] **Wire up the contact form.** `src/components/Contact.astro` posts
       nowhere; the note under the submit button says so rather than silently
       dropping enquiries. Point `action` at a handler and delete that note.
@@ -79,6 +95,11 @@ cream/forest seam is `src/components/Treeline.astro`.
 | Path | Purpose |
 | --- | --- |
 | `src/data/site.ts` | All business facts. Change them here, not in components. |
+| `src/data/services.ts` | Service registry: titles, summaries, card photos. Nav menu, footer, `/services/` and related-service rows read it. |
+| `src/data/nav.ts` | Page map and nav links. |
+| `src/data/photo-credits.ts` | Photographer, source and licence for every sourced photo; rendered at `/photo-credits/`. Add a line with every new photo. |
+| `src/layouts/Page.astro` | Shell for inner pages (nav, footer, breadcrumb JSON-LD). |
+| `src/components/PageHero.astro` | Forest opening band used by every inner page. |
 | `src/layouts/Base.astro` | Head, fonts, favicon, SEO, `RoofingContractor` JSON-LD. |
 | `src/styles/global.css` | Tailwind 4 `@theme` tokens, type roles, components. |
 | `DESIGN.md` | The design system this site implements. |

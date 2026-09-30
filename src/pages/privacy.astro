@@ -1,0 +1,154 @@
+---
+import Page from "../layouts/Page.astro";
+import PageHero from "../components/PageHero.astro";
+import ClosingCta from "../components/ClosingCta.astro";
+import { site } from "../data/site";
+import { pages } from "../data/nav";
+
+/*
+  OWNER REVIEW NEEDED before launch. This notice is a plain description of
+  what the site does as built on the date below, not legal advice, and it has
+  not been reviewed by a lawyer. Check in particular:
+  - The estimate form isn't wired to a backend yet (see Contact.astro). When
+    it is, name the service that receives submissions (a form service, an
+    email provider) under "Who else sees it", and confirm the "how long we
+    keep it" wording matches what you actually do.
+  - Hosting is Cloudflare Pages (per the deploy setup). If that changes,
+    update "Who else sees it".
+  - Base.astro loads Google Fonts from Google's servers and has no analytics,
+    ad pixels or cookies. If analytics or a chat widget is ever added, this
+    page has to change the same day.
+  - Bump `updated` whenever the substance changes.
+*/
+const crumbs = [{ label: "Privacy", href: pages.privacy }];
+const updated = { iso: "2026-09-29", label: "September 29, 2026" };
+
+const summary = [
+  "The estimate form asks for your name, phone, email, property address and a description of the roof.",
+  "We use it to answer you and to quote and do the work. Nothing else.",
+  "We don't sell or rent it, and we don't share it for marketing.",
+  "No analytics, no advertising trackers, no cookies.",
+  `Email ${site.email} to see, correct or delete what we have.`,
+];
+---
+
+<Page
+  title="Privacy Notice"
+  description="What the Acosta Roofing website collects, what we use it for, and how to have it deleted. No analytics, no ad tracking, no selling of data."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Privacy"
+    title="Privacy notice"
+    lead="A short, plain account of what this website collects and what we do with it."
+    actions={false}
+    treelineOffset={-180}
+  />
+
+  <section class="section bg-canvas">
+    <div class="container-page grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
+      <div class="prose-page min-w-0">
+        <p class="t-spaced-sm text-mute">
+          Last updated <time datetime={updated.iso}>{updated.label}</time>
+        </p>
+
+        <h2>Who we are</h2>
+        <p>
+          This site belongs to {site.legalName}, a roofing contractor in {site.address.city}, Oregon (CCB #{site.ccb}).
+          When this notice says "we", it means us. You can reach us at
+          <a href={`mailto:${site.email}`}>{site.email}</a> or <a href={site.phoneHref}>{site.phone}</a>.
+        </p>
+
+        <h2>What the estimate form collects</h2>
+        <p>Only what you type into it:</p>
+        <ul>
+          <li>your name and phone number,</li>
+          <li>your email address, if you give it,</li>
+          <li>the property address, if you give it, and</li>
+          <li>whatever you write about the roof.</li>
+        </ul>
+        <p>
+          If you call or email us instead, we have what you tell us or send us, such as your number, your address and
+          any photos of the roof.
+        </p>
+
+        <h2>What we use it for</h2>
+        <p>
+          To reply to you, arrange a visit, write your estimate and, if you hire us, do the job and keep the records
+          that go with it. We don't add you to a mailing list and we don't use it to advertise to you.
+        </p>
+
+        <h2>What we don't do</h2>
+        <ul>
+          <li>We don't sell, rent or trade your information.</li>
+          <li>We don't share it with anyone for their marketing.</li>
+          <li>
+            This site has no analytics, no advertising or tracking pixels, and sets no cookies. We don't know who
+            reads it.
+          </li>
+        </ul>
+
+        <h2>Who else sees it</h2>
+        <p>
+          <strong>Fonts.</strong> The site's typefaces (Oswald and Barlow) load from Google Fonts. To send them, your
+          browser connects to Google's servers, which see your IP address and browser details the way any web server
+          does. Google describes how it handles that data in its
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">privacy policy</a>.
+        </p>
+        <p>
+          <strong>Hosting.</strong> The site is served by Cloudflare. Like any host, it processes technical data such
+          as IP addresses to deliver the pages and protect the site from abuse.
+        </p>
+        <p>
+          <strong>When it's needed for your job.</strong> If you ask us to, we'll share details with your insurance
+          adjuster, and we give the city or county what a permit application requires.
+        </p>
+
+        <h2>How long we keep it</h2>
+        <p>
+          Enquiries that don't turn into work are kept only as long as they're useful for following up. If we do work
+          on your property, we keep the job records, including your contact details, as a business keeps any job file.
+        </p>
+
+        <h2>Seeing, correcting or deleting it</h2>
+        <p>
+          Email <a href={`mailto:${site.email}`}>{site.email}</a> and tell us what you'd like: a copy of what we have,
+          a correction, or deletion. We'll do it, except for anything we have to keep for a job we've done for you,
+          and we'll tell you what that is.
+        </p>
+        <p>
+          Oregon's Consumer Privacy Act sets rules for businesses that handle personal data about large numbers of
+          Oregonians. We're a small local contractor, and we'll honor these requests whether or not a law requires it.
+        </p>
+
+        <h2>Children</h2>
+        <p>This site is for homeowners and property managers. It isn't meant for children, and we don't knowingly collect their information.</p>
+
+        <h2>Changes</h2>
+        <p>
+          If what the site collects changes, this page changes with it, and the date at the top moves. The current
+          version is the one that applies.
+        </p>
+      </div>
+
+      <aside class="min-w-0 lg:sticky lg:top-28 lg:self-start" aria-labelledby="privacy-summary">
+        <div class="panel panel-keyline overflow-hidden">
+          <div class="plate-label">
+            <span id="privacy-summary" class="t-spaced">The short version</span>
+          </div>
+          <ul class="check-list t-body-sm px-6 pt-7 pb-8 text-body sm:px-8">
+            {summary.map((line) => <li>{line}</li>)}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <ClosingCta
+    surface="cream-deep"
+    label="Questions"
+    title="Questions about your information?"
+    body={`Email ${site.email} or call during shop hours. You'll get an answer from us, not a form letter.`}
+  />
+</Page>

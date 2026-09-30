@@ -1,44 +1,190 @@
 ---
-import { home } from "../lib/url";
+import { asset, home, isCurrent } from "../lib/url";
 // 76px cream bar at the top of the page: lockup left, link row center, one
 // forest CTA right. Below 1024px the row collapses into a drawer built from
 // <details>: no framework, and it still opens with JS off.
+//
+// Services opens a menu plate on hover and on keyboard focus (focus-within),
+// so it needs no script either. The Services label is itself a link to the
+// services index, which lists everything the menu does; a tablet that can't
+// hover still gets there in one tap.
 import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
 import { site } from "../data/site";
+import { serviceHref, serviceThumb } from "../data/services";
+import { primaryLinks, serviceMenu, planningLinks, estimateHref, pages } from "../data/nav";
 
-const links = [
-  { href: "#services", label: "Services" },
-  { href: "#materials", label: "Materials" },
-  { href: "#service-area", label: "Service Area" },
-  { href: "#contact", label: "Contact" },
-];
+const pathname = Astro.url.pathname;
+const active = (href: string) => isCurrent(pathname, href);
+
+// Every top-level link shares one box, so the Services label (which carries
+// a caret) sits on exactly the same line as the plain links beside it.
+const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 hover:border-forest hover:text-forest";
 ---
 
 <header class="sticky top-0 z-40 border-b border-hairline bg-canvas shadow-[0_1px_0_0_rgba(43,43,43,0.18)]">
-  <nav class="container-page flex h-[76px] items-center justify-between gap-6 max-[340px]:gap-3" aria-label="Main">
+  <nav
+    class="container-page relative flex h-[76px] items-center justify-between gap-6 max-[340px]:gap-3"
+    aria-label="Main"
+  >
     <a href={home} class="shrink-0">
       <Logo />
       <span class="sr-only">Home</span>
     </a>
 
-    <div class="hidden items-center gap-8 lg:flex">
+    <ul class="hidden h-full items-center gap-6 lg:flex xl:gap-8">
       {
-        links.map((link) => (
-          <a
-            href={link.href}
-            class="t-spaced-sm border-b-2 border-transparent pb-1 text-ink hover:border-forest hover:text-forest"
-          >
-            {link.label}
-          </a>
+        primaryLinks.map((link) => (
+          <li class={link.menu ? "group/menu flex h-full items-center" : "flex h-full items-center"}>
+            <a
+              href={link.href}
+              class:list={[topLink, active(link.href) ? "border-forest text-forest" : "border-transparent text-ink"]}
+              aria-current={isCurrent(pathname, link.href, true) ? "page" : undefined}
+            >
+              {link.label}
+              {link.menu && (
+                <svg
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  aria-hidden="true"
+                  class="-mt-px transition-transform duration-200 group-hover/menu:rotate-180 group-focus-within/menu:rotate-180"
+                >
+                  <path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              )}
+            </a>
+
+            {link.menu && (
+              /* The plate hangs from the bottom of the bar and spans the
+                 page container, so it lines up with the content under it.
+                 It is positioned against the <nav>, not this <li>, but it
+                 is still inside the <li>, so hover and focus-within keep it
+                 open while the pointer or the tab key moves through it.
+                 Closing waits a beat, so a pointer that slips off the edge
+                 on its way in doesn't snap it shut. */
+              <div class="nav-menu invisible absolute inset-x-6 top-full pt-px opacity-0 group-hover/menu:visible group-hover/menu:opacity-100 group-focus-within/menu:visible group-focus-within/menu:opacity-100 min-[1440px]:inset-x-12">
+                <div class="nav-menu__plate border border-t-0 border-hairline bg-board p-2 shadow-[0_1px_0_0_rgba(43,43,43,0.18)]">
+                  <div class="grid grid-cols-2 border border-hairline xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.85fr)]">
+                    {serviceMenu.map((column, index) => (
+                      <div class:list={["flex flex-col px-7 pt-6 pb-7", index > 0 && "border-l border-hairline"]}>
+                        <div class="flex items-baseline justify-between gap-4 border-b border-hairline pb-3">
+                          <p class="t-spaced-sm text-mute">{column.heading}</p>
+                          <a href={column.href} class="t-spaced-sm inline-flex items-center gap-1.5 text-forest hover:text-forest-deep">
+                            {column.hrefLabel}
+                            <Icon name="arrow" size={12} />
+                          </a>
+                        </div>
+
+                        <ul class="mt-2">
+                          {column.items.map((service) => {
+                            const href = serviceHref(service.slug);
+                            const here = active(href);
+                            return (
+                              <li>
+                                <a
+                                  href={href}
+                                  aria-current={here ? "page" : undefined}
+                                  class:list={[
+                                    "group/item -mx-3 flex items-center gap-4 px-3 py-2.5 transition-colors duration-150 hover:bg-cream-deep",
+                                    here && "bg-cream-deep",
+                                  ]}
+                                >
+                                  {/* Eager: a lazy image inside a hidden menu
+                                      only starts loading when the menu opens,
+                                      so it would pop in. The thumbs are ~10 KB. */}
+                                  <img
+                                    src={asset(serviceThumb(service.slug))}
+                                    alt=""
+                                    width="64"
+                                    height="48"
+                                    decoding="async"
+                                    class="h-12 w-16 shrink-0 border border-hairline object-cover"
+                                  />
+                                  <span class="min-w-0 grow">
+                                    <span
+                                      class:list={[
+                                        "t-heading-sm block group-hover/item:text-forest",
+                                        here ? "text-forest" : "text-ink",
+                                      ]}
+                                    >
+                                      {service.title}
+                                    </span>
+                                    <span class="t-caption mt-0.5 block truncate text-mute">{service.tagline}</span>
+                                  </span>
+                                  <Icon
+                                    name="arrow"
+                                    size={16}
+                                    class="shrink-0 -translate-x-1 text-forest opacity-0 transition-[opacity,transform] duration-200 group-hover/item:translate-x-0 group-hover/item:opacity-100"
+                                  />
+                                </a>
+                              </li>
+                            );
+                          })}
+                        </ul>
+
+                        {/* The commercial column is two services long; its
+                            spare depth carries the pages people read while
+                            they decide. */}
+                        {index === serviceMenu.length - 1 && (
+                          <div class="mt-auto pt-6">
+                            <p class="t-spaced-sm border-b border-hairline pb-3 text-mute">Planning a roof</p>
+                            <ul class="mt-1">
+                              {planningLinks.map((item) => (
+                                <li>
+                                  <a
+                                    href={item.href}
+                                    class:list={[
+                                      "t-body-sm flex min-h-10 items-center justify-between gap-3 border-b border-hairline last:border-b-0 hover:text-forest",
+                                      active(item.href) ? "font-semibold text-forest" : "text-body",
+                                    ]}
+                                  >
+                                    {item.label}
+                                    <Icon name="arrow" size={14} class="text-forest" />
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+
+                    {/* The one question the menu can't answer, set as a
+                        small forest sign. The board frame around the plate
+                        keeps it from running into a forest hero below.
+                        Under 1280px the two service columns need the room,
+                        and the bar's own Free Estimate button covers it. */}
+                    <div class="on-forest panel-keyline panel-keyline-cream hidden flex-col bg-forest px-7 pt-7 pb-8 text-on-forest xl:flex">
+                      <p class="t-eyebrow text-on-forest-mute">Free estimate</p>
+                      <p class="t-heading-xl mt-4">Not sure what the roof needs?</p>
+                      <p class="t-body-sm mt-3 text-on-forest-mute">
+                        We'll walk it, show you what we find and write it down. No charge, no pressure.
+                      </p>
+                      <div class="mt-auto flex flex-col gap-2 pt-6">
+                        <a href={site.phoneHref} class="btn btn-cream w-full">
+                          <Icon name="phone" size={16} />
+                          {site.phone}
+                        </a>
+                        <a href={estimateHref} class="btn btn-outline-cream w-full">
+                          Request an estimate
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </li>
         ))
       }
-    </div>
+    </ul>
 
     <div class="hidden items-center gap-6 lg:flex">
-      <a href={site.phoneHref} class="t-heading-sm text-forest hover:text-forest-deep">
+      <a href={site.phoneHref} class="t-heading-sm hidden text-forest hover:text-forest-deep xl:inline">
         {site.phone}
       </a>
-      <a href="#contact" class="btn btn-primary">Free Estimate</a>
+      <a href={estimateHref} class="btn btn-primary">Free Estimate</a>
     </div>
 
     <details class="group lg:hidden">
@@ -60,18 +206,82 @@ const links = [
       >
         <ul>
           {
-            links.map((link) => (
+            primaryLinks.map((link) => (
               <li class="border-b border-hairline">
-                <a href={link.href} class="t-heading-md block py-5 text-ink">
+                <a
+                  href={link.href}
+                  class:list={["t-heading-md block py-5", active(link.href) ? "text-forest" : "text-ink"]}
+                >
                   {link.label}
                 </a>
+                {link.menu && (
+                  <ul class="-mt-2 grid gap-x-6 pb-4 min-[480px]:grid-cols-2">
+                    {serviceMenu.flatMap((column) => column.items).map((service) => {
+                      const href = serviceHref(service.slug);
+                      return (
+                        <li>
+                          <a
+                            href={href}
+                            class:list={[
+                              "t-body-md flex min-h-11 items-center gap-3",
+                              active(href) ? "font-semibold text-forest" : "text-body",
+                            ]}
+                          >
+                            <span aria-hidden="true" class="h-px w-3 bg-forest" />
+                            {service.title}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
               </li>
             ))
           }
+          <li class="border-b border-hairline">
+            <a
+              href={pages.contact}
+              class:list={["t-heading-md block py-5", active(pages.contact) ? "text-forest" : "text-ink"]}
+            >
+              Contact
+            </a>
+          </li>
         </ul>
         <a href={site.phoneHref} class="btn btn-primary mt-8 w-full">Call {site.phone}</a>
-        <a href="#contact" class="btn btn-outline mt-3 w-full">Request an Estimate</a>
+        <a href={estimateHref} class="btn btn-outline mt-3 w-full">Request an Estimate</a>
       </div>
     </details>
   </nav>
 </header>
+
+<style>
+  /* Open: fade in and settle, at once. Close: hold for 120ms, then fade
+     (the delays on the base state), so a pointer that grazes the edge on
+     its way into the plate doesn't drop the menu. */
+  .nav-menu {
+    transition:
+      opacity 160ms ease 120ms,
+      visibility 0s linear 280ms;
+  }
+  .nav-menu__plate {
+    transform: translateY(-6px);
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  :global(.group\/menu:hover) .nav-menu,
+  :global(.group\/menu:focus-within) .nav-menu {
+    transition:
+      opacity 160ms ease,
+      visibility 0s linear 0s;
+  }
+  :global(.group\/menu:hover) .nav-menu__plate,
+  :global(.group\/menu:focus-within) .nav-menu__plate {
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-menu,
+    .nav-menu__plate {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+</style>

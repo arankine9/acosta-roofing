@@ -1,0 +1,50 @@
+---
+import Page from "../layouts/Page.astro";
+import PageHero from "../components/PageHero.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+import { pages } from "../data/nav";
+import { home, page } from "../lib/url";
+
+// Not found. Kept small: one line of humor in the headline, then the four
+// places most people were trying to get to. The breadcrumb is passed to the
+// hero only, so no BreadcrumbList is published for a page that doesn't exist.
+const crumbs = [{ label: "Page not found", href: page("/404/") }];
+
+const links = [
+  { href: home, label: "Home", note: "Start from the top" },
+  { href: pages.services, label: "Services", note: "Replacement, repair, maintenance, gutters, commercial" },
+  { href: pages.contact, label: "Contact", note: "Request a free estimate" },
+  { href: site.phoneHref, label: site.phone, note: "Call during shop hours" },
+];
+---
+
+<Page title="Page Not Found" description="This page doesn't exist. Find Acosta Roofing's services, contact details and phone number here." noindex>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Error 404"
+    title="This page blew off the roof"
+    lead="The address may have changed, or the link was mistyped. Everything else is still where it should be."
+    actions={false}
+    treelineOffset={-40}
+  />
+
+  <section class="section bg-canvas pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28">
+    <div class="container-page">
+      <h2 class="t-heading-xl text-ink">Try one of these</h2>
+      <ul class="mt-8 max-w-3xl border-t border-hairline">
+        {
+          links.map((link) => (
+            <li class="border-b border-hairline">
+              <a href={link.href} class="group flex min-h-16 items-center gap-6 py-4">
+                <span class="t-heading-md w-44 shrink-0 text-ink group-hover:text-forest max-[480px]:w-auto">{link.label}</span>
+                <span class="t-body-sm flex-1 text-body max-[480px]:hidden">{link.note}</span>
+                <Icon name="arrow" size={20} class="ml-auto shrink-0 text-forest transition-transform group-hover:translate-x-1" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Page>

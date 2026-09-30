@@ -4,23 +4,40 @@
 // flat color change.
 import Treeline from "./Treeline.astro";
 import { site } from "../data/site";
+
+// On an inner page the estimate button goes to the contact page; the home
+// page passes its own #contact anchor. The section above this band must
+// leave 64px of extra bottom padding for the treeline standing into it.
+interface Props {
+  title?: string;
+  body?: string;
+  href?: string;
+  offset?: number;
+}
+
+const {
+  title = "Ready to get a number on it?",
+  body = "Free on-site estimates across the Portland metro, in writing and itemized.",
+  href = "#contact",
+  offset = -190,
+} = Astro.props;
 ---
 
 <section class="on-forest relative bg-forest text-on-forest">
-  <Treeline tone="forest" height={64} offset={-190} class="absolute inset-x-0 bottom-full" />
+  <Treeline tone="forest" height={64} offset={offset} class="absolute inset-x-0 bottom-full" />
 
   <div
     class="container-page relative flex flex-col items-start gap-8 pt-24 pb-16 md:flex-row md:items-center md:justify-between md:pt-28"
   >
     <div>
-      <h2 class="t-heading-xl">Ready to get a number on it?</h2>
+      <h2 class="t-heading-xl">{title}</h2>
       <p class="t-body-md mt-3 max-w-xl text-on-forest-mute">
-        Free on-site estimates across the Portland metro, in writing and itemized.
+        {body}
       </p>
     </div>
     <div class="flex shrink-0 flex-col gap-3 sm:flex-row">
       <a href={site.phoneHref} class="btn btn-cream">Call {site.phone}</a>
-      <a href="#contact" class="btn btn-outline-cream">Request an Estimate</a>
+      <a href={href} class="btn btn-outline-cream">Request an Estimate</a>
     </div>
   </div>
 </section>

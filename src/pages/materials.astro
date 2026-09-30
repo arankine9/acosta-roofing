@@ -1,0 +1,861 @@
+---
+import Page from "../layouts/Page.astro";
+import PageHero from "../components/PageHero.astro";
+import ClosingCta from "../components/ClosingCta.astro";
+import Treeline from "../components/Treeline.astro";
+import Icon from "../components/Icon.astro";
+import RoofSystem from "../components/materials/RoofSystem.astro";
+import { asset } from "../lib/url";
+import { pages, estimateHref } from "../data/nav";
+import { serviceHref } from "../data/services";
+import { site } from "../data/site";
+
+// The materials page: the three systems from the home page's Materials band,
+// each at full length (what it is, where it fits, strengths, trade-offs,
+// Northwest weather, upkeep), then a side-by-side table, the parts around
+// the shingles that decide how long a roof lasts, and how we pick one.
+//
+// Expected-life figures are the same as the home page band (Materials.astro):
+// typical industry ranges for a correctly installed, maintained roof, not a
+// warranty. Keep the two in step if either changes.
+//
+// No manufacturer product lines are named on purpose: the page explains the
+// material, not a brand.
+//
+// Photos (public/images/materials/page/):
+//   rain-on-shingles.jpg      Luke Southern, Unsplash (Unsplash License)
+//                             https://unsplash.com/photos/ZzZouwiQWV0
+//   three-tab-shingle.jpg     FASTILY, Wikimedia Commons, CC BY-SA 4.0
+//                             https://commons.wikimedia.org/wiki/File:Shingle_Roof_1_2017-04-21.jpg
+//                             (credited in its caption, as the licence asks)
+//   architectural-shingle.jpg Hal Gatewood, Unsplash (Unsplash License)
+//                             https://unsplash.com/photos/9u5r1XbtMJg
+//   white-single-ply-over-old-roof.jpg
+//                             Daniel X. O'Neil, "Workers adding reflective
+//                             roofing material", Flickr, CC BY 2.0
+//                             https://www.flickr.com/photos/juggernautco/3016888550
+//                             https://creativecommons.org/licenses/by/2.0/
+//                             (cropped to 3:2; credited in its caption)
+// The roof section is drawn inline: src/components/materials/RoofSystem.astro.
+const crumbs = [{ label: "Roofing materials", href: pages.materials }];
+
+const systems = [
+  { id: "asphalt-shingle", title: "3-tab asphalt shingle", fit: "Steep slope", life: "15–20" },
+  { id: "architectural-shingle", title: "Architectural shingle", fit: "Steep slope", life: "25–30" },
+  { id: "single-ply", title: "Single-ply (TPO / PVC)", fit: "Flat & low slope", life: "20–30" },
+];
+
+// Comparison rows. Each cell is short on purpose; the sections above carry
+// the reasons.
+const compare = [
+  {
+    label: "Roof type",
+    cells: ["Steep slope", "Steep slope", "Flat and low slope"],
+  },
+  {
+    label: "Pitch, as a rule",
+    cells: [
+      "4-in-12 and steeper; 2-in-12 to 4-in-12 with doubled underlayment",
+      "Same as 3-tab",
+      "Built to drain, usually at least ¼ inch of fall per foot",
+    ],
+  },
+  {
+    label: "Expected life*",
+    cells: ["15–20 years", "25–30 years", "20–30 years"],
+  },
+  {
+    label: "How it's made",
+    cells: [
+      "One layer, cut into three even tabs",
+      "Two layers laminated together, cut to random widths",
+      "One continuous sheet with heat-welded seams",
+    ],
+  },
+  {
+    label: "Wind",
+    cells: [
+      "The lightest of the three; tabs lift and tear first",
+      "Heavier and stiffer; most lines carry higher wind ratings",
+      "Wind works at the edges and corners, so perimeter attachment is everything",
+    ],
+  },
+  {
+    label: "Moss and wet",
+    cells: [
+      "Moss starts in the flat seams and keyways",
+      "Holds up better, but shaded slopes still need watching",
+      "Moss is rare; ponding and blocked drains are the risk",
+    ],
+  },
+  {
+    label: "The look",
+    cells: ["Flat, even courses", "Dimensional shadow lines that read like shake", "A flat white or gray sheet, mostly out of sight"],
+  },
+  {
+    label: "Up-front cost",
+    cells: [
+      "Lowest of the three",
+      "More than 3-tab",
+      "Priced by the job: insulation, drains and details drive it",
+    ],
+  },
+  {
+    label: "Usual jobs",
+    cells: [
+      "Garages, outbuildings, budget re-roofs",
+      "Most house re-roofs",
+      "Commercial and multi-unit roofs; porch, dormer and addition roofs on houses",
+    ],
+  },
+];
+
+// Legend for the roof section. Numbers match the drawing.
+const parts = [
+  {
+    n: 1,
+    title: "Underlayment",
+    body: "A synthetic sheet over the whole deck, under the shingles. It's the second line of defense when wind drives rain up under a course, and it keeps the deck dry while the roof goes on.",
+  },
+  {
+    n: 2,
+    title: "Ice-and-water shield",
+    body: "A self-sticking rubberized membrane that seals around every nail driven through it. It goes along the eaves, up every valley and around penetrations, where water backs up or runs heaviest. Freezing rain and the odd ice dam do happen here, more often out toward the Gorge and up toward Sandy.",
+  },
+  {
+    n: 3,
+    title: "Drip edge",
+    body: "Bent metal at the eaves and rakes. It carries water off the edge and into the gutter instead of letting it curl back under and soak the fascia and the edge of the deck. Cheap to put on, expensive to leave off.",
+  },
+  {
+    n: 4,
+    title: "Flashing",
+    body: "Metal and rubber that seal the joints: step flashing where the roof meets a wall, counter-flashing at a chimney, valley metal, and the rubber boot on every plumbing vent. Most leaks start at flashing, not in the open field of shingles, and pipe boots often crack years before the shingles around them wear out.",
+  },
+  {
+    n: 5,
+    title: "Intake ventilation",
+    body: "Vents in the soffit let outside air into the attic at its lowest point. Baffles hold the insulation back so it doesn't smother them.",
+  },
+  {
+    n: 6,
+    title: "Exhaust ventilation",
+    body: "A ridge vent, or roof vents near the top, lets warm, damp attic air out. In a Northwest winter, moisture from the house condenses on the cold underside of the deck. With intake and exhaust balanced, moving air carries it off before it becomes mold, rusted nails and soft sheathing.",
+  },
+    {
+    n: 8,
+    title: "Starter course",
+    body: "A strip laid along the eaves and rakes before the first course, with its sealant right at the edge. It glues the first row of shingles down, where wind gets its first grip on a roof.",
+  },
+  {
+    n: 7,
+    title: "Ridge caps",
+    body: "Thicker, pre-bent cap shingles made for hips and ridges, not 3-tab cut into pieces. The ridge is where wind pulls hardest, and the cap is what covers the ridge vent.",
+  },
+];
+
+const choose = [
+  {
+    title: "Pitch",
+    body: "The first question, and it isn't a matter of taste. We measure the slope of each roof plane. Steep enough for shingles, you have a choice; flat or low slope, it's membrane. Plenty of houses have both: a shingle main roof and a flat porch or addition roof.",
+  },
+  {
+    title: "Budget",
+    body: "3-tab costs the least today. Architectural costs more, but divide each price by its expected years and the gap narrows. When both fit the roof, we'll price both on the estimate so you can see it for yourself.",
+  },
+  {
+    title: "How long you'll stay",
+    body: "Selling in a few years, a sound 3-tab roof may be all the house needs. Staying for twenty, the longer-lived shingle usually makes more sense, because you'll be the one paying for the next roof.",
+  },
+  {
+    title: "HOA and neighborhood rules",
+    body: "Many HOAs set the material, color or profile. Send us your CC&Rs or the approved list and we'll quote to it, with the product written out for your submittal. Historic districts can have rules of their own; that depends on the city, and we'll check.",
+  },
+  {
+    title: "The look",
+    body: "Color and profile change a house more than people expect. Look at samples against your own siding in daylight, not on a screen. Tell us what you like on the street and we'll help you narrow it down.",
+  },
+];
+---
+
+<Page
+  title="Roofing Materials"
+  description="3-tab asphalt shingle, architectural shingle and single-ply membrane (TPO/PVC): what each one is, where it fits, how it handles Northwest weather, and the underlayment, flashing and ventilation that decide how long a roof lasts."
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Roofing materials"
+    title="What goes on your roof, and why"
+    lead="We install three roofing systems: 3-tab asphalt shingle, architectural shingle and single-ply membrane. Here's what each one is, where it fits, how it stands up to an Oregon winter, and the parts under and around it that matter just as much."
+    image="/images/materials/page/rain-on-shingles.jpg"
+    imageAlt="Rain pouring off the edge of an upper roof onto dark shingles below"
+    imageCaption="Water off an upper roof landing on the one below. From October to May, this is a normal day."
+    treelineOffset={-220}
+  />
+
+  {/* 1. Index of the three systems, then 3-tab: photo left, ruled spec rows right. */}
+  <section class="section bg-canvas">
+    <div class="container-page">
+      <nav aria-label="The three systems" class="border-y border-hairline">
+        <ul class="grid md:grid-cols-3">
+          {
+            systems.map((system, index) => (
+              <li
+                class:list={[
+                  "border-hairline",
+                  index > 0 && "border-t md:border-t-0 md:border-l md:pl-6",
+                  index < systems.length - 1 && "md:pr-6",
+                ]}
+              >
+                <a
+                  href={`#${system.id}`}
+                  class="group flex h-full items-end justify-between gap-4 py-5"
+                >
+                  <span>
+                    <span class="t-spaced-sm block text-mute">{system.fit}</span>
+                    <span class="t-heading-sm mt-2 block text-ink group-hover:text-forest">{system.title}</span>
+                  </span>
+                  <span class="shrink-0 text-right">
+                    <span class="t-heading-md block text-forest">{system.life}</span>
+                    <span class="t-caption block text-mute">years</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <article id="asphalt-shingle" class="mt-16 grid gap-10 lg:mt-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <div>
+          <p class="t-eyebrow text-forest">Steep slope</p>
+          <h2 class="t-display-lg mt-4 text-ink">3-tab asphalt shingle</h2>
+          <p class="t-lead mt-5 text-body">
+            The original strip shingle: a fiberglass mat soaked in asphalt and coated in ceramic
+            granules, cut into three equal tabs so each strip lies flat and reads as three
+            shingles. One layer thick, so the roof has flat, even courses.
+          </p>
+
+          <figure class="photo-plate mt-8">
+            <img
+              src={asset("/images/materials/page/three-tab-shingle.jpg")}
+              alt="Close view of gray 3-tab shingles, with needles and leaf litter caught along a course line"
+              class="aspect-[4/3]"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              3-tab up close: one flat layer, the keyway slots lined up course to course. Photo:
+              FASTILY, CC BY-SA 4.0.
+            </figcaption>
+          </figure>
+
+          <dl class="mt-8 flex flex-row-reverse items-end justify-end gap-4 border-t border-hairline pt-6">
+            <dt class="t-caption max-w-[22ch] text-mute">years expected life, a typical industry range, not a warranty</dt>
+            <dd class="t-display-lg leading-none text-forest">15–20</dd>
+          </dl>
+        </div>
+
+        <dl class="spec-rows">
+          <div>
+            <dt>Where it fits</dt>
+            <dd>
+              <p>
+                Steep-slope roofs: houses, garages, sheds and outbuildings. Shingles shed water by
+                overlap, so they need pitch. As a rule, 4-in-12 or steeper is a standard install;
+                between 2 and 4 in 12 it takes a double layer of underlayment; below 2 in 12,
+                shingles aren't the right roof. Most manufacturers and the building code draw the
+                same lines.
+              </p>
+            </dd>
+          </div>
+          <div>
+            <dt>Strengths</dt>
+            <dd>
+              <ul class="check-list">
+                <li>The lowest cost per square of the three.</li>
+                <li>Light, so it's easy on older framing.</li>
+                <li>Simple to repair: a damaged tab can be slipped out and replaced.</li>
+                <li>A plain, traditional look that suits older houses and outbuildings.</li>
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt>Trade-offs</dt>
+            <dd>
+              <ul class="dash-list">
+                <li>The shortest life of the three.</li>
+                <li>Light and flat, so it's the first to lift and tear in a wind storm.</li>
+                <li>Shows every dip and wave in the deck underneath.</li>
+                <li>
+                  Fewer colors, and some lines are being dropped as manufacturers move to laminated
+                  shingle, which can make matching a repair harder later.
+                </li>
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt>Northwest weather</dt>
+            <dd>
+              <p>
+                The flat tabs hold water in their seams, and moss gets its start in the keyways,
+                fastest on north-facing slopes and under firs. Once moss lifts a tab edge,
+                wind-driven rain gets under it. A 3-tab roof here does best with sun on it, clear
+                valleys and gutters, and moss dealt with while it's still a film.
+              </p>
+            </dd>
+          </div>
+          <div>
+            <dt>Upkeep</dt>
+            <dd>
+              <p>
+                Clear needles out of the valleys and gutters every fall. Treat moss before it gets
+                thick, and never pressure-wash: it strips the granules that shield the asphalt from
+                the sun. Replace creased or missing tabs soon; with only one layer, a missing tab
+                leaves bare underlayment.
+              </p>
+            </dd>
+          </div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  {/* 2. Architectural: long-form prose with a sticky rail (photo + fact plate).
+      Extra bottom padding: the next band's treeline stands up into it. */}
+  <section
+    id="architectural-shingle"
+    class="section bg-cream-deep pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28"
+  >
+    <div class="container-page grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
+      <div class="min-w-0">
+        <p class="t-eyebrow text-forest">Steep slope</p>
+        <h2 class="t-display-lg mt-4 text-ink">Architectural shingle</h2>
+
+        <div class="prose-page mt-6">
+          <p class="t-lead text-body">
+            Also called laminated or dimensional shingle. Two layers of shingle mat are bonded
+            together, and the top layer is cut away in random widths so the bottom one shows
+            through. The courses throw shadow lines and read like shake from the street. It's
+            thicker and heavier than 3-tab, and it's the standard choice on most house re-roofs
+            today.
+          </p>
+
+          <h3>Where it fits</h3>
+          <p>
+            Steep-slope roofs, on the same pitch rules as 3-tab: 4-in-12 and up as standard, down to
+            2-in-12 with doubled underlayment. Its random pattern also hides small waves in an older
+            deck that flat 3-tab would show.
+          </p>
+
+          <h3>Strengths</h3>
+          <ul>
+            <li>A longer expected life: 25–30 years against 15–20 for 3-tab.</li>
+            <li>Heavier and stiffer, and most lines carry higher wind ratings than 3-tab.</li>
+            <li>The widest range of colors and blends, and a profile that suits most houses.</li>
+            <li>Forgiving of an imperfect deck.</li>
+          </ul>
+
+          <h3>Trade-offs</h3>
+          <ul>
+            <li>It costs more than 3-tab up front.</li>
+            <li>
+              It's heavier. On an old house with two layers already on it, the deck and framing get a
+              look before anything goes up.
+            </li>
+            <li>It won't blend into an existing 3-tab roof, so it's not the patch for one.</li>
+          </ul>
+
+          <h3>Northwest weather</h3>
+          <p>
+            Weight and thickness help in wind, which matters in east-wind country out toward
+            Troutdale and the Gorge, and in the southwest gales that come through every winter. The
+            laminated layers dry a little slower than a single one, so moss still needs watching on
+            shaded slopes. Many lines have algae-resistant granules that stop the black streaks you
+            see on older roofs; they don't stop moss.
+          </p>
+          <p>
+            One thing true of any shingle: the sealant strip that bonds each course to the one below
+            needs warmth to set. Shingles laid in a cold snap may not seal until the weather warms, so
+            a winter install can call for hand-sealing, especially on exposed edges.
+          </p>
+
+          <h3>Upkeep</h3>
+          <p>
+            The same as any shingle roof: keep the valleys and gutters clear, treat moss early, and
+            have the pipe boots and flashings looked at every few years. Of the three systems, a
+            well-kept architectural roof asks the least of you.
+          </p>
+        </div>
+      </div>
+
+      <aside class="min-w-0">
+        <div class="flex flex-col gap-8 lg:sticky lg:top-28">
+          <figure class="photo-plate">
+            <img
+              src={asset("/images/materials/page/architectural-shingle.jpg")}
+              alt="Courses of gray architectural shingle with random-width tabs and deep shadow lines"
+              class="aspect-[4/3]"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Laminated shingle: tabs cut to random widths over a second layer, so every course casts a shadow.</figcaption>
+          </figure>
+
+          <div class="panel panel-keyline overflow-hidden">
+            <div class="plate-label">
+              <span class="t-spaced-sm">At a glance</span>
+            </div>
+            <dl class="glance px-6 py-3">
+              <div>
+                <dt>Fits</dt>
+                <dd>Steep slope, 4-in-12 and up</dd>
+              </div>
+              <div>
+                <dt>Expected life</dt>
+                <dd>25–30 years</dd>
+              </div>
+              <div>
+                <dt>Build</dt>
+                <dd>Two layers, laminated</dd>
+              </div>
+              <div>
+                <dt>Look</dt>
+                <dd>Dimensional, shake-like</dd>
+              </div>
+            </dl>
+          </div>
+          <p class="t-caption text-mute">
+            Life figures are typical industry ranges for a correctly installed, maintained roof. They
+            aren't a warranty or a promise about any one roof.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {/* 3. Single-ply on a forest band: heading row, wide photo, three columns. */}
+  <section id="single-ply" class="on-forest relative bg-forest text-on-forest">
+    <Treeline tone="forest" height={64} offset={-310} class="absolute inset-x-0 bottom-full" />
+
+    <div class="container-page pt-24 pb-36 md:pt-28 md:pb-40">
+      <div class="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+        <div>
+          <p class="t-eyebrow text-on-forest-mute">Flat &amp; low slope</p>
+          <h2 class="t-display-lg mt-4">Single-ply membrane <span class="whitespace-nowrap">(TPO / PVC)</span></h2>
+        </div>
+        <p class="t-lead text-on-forest-mute">
+          A flat roof is a different animal. Instead of overlapping pieces that shed water downhill,
+          single-ply is one continuous sheet, and it has to hold water until the water finds a drain.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
+        <figure class="photo-plate">
+          <img
+            src={asset("/images/materials/page/white-single-ply-over-old-roof.jpg")}
+            alt="Looking down on a low-slope roof mid-job: new white membrane over the near sections, turned up the parapet walls and around exhaust fans and equipment curbs, with the old black roof still showing beyond"
+            class="aspect-[3/2]"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            White single-ply going on, section by section: the sheet runs up the parapets and around every fan and
+            curb, and the old black roof beyond is still waiting its turn. Photo: Daniel X. O'Neil, CC BY 2.0.
+          </figcaption>
+        </figure>
+
+        <div class="prose-page">
+          <h3>What it is</h3>
+          <p>
+            Rolls of thermoplastic membrane, TPO or PVC, are laid over insulation or cover board and
+            fastened or fully adhered. The seams are welded with hot air, so the laps fuse into one
+            sheet. Flashings at walls, curbs and drains are welded in the same way.
+          </p>
+          <p>
+            TPO is the common choice and usually the lower cost of the two. PVC stands up better to
+            grease and oils, which is why it goes on restaurant roofs under the kitchen exhaust.
+          </p>
+          <dl class="mt-8 flex flex-row-reverse items-end justify-end gap-4 border-t border-hairline-dark pt-6">
+            <dt class="t-caption max-w-[22ch] text-on-forest-mute">years expected life, a typical industry range, not a warranty</dt>
+            <dd class="t-display-lg leading-none text-on-forest">20–30</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="mt-14 grid border-t border-hairline-dark md:grid-cols-3">
+        <div class="py-8 md:pr-8">
+          <h3 class="t-heading-md">Where it fits</h3>
+          <p class="t-body-sm mt-3 text-on-forest-mute">
+            Flat and low-slope roofs, where shingles can't go: commercial buildings and apartment
+            roofs, and on houses, the flat porch roof, the dormer, the addition or the modern
+            low-slope roof. Low slope still isn't dead flat. It needs fall to drain, usually at
+            least a quarter inch per foot, built in with tapered insulation and crickets that steer
+            water to drains and scuppers.
+          </p>
+        </div>
+        <div class="border-t border-hairline-dark py-8 md:border-t-0 md:border-l md:px-8">
+          <h3 class="t-heading-md">Strengths</h3>
+          <ul class="check-list t-body-sm mt-4 text-on-forest-mute">
+            <li>Welded seams: no glued laps or tar joints to dry out.</li>
+            <li>Light and reflective, so the top floor runs cooler in summer.</li>
+            <li>Repairable by welding in a patch of new membrane.</li>
+            <li>Light enough to go over most existing low-slope structure.</li>
+          </ul>
+        </div>
+        <div class="border-t border-hairline-dark py-8 md:border-t-0 md:border-l md:pl-8">
+          <h3 class="t-heading-md">Trade-offs</h3>
+          <ul class="check-list dash t-body-sm mt-4 text-on-forest-mute">
+            <li>Only as good as its drainage and its welds. A bad seam or a blocked drain is where it leaks.</li>
+            <li>A dropped tool or a careless boot can puncture it; walk pads belong on paths to equipment.</li>
+            <li>It takes a crew that welds membrane regularly. It isn't shingle work.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid gap-10 border-t border-hairline-dark pt-10 md:grid-cols-2 md:gap-16">
+        <div>
+          <h3 class="t-heading-md">Northwest weather</h3>
+          <p class="t-body-md mt-3 text-on-forest-mute">
+            Rain on a flat roof doesn't run off in minutes; it has to find the drain. Months of it
+            means any low spot ponds, fir needles and leaves pile up at drains and scuppers, and
+            standing water finds any weak seam. Moss is rarely the problem on membrane up here.
+            Debris and drainage are.
+          </p>
+        </div>
+        <div>
+          <h3 class="t-heading-md">Upkeep</h3>
+          <p class="t-body-md mt-3 text-on-forest-mute">
+            Clear drains, scuppers and gutters in the fall and again in midwinter. Walk the roof
+            twice a year and after big storms, looking at seams, the flashing at curbs and walls, and
+            anything the last contractor left behind. Anyone who cuts into the roof for a vent, a
+            unit or solar should have the penetration flashed properly.
+          </p>
+          <a href={serviceHref("commercial")} class="t-spaced-sm mt-6 inline-flex min-h-12 items-center gap-2 text-on-forest hover:text-on-forest-mute">
+            Commercial roofing
+            <Icon name="arrow" size={16} />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <Treeline tone="cream" height={64} offset={-40} class="absolute inset-x-0 bottom-0" />
+  </section>
+
+  {/* 4. Side-by-side reference table. */}
+  <section class="section bg-canvas">
+    <div class="container-page">
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
+        <h2 class="t-display-lg text-ink">Side by side</h2>
+        <p class="t-lead max-w-2xl text-body">
+          The three systems on one sheet. Pitch decides which of them your roof can
+          take; the rest is budget, time and taste.
+        </p>
+      </div>
+
+      <p class="t-caption mt-8 text-mute md:hidden">Swipe the table sideways to see all three.</p>
+      <div class="table-scroll mt-3 md:mt-10">
+        <table class="data-table compare-table">
+          <caption class="sr-only">Comparison of 3-tab asphalt shingle, architectural shingle and single-ply membrane</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Property</span></th>
+              <th scope="col">3-tab asphalt shingle</th>
+              <th scope="col">Architectural shingle</th>
+              <th scope="col">Single-ply (TPO / PVC)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              compare.map((row) => (
+                <tr>
+                  <th scope="row">{row.label}</th>
+                  {row.cells.map((cell) => (
+                    <td>{cell}</td>
+                  ))}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="t-caption mt-4 max-w-3xl text-mute">
+        *Expected life is a typical industry range for a correctly installed, maintained roof, not a
+        warranty and not a promise about any one roof. Shade, moss, ventilation and slope move it
+        either way.
+      </p>
+    </div>
+  </section>
+
+  {/* 5. The rest of the roof: drawing in a plate, numbered legend beside it. */}
+  <section class="section bg-cream-deep">
+    <div class="container-page">
+      <div class="max-w-3xl">
+        <h2 class="t-display-lg text-ink">The rest of the roof</h2>
+        <p class="t-lead mt-5 text-body">
+          Shingles are the part you see. Most leaks start somewhere else: at an edge, a wall, a pipe
+          or a valley. These are the parts that decide how long a roof really lasts, whichever
+          material goes on top.
+        </p>
+      </div>
+
+      <div class="mt-12">
+        <figure class="panel m-0 overflow-hidden">
+          <figcaption class="plate-label flex-wrap justify-between gap-y-1">
+            <span class="t-spaced-sm">Section through a shingle roof</span>
+            <span class="t-spaced-sm text-on-forest-mute">Not to scale</span>
+          </figcaption>
+          <div class="bg-board px-2 py-6 sm:px-8 lg:px-16 lg:py-10">
+            <RoofSystem class="mx-auto block h-auto w-full max-w-[1000px]" />
+          </div>
+          <div class="flex flex-wrap gap-x-8 gap-y-2 border-t border-hairline px-5 py-4">
+            <span class="flex items-center gap-2.5">
+              <span class="key-line key-dashed" aria-hidden="true"></span>
+              <span class="t-caption text-body">Air path, soffit to ridge</span>
+            </span>
+            <span class="flex items-center gap-2.5">
+              <span class="key-line key-solid" aria-hidden="true"></span>
+              <span class="t-caption text-body">Metal and ice-and-water shield</span>
+            </span>
+            <span class="flex items-center gap-2.5">
+              <span class="key-line key-thin" aria-hidden="true"></span>
+              <span class="t-caption text-body">Underlayment</span>
+            </span>
+          </div>
+        </figure>
+
+        <ol class="parts-list mt-10">
+          {
+            [...parts].sort((a, b) => a.n - b.n).map((part) => (
+              <li>
+                <span class="parts-num" aria-hidden="true">{part.n}</span>
+                <div>
+                  <h3 class="t-heading-sm text-ink">{part.title}</h3>
+                  <p class="t-body-sm mt-1.5 text-body">{part.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  {/* 6. How we help you choose: sticky heading left, ruled factors right. */}
+  <section class="section bg-canvas">
+    <div class="container-page grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
+      <div>
+        <div class="lg:sticky lg:top-28">
+          <h2 class="t-display-lg text-ink">How we help you choose</h2>
+          <p class="t-lead mt-5 text-body">
+            The estimate names one material and says why. These five things decide it.
+          </p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-start">
+            <a href={estimateHref} class="btn btn-primary">Request a Free Estimate</a>
+            <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
+          </div>
+        </div>
+      </div>
+
+      <ul class="border-t border-hairline">
+        {
+          choose.map((item) => (
+            <li class="grid gap-2 border-b border-hairline py-7 sm:grid-cols-[200px_minmax(0,1fr)] sm:gap-8">
+              <h3 class="t-heading-md text-ink">{item.title}</h3>
+              <p class="t-body-md text-body">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <ClosingCta
+    title="Not sure what your roof is?"
+    body="Most people aren't. We'll come look, measure the pitch, tell you what's up there now and what we'd put on next, in writing."
+  />
+</Page>
+
+<style>
+  /* Ruled spec rows for the 3-tab section: term in the display cut on the
+     left, the answer on the right; stacked on small screens. */
+  .spec-rows {
+    border-top: 1px solid var(--color-hairline);
+  }
+  .spec-rows > div {
+    display: grid;
+    gap: 8px;
+    padding-block: 22px;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  @media (min-width: 640px) {
+    .spec-rows > div {
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 24px;
+    }
+  }
+  .spec-rows dt {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-forest);
+  }
+  .spec-rows dd {
+    margin: 0;
+    font-size: 16.5px;
+    line-height: 1.62;
+    color: var(--color-body);
+  }
+
+  /* Trade-offs get a plain rule instead of a check: a check would read as
+     a point in the material's favor. */
+  .dash-list > li,
+  .check-list.dash > li {
+    position: relative;
+    padding-left: 32px;
+  }
+  .dash-list > li + li {
+    margin-top: 12px;
+  }
+  .dash-list > li::before,
+  .check-list.dash > li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 0.8em;
+    width: 14px;
+    height: 2px;
+    background-color: var(--color-forest);
+    mask: none;
+  }
+  .on-forest .check-list.dash > li::before {
+    background-color: var(--color-cream);
+  }
+
+  /* Fact plate in the architectural rail. */
+  .glance > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding-block: 12px;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .glance > div:last-child {
+    border-bottom: 0;
+  }
+  .glance dt {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-mute);
+    flex: none;
+  }
+  .glance dd {
+    margin: 0;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--color-ink);
+    text-align: right;
+  }
+
+  /* Comparison table: a fixed first column and even data columns; wide
+     enough to scroll inside itself on a phone rather than squeeze. */
+  .compare-table {
+    min-width: 760px;
+    table-layout: fixed;
+  }
+  .compare-table thead th:first-child,
+  .compare-table tbody th {
+    width: 170px;
+  }
+  /* On a phone the label column narrows so the next column shows at the
+     edge, which is what tells you the table scrolls. */
+  @media (max-width: 767.98px) {
+    .compare-table {
+      min-width: 640px;
+    }
+    .compare-table thead th:first-child,
+    .compare-table tbody th {
+      width: 116px;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding: 12px 14px;
+    }
+  }
+  .compare-table tbody th {
+    font-size: 13.5px;
+    letter-spacing: 0.1em;
+    color: var(--color-forest);
+  }
+  .compare-table tbody tr:nth-child(3) td {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--color-ink);
+  }
+
+  /* Legend for the roof section: forest number blocks matching the drawing. */
+  .parts-list {
+    border-top: 1px solid var(--color-hairline);
+  }
+  .parts-list > li {
+    display: grid;
+    align-content: start;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 16px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .parts-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: var(--color-forest);
+    color: var(--color-cream);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+  }
+  @media (min-width: 768px) {
+    .parts-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 40px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .parts-list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      column-gap: 32px;
+    }
+    .parts-list > li {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      padding-block: 20px 24px;
+    }
+  }
+
+  .key-line {
+    flex: none;
+    width: 28px;
+    height: 0;
+    border-top: 2px dashed var(--color-forest);
+  }
+  .key-solid {
+    border-top: 4px solid var(--color-forest);
+  }
+  .key-thin {
+    border-top: 2px solid var(--color-forest-mid);
+  }
+</style>

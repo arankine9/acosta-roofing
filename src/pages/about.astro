@@ -1,0 +1,426 @@
+---
+import Page from "../layouts/Page.astro";
+import PageHero from "../components/PageHero.astro";
+import ClosingCta from "../components/ClosingCta.astro";
+import Treeline from "../components/Treeline.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+import { pages } from "../data/nav";
+import { asset } from "../lib/url";
+
+// About. Built around how the company works rather than a history: nothing
+// here is a fact about the business that isn't in src/data/site.ts or
+// already on the home page (small crew, the estimator is the installer, the
+// four TrustStrip claims). No founding year, job counts, names or reviews.
+//
+// Photo credits:
+// - images/about/crew-on-shingle-roof.jpg: Jon Callas, "Starting Roof
+//   Install", https://www.flickr.com/photos/joncallas/5303968859
+//   (CC BY 2.0, https://creativecommons.org/licenses/by/2.0/). Cropped to
+//   4:3 and resized. The photo shows an installer crew (not ours) setting
+//   and sealing roof-mount brackets; the caption describes the work, not
+//   whose crew it is. Attribution is printed in the caption.
+// - images/about/west-union-farmhouse.jpg: M.O. Stevens,
+//   "22097 West Union Road - West Union, Oregon",
+//   https://commons.wikimedia.org/wiki/File:22097_West_Union_Road_-_West_Union,_Oregon.JPG
+//   (CC BY-SA 3.0, https://creativecommons.org/licenses/by-sa/3.0/). Cropped
+//   square to the house and the fir behind it; attribution is required and
+//   is printed in the caption. The caption leaves out the street address.
+const crumbs = [{ label: "About", href: pages.about }];
+
+const ccbSearch = "https://search.ccb.state.or.us/search/";
+
+// The company record, from site.ts only.
+const record = [
+  { label: "Legal name", value: site.legalName },
+  { label: "Based in", value: `${site.address.city}, ${site.address.state}` },
+  { label: "Oregon CCB #", value: site.ccb },
+  { label: "Coverage", value: "Licensed · Bonded · Insured" },
+  { label: "Work", value: "Residential & commercial" },
+];
+
+const steps = [
+  {
+    title: "You call or send the form",
+    body: "We ask what you're seeing, roughly how old the roof is if you know, and where the house is. If water is coming in, say so first; that changes the order of everything.",
+  },
+  {
+    title: "We walk the roof",
+    body: "On the roof when it's safe to be, and in the attic if there's access. From below, the underside of the deck shows old leaks, condensation and how well the attic breathes. We take photos as we go so you can see what we saw.",
+  },
+  {
+    title: "You get a written estimate",
+    body: "Itemized, in plain words, with the materials named. What goes in it is set out further down this page. Take your time with it and compare it against anyone else's.",
+  },
+  {
+    title: "We schedule and order materials",
+    body: "You get a start window and a heads-up on what the days will look like: noise, where the truck and debris container go, when you'll need the driveway. We watch the forecast and only open as much roof as we can dry in the same day.",
+  },
+  {
+    title: "Tear-off and deck check",
+    body: "The old roof comes off to the wood. Soft or delaminated sheathing only shows once it's bare, so the estimate already says how replacement decking is handled. If we find it, we show you before we fix it.",
+  },
+  {
+    title: "The new roof goes on",
+    body: "Drip edge, underlayment, ice-and-water shield in the valleys and around penetrations, new step and chimney flashing, pipe boots, shingles, and ridge vent where the attic needs it. The parts you'll never see get the most attention.",
+  },
+  {
+    title: "Cleanup and the final walk-through",
+    body: "A last magnetic sweep of the lawn, beds and driveway, then we walk the job with you, from the ground or the attic, and answer whatever's left. You get the paperwork for your records.",
+  },
+];
+
+const estimateItems = [
+  { title: "Scope in plain words", body: "Full tear-off to the deck, an overlay, or a repair to one area, and exactly which slopes." },
+  { title: "Materials by name", body: "Shingle or membrane type, product line and color, so you can look it up." },
+  { title: "Underlayment and ice-and-water shield", body: "What goes under the shingles, and where the self-adhering membrane goes." },
+  { title: "Flashing", body: "Which step, wall, chimney and valley flashing is being replaced, and which pipe boots." },
+  { title: "Ventilation", body: "Ridge vent, roof vents and soffit intake: what's there now and what changes." },
+  { title: "Decking", body: "How damaged sheathing is handled if the tear-off finds it, written down before we start." },
+  { title: "Gutters and drainage", body: "If gutters or downspouts are part of the job, the size and layout." },
+  { title: "Cleanup and disposal", body: "Who hauls the old roof away, and the magnetic sweep." },
+  { title: "Permits", body: "Whether your city or county wants one for this job, and who pulls it." },
+  { title: "Schedule and payment terms", body: "The expected start window, how long the work should take, and when payments are due." },
+];
+
+const propertyCare = [
+  {
+    title: "Tarps over the landscaping",
+    body: "Beds, shrubs and anything along the drip line get covered before tear-off starts. Tell us about the plants you care most about and we'll plan around them.",
+  },
+  {
+    title: "A dry roof every night",
+    body: "An unfinished roof is dried in with underlayment or tarps before we leave. Oregon weather turns fast, and a forecast is not a promise.",
+  },
+  {
+    title: "Daily cleanup",
+    body: "Loose debris, wrappers and offcuts are picked up at the end of each day, not left for the last one. You should be able to use your yard in the evening.",
+  },
+  {
+    title: "The magnetic sweep",
+    body: "Roofing nails end up in lawns and gravel. A rolling magnet goes over the grass, beds, driveway and street edge each day, and once more at the end.",
+  },
+  {
+    title: "Your attic",
+    body: "Tear-off shakes the rafters, and dust and old granules can sift down. If you store things up there, cover them before we start; we'll remind you.",
+  },
+  {
+    title: "No surprises on the bill",
+    body: "If the job turns up something the estimate didn't cover, like rotten decking or a cracked chimney crown, we stop, show you and agree the change before doing it.",
+  },
+];
+
+const claims = [
+  {
+    icon: "quality",
+    label: "Quality workmanship",
+    body: "Judged in the parts you never see: the nailing line, the underlayment laps, the flashing at every wall.",
+  },
+  {
+    icon: "honest",
+    label: "Honest & reliable",
+    body: "An estimate you can compare line by line, a call before any change, and a straight answer when the weather moves a start date.",
+  },
+  {
+    icon: "built",
+    label: "Built to last",
+    body: "Details chosen for a long wet season, fir needles in the valleys and the odd ice storm off the Gorge.",
+  },
+  {
+    icon: "oregon",
+    label: "Rooted in Oregon",
+    body: `Based in ${site.address.city}, licensed with the Oregon CCB, and working within reach of the shop.`,
+  },
+];
+---
+
+<Page
+  title="About"
+  description={`How Acosta Roofing works: a small Beaverton crew where the person who quotes your roof is on it. What a written estimate includes, how we treat your property, and how to check our Oregon CCB license #${site.ccb}.`}
+  crumbs={crumbs}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="About Acosta Roofing"
+    title="The person who quotes your roof is on it"
+    lead={`${site.legalName} is a small roofing contractor in ${site.address.city}, licensed, bonded and insured in Oregon. This page is about how we work, and about what you can check for yourself.`}
+    image="/images/about/crew-on-shingle-roof.jpg"
+    imageAlt="Two workers on a dark laminated shingle roof above cedar-shingled walls, one kneeling at a bracket near the eave, a ladder against the gutter"
+    imageCaption="Every bracket, vent and pipe that goes through a roof is a place water can get in, so each one is flashed and sealed. Photo: Jon Callas, CC BY 2.0."
+    treelineOffset={-340}
+  />
+
+  {/* 1. Who we are, as far as the record goes. */}
+  <section id="how-we-work" class="section bg-canvas">
+    <div class="container-page grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
+      <div class="min-w-0">
+        <h2 class="t-display-lg text-ink">A small crew, on purpose</h2>
+        <div class="prose-page mt-8">
+          <p class="t-lead text-body">
+            We replace, repair and maintain roofs on houses across {site.serviceArea}, hang gutter systems, and
+            work on low-slope commercial and multi-unit buildings. All of it from one shop in {site.address.city}.
+          </p>
+          <p>
+            We keep the company small because it keeps the job straight. The person who walks your roof and writes
+            your estimate is the person on your roof when the work gets done, so what was promised at the kitchen
+            table is what gets built. If something turns up halfway through, you hear about it from someone who has
+            seen it with their own eyes.
+          </p>
+          {/*
+            TODO(owner): founder story goes here. Two or three short paragraphs
+            in your own words: who started Acosta Roofing, where you learned the
+            trade, and why you run it the way you do. Leave out anything you
+            wouldn't want a customer to quote back to you. Until it's written,
+            this page deliberately says nothing about the company's history.
+          */}
+          <p>
+            Below is how a job runs from the first call to the last walk-through, what goes into a written estimate,
+            how we treat your house while we're on it, and how to look up our license yourself. Those are the
+            things you can hold us to.
+          </p>
+        </div>
+      </div>
+
+      <aside class="min-w-0 lg:sticky lg:top-28 lg:self-start" aria-label="Company record">
+        <div class="panel panel-keyline overflow-hidden">
+          <div class="plate-label">
+            <span class="t-spaced">Company record</span>
+          </div>
+          <dl class="px-6 pt-3 pb-6">
+            {
+              record.map((row) => (
+                <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-hairline py-3.5">
+                  <dt class="t-spaced-sm text-mute">{row.label}</dt>
+                  <dd class="t-heading-sm text-forest">{row.value}</dd>
+                </div>
+              ))
+            }
+            <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3.5">
+              <dt class="t-spaced-sm text-mute">Service area</dt>
+              <dd>
+                <a href={pages.serviceArea} class="link-inline t-body-sm inline-flex min-h-11 items-center">
+                  {site.serviceArea.replace(/^the /, "The ")}
+                </a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {/* 2. The process. Extra bottom padding: the forest band's treeline stands in it. */}
+  <section id="process" class="section bg-cream-deep pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28">
+    <div class="container-page grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
+      <div class="min-w-0 lg:sticky lg:top-28 lg:self-start">
+        <p class="t-eyebrow text-forest-mid">How a job runs</p>
+        <h2 class="t-display-lg mt-4 text-ink">From first call to final <span class="whitespace-nowrap">walk-through</span></h2>
+        <p class="t-body-md mt-5 max-w-md text-body">
+          This is a full replacement, start to finish. A repair runs the same way with fewer days in the middle.
+        </p>
+      </div>
+      <ol class="step-list min-w-0">
+        {
+          steps.map((step) => (
+            <li>
+              <h3 class="t-heading-md text-ink">{step.title}</h3>
+              <p class="t-body-md text-body">{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* 3. The estimate, on a forest band. */}
+  <section id="estimate" class="on-forest relative bg-forest text-on-forest">
+    <Treeline tone="forest" height={64} offset={-230} class="absolute inset-x-0 bottom-full" />
+    <div class="container-page pt-24 pb-36 md:pt-28 md:pb-40">
+      <div class="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+        <h2 class="t-display-lg max-w-xl">What a written estimate from us includes</h2>
+        <p class="t-lead max-w-xl text-on-forest-mute">
+          Free, on paper, and specific enough to compare. If another estimate you're holding leaves one of these
+          out, it's worth asking why.
+        </p>
+      </div>
+      <ul class="check-list mt-12 grid gap-x-16 border-t border-hairline-dark pt-10 md:grid-cols-2 [&>li+li]:mt-0 [&>li]:pb-6">
+        {
+          estimateItems.map((item) => (
+            <li>
+              <p class="t-heading-sm">{item.title}</p>
+              <p class="t-body-sm mt-1.5 text-on-forest-mute">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="t-body-sm mt-4 max-w-3xl text-on-forest-mute">
+        Oregon also requires residential contractors to give homeowners certain written notices with the contract,
+        including one about construction liens. You'll get those with ours.
+      </p>
+    </div>
+    <Treeline tone="cream" height={64} offset={-415} class="absolute inset-x-0 bottom-0" />
+  </section>
+
+  {/* 4. On site. */}
+  <section id="property" class="section bg-canvas">
+    <div class="container-page">
+      <div class="grid gap-6 border-b border-hairline pb-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
+        <h2 class="t-display-lg text-ink">How we treat your property</h2>
+        <p class="t-body-md max-w-xl text-body">
+          A roof job is loud and messy for a few days. The mess is ours to manage, not yours to clean up after we've
+          gone.
+        </p>
+      </div>
+      <dl class="grid md:grid-cols-2 md:gap-x-16">
+        {
+          propertyCare.map((item) => (
+            <div class="grid gap-2 border-b border-hairline py-7 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-6 md:grid-cols-1 md:gap-2 xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] xl:gap-6">
+              <dt class="t-heading-sm text-forest">{item.title}</dt>
+              <dd class="t-body-sm text-body">{item.body}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  {/* 5. Licensed, bonded and insured. */}
+  <section id="licensed" class="section bg-cream-deep">
+    <div class="container-page grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
+      <div class="min-w-0">
+        <h2 class="t-display-lg text-ink">Licensed, bonded and insured, in plain terms</h2>
+        <div class="prose-page mt-8">
+          <p>
+            Every roofer says it. Here is what each word means in Oregon, and how to check it for any contractor,
+            us included.
+          </p>
+
+          <h3>Licensed</h3>
+          <p>
+            Anyone paid to do construction work in Oregon, roofing included, has to be licensed by the Construction
+            Contractors Board (CCB). Getting a license means completing training and an exam, and keeping a bond
+            and liability insurance on file with the state. A license also carries endorsements that say whether a
+            contractor may work on residential jobs, commercial jobs or both.
+          </p>
+
+          <h3>Bonded</h3>
+          <p>
+            A licensed contractor keeps a surety bond on file with the CCB. If a contractor breaks a contract or
+            does improper work, a homeowner can file a complaint with the CCB, and the bond can pay toward what's
+            owed. It's a backstop, not a warranty, but a contractor without one can't legally take your job.
+          </p>
+
+          <h3>Insured</h3>
+          <p>
+            Liability insurance covers damage the work causes to your property or to someone else's, like a
+            dropped bundle through a skylight or water through an open roof. Without it, that bill can land with
+            you. Contractors with employees also need workers' compensation coverage.
+          </p>
+
+          <h3>Check any contractor in two minutes</h3>
+          <ol>
+            <li>
+              Open the <a href={ccbSearch} target="_blank" rel="noopener">Oregon CCB license search</a>.
+            </li>
+            <li>Search by license number, which should be printed on the contractor's ads, website and estimate, or by business name.</li>
+            <li>Confirm the license is active and the endorsement fits your job: residential for a house.</li>
+            <li>Look at the bond and insurance on file, and at any complaint history.</li>
+          </ol>
+
+          <h3>Why our number is on every page</h3>
+          <p>
+            Oregon requires contractors to show their CCB license number in their advertising, websites included.
+            Ours is {site.ccb}. It's in the footer of every page, so you never have to ask for
+            it.
+          </p>
+        </div>
+      </div>
+
+      <aside class="min-w-0 lg:sticky lg:top-28 lg:self-start" aria-label="Look up our license">
+        <div class="panel panel-keyline overflow-hidden">
+          <div class="plate-label">
+            <span class="t-spaced">Oregon CCB license</span>
+          </div>
+          <div class="px-6 pt-8 pb-8 sm:px-8">
+            <p class="t-spaced-sm text-mute">CCB #</p>
+            <p class="t-display-lg mt-2 leading-none text-forest">{site.ccb}</p>
+            <p class="t-spaced-sm mt-6 border-y border-hairline py-3 text-forest">Licensed &middot; Bonded &middot; Insured</p>
+            <p class="t-body-sm mt-6 text-body">
+              Search the number or "{site.legalName}". The result shows license status, endorsements, and the bond
+              and insurance on file.
+            </p>
+            <a href={ccbSearch} target="_blank" rel="noopener" class="btn btn-primary mt-6 w-full">
+              Open the CCB search
+              <Icon name="arrow" size={18} />
+            </a>
+            <p class="t-caption mt-3 text-mute">Opens search.ccb.state.or.us in a new tab.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {/* 6. Oregon roots: the mark, a Washington County house, and the four words on the sign. */}
+  <section id="oregon" class="section bg-canvas">
+    <div class="container-page">
+      <div class="grid gap-6 border-b border-hairline pb-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
+        <h2 class="t-display-lg text-ink">Rooted in Oregon</h2>
+        <p class="t-body-md max-w-xl text-body">
+          The mark is a stand of firs behind a gable roof: a house with the timber at its back, which is what most
+          of the roofs we work on look like from the street. The firs are also why this is roofing country. They
+          drop needles in the valleys, shade the north slopes and keep the moss going all winter.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
+        <figure class="photo-plate min-w-0">
+          <img
+            src={asset("/images/about/west-union-farmhouse.jpg")}
+            alt="A white farmhouse with a gray shingle roof and green front door, a tall Douglas fir behind it and a wet lawn in front"
+            loading="lazy"
+            decoding="async"
+            class="aspect-[4/3] object-[50%_40%] lg:aspect-square"
+          />
+          <figcaption>
+            A farmhouse in West Union, Washington County, in January, with the timber at its back. Photo: M.O. Stevens,
+            <a
+              href="https://commons.wikimedia.org/wiki/File:22097_West_Union_Road_-_West_Union,_Oregon.JPG"
+              class="underline underline-offset-2 hover:text-forest"
+              target="_blank"
+              rel="noopener">Wikimedia Commons</a>,
+            <a
+              href="https://creativecommons.org/licenses/by-sa/3.0/"
+              class="underline underline-offset-2 hover:text-forest"
+              target="_blank"
+              rel="noopener">CC BY-SA 3.0</a>.
+          </figcaption>
+        </figure>
+
+        <div class="min-w-0">
+          <div class="panel panel-keyline flex items-center justify-center px-8 py-10">
+            <img src={asset("/mark.svg")} alt="The Acosta Roofing mark: firs behind a gable roof" width="197" height="90" class="h-auto w-full max-w-[280px]" />
+          </div>
+          <ul class="mt-8 border-t border-hairline">
+            {
+              claims.map((claim) => (
+                <li class="grid grid-cols-[28px_minmax(0,1fr)] gap-x-4 border-b border-hairline py-5">
+                  <Icon name={claim.icon} size={26} class="mt-0.5 text-forest" />
+                  <div>
+                    <h3 class="t-heading-sm text-ink">{claim.label}</h3>
+                    <p class="t-body-sm mt-1.5 text-body">{claim.body}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ClosingCta
+    surface="cream-deep"
+    title="Come see how we work"
+    body="The estimate is the easiest way to judge us: we walk the roof, show you what we found and write it all down. It's free and there's no follow-up pressure."
+  />
+</Page>

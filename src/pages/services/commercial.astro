@@ -1,0 +1,716 @@
+---
+import Page from "../../layouts/Page.astro";
+import PageHero from "../../components/PageHero.astro";
+import ClosingCta from "../../components/ClosingCta.astro";
+import RelatedServices from "../../components/RelatedServices.astro";
+import Treeline from "../../components/Treeline.astro";
+import Icon from "../../components/Icon.astro";
+import { asset } from "../../lib/url";
+import { pages } from "../../data/nav";
+import { serviceHref } from "../../data/services";
+import { site, counties } from "../../data/site";
+
+// Commercial roofing: single-ply membrane and low-slope roofs for shops,
+// warehouses, offices and light-industrial buildings. Written for property
+// managers, owners and facilities people. The footer links to #single-ply and
+// #low-slope, so those two ids must stay.
+//
+// Photos (all Unsplash License: free for commercial use, no attribution
+// required; credited here for the record):
+// - commercial/white-membrane-rooftop-units.jpg: Toni Reed,
+//   https://unsplash.com/photos/Ba_o2rvI5aY
+// - commercial/light-industrial-low-slope.jpg: Alex Reynolds,
+//   https://unsplash.com/photos/rHvi-_-0jUU (cropped)
+// - commercial/rooftop-unit-parapet-drain.jpg: Linus Belanger,
+//   https://unsplash.com/photos/vvDUCfhiDpE (cropped, saturation reduced)
+//
+// The low-slope cross-section is drawn inline below, in the house style.
+
+const crumbs = [
+  { label: "Services", href: pages.services },
+  { label: "Commercial roofing", href: serviceHref("commercial") },
+];
+
+const schema = {
+  "@type": "Service",
+  name: "Commercial roofing",
+  serviceType: "Commercial low-slope and single-ply membrane roofing",
+  description:
+    "TPO and PVC single-ply membrane and low-slope roofing for shops, warehouses, offices and light-industrial buildings: replacement, repair, condition reports and maintenance.",
+  url: new URL(serviceHref("commercial"), Astro.site).toString(),
+  provider: {
+    "@type": "RoofingContractor",
+    name: site.legalName,
+    telephone: site.phone,
+    url: `https://${site.domain}`,
+  },
+  areaServed: counties.map((county) => `${county.name} County, OR`),
+};
+
+// Chapter 1: the buildings and the kinds of work on them.
+const workTypes = [
+  {
+    title: "Replacement",
+    body: "Tear-off to the deck, or where the existing roof is dry and sound and the code allows it, a recover over it. We'll tell you which one your building qualifies for.",
+  },
+  {
+    title: "Repair",
+    body: "Leaks at curbs, seams, drains, walls and edges, and wind damage after a storm. Found at the source, fixed in the same membrane.",
+  },
+  {
+    title: "Reports and maintenance",
+    body: "A written condition report when you need to plan or budget, and scheduled visits to keep drains open and details tight.",
+  },
+];
+
+// Chapter 2: how a single-ply sheet is held down.
+const attachment = [
+  {
+    title: "Mechanically attached",
+    body: "Insulation and membrane are screwed to the deck through steel plates. The fasteners sit in the seam laps and the next sheet is welded over them. Quick to install, less fussy about weather, and common on steel decks.",
+  },
+  {
+    title: "Fully adhered",
+    body: "The membrane is glued to the cover board across its whole area. No flutter in wind, a smoother finish, and a good fit for roofs crowded with penetrations. Adhesives need a dry surface and mild temperatures, so the weather matters more.",
+  },
+];
+
+// Chapter 2: reference table. General characteristics only.
+const systems = [
+  {
+    name: "TPO",
+    what: "Thermoplastic single-ply sheet, usually white",
+    seams: "Hot-air welded",
+    note: "The common choice for re-roofing low-slope commercial buildings. Reflective surface.",
+  },
+  {
+    name: "PVC",
+    what: "Thermoplastic single-ply sheet, usually white",
+    seams: "Hot-air welded",
+    note: "Holds up better than TPO to grease, oils and many chemicals. Costs more.",
+  },
+  {
+    name: "EPDM",
+    what: "Synthetic rubber single-ply sheet, usually black",
+    seams: "Taped or glued laps",
+    note: "Long track record and flexible in the cold. The laps are the usual weak point as it ages.",
+  },
+  {
+    name: "Modified bitumen",
+    what: "Asphalt sheets with polymer modifiers, in two or more plies",
+    seams: "Torched, hot-mopped or self-adhered",
+    note: "Tough under foot traffic. Torch-applied work carries a fire risk on an occupied building.",
+  },
+  {
+    name: "Built-up (tar & gravel)",
+    what: "Alternating layers of felt and hot asphalt, often with gravel on top",
+    seams: "Continuous layers",
+    note: "Common on older buildings. Heavy, and the gravel hides the membrane, so leaks are hard to trace.",
+  },
+];
+
+// Chapter 3: keyed notes for the cross-section.
+const drainage = [
+  {
+    key: "A",
+    title: "Tapered insulation",
+    body: "Insulation boards cut with a built-in slope, laid so every part of the roof falls toward a drain. On a replacement, it's how a roof that ponds gets fixed for good instead of patched around. The usual target for a new membrane roof is at least a quarter inch of fall per foot.",
+  },
+  {
+    key: "B",
+    title: "Drains",
+    body: "Interior drains sit at the low points, with the membrane clamped into the drain bowl under a ring. The strainer on top keeps fir needles and leaves out of the pipe. A slow drain is a roof that ponds.",
+  },
+  {
+    key: "C",
+    title: "Scuppers & overflows",
+    body: "An overflow scupper or secondary drain sits a little above the primary one, so if the main drain clogs, water leaves through the wall instead of piling weight on the roof. Water coming out of an overflow means the primary drain needs attention.",
+  },
+  {
+    key: "D",
+    title: "Crickets",
+    body: "A small ridge built on the uphill side of a curb, chimney or wide unit. It splits the water and sends it around. Without one, water sits against the curb and eventually finds the flashing.",
+  },
+  {
+    key: "E",
+    title: "Parapets & edges",
+    body: "Membrane runs up the inside of the wall under a termination bar, and metal coping caps the top with a slight pitch back onto the roof. At an open edge, the edge metal is what wind grabs first, so it's fastened to hold.",
+  },
+];
+
+// Chapter 4: the details, as a ruled definition list.
+const details = [
+  {
+    title: "Curbs & rooftop units",
+    body: "Membrane runs up the curb and is sealed under the unit's flange or counterflashed, high enough that ponded or drifting water can't reach the top. Curbs that are too short get raised during a replacement, coordinated with your HVAC contractor.",
+  },
+  {
+    title: "Pipes, conduit & gas lines",
+    body: "Round penetrations get prefabricated or field-welded boots, clamped at the top. Old pitch pans full of sealant need topping up forever, so we replace them with boots wherever the penetration allows. Gas lines and conduit sit on supports, not on the membrane.",
+  },
+  {
+    title: "Parapets & coping",
+    body: "Membrane goes up the inside of the wall and, where the detail calls for it, over the top and under metal coping with sealed or cleated joints. A lot of leaks that seem to come from nowhere start at a loose coping joint: wind-driven rain gets in and runs down inside the wall.",
+  },
+  {
+    title: "Edge metal",
+    body: "On a roof without parapets, the edge is where wind starts peeling. Edge metal is fastened on a tight pattern and the membrane is stripped in over it. Where the roof drains to a gutter, the gutter is sized for the area it serves.",
+  },
+  {
+    title: "Drains",
+    body: "Corroded drain bodies get replaced or fitted with retrofit inserts. The membrane clamps into the bowl, and the strainer goes back on before we leave.",
+  },
+  {
+    title: "Skylights & hatches",
+    body: "Curb-mounted skylights and roof hatches are flashed like any other curb. Old plastic domes crack and leak at the frame, and they are much easier to replace during a reroof than after it.",
+  },
+];
+
+// Chapter 5: how a job runs on an occupied building.
+const steps = [
+  {
+    title: "Walk it with whoever runs the building",
+    body: "Access, hours, deliveries, loading docks, tenants with sensitive work below, equipment that can't lose power. Staging and the order of work are planned around what you tell us.",
+  },
+  {
+    title: "Schedule the loud parts",
+    body: "Tear-off and fastening are loud and shake the deck. We agree when those happen so tenants can be told which days. Early starts or weekend work are possible where the city and the neighbors allow it.",
+  },
+  {
+    title: "Stage it and keep it safe",
+    body: "Material goes up by lift or crane at agreed times and sits where the structure can take it. The ground below the work is taped or fenced off, entrances stay open, and edges get warning lines or guardrails.",
+  },
+  {
+    title: "Dry every night",
+    body: "We only tear off what we can close the same day. At the end of each shift the new roof is tied in to the old with a temporary seal and the drains are left open. If rain is on the way, less comes off.",
+  },
+  {
+    title: "Protect what's underneath",
+    body: "Tear-off shakes dust and debris loose above ceilings. Where the space below holds stock, equipment or an office, we'll say so ahead of time so it can be covered or moved.",
+  },
+  {
+    title: "Close it out",
+    body: "We walk the finished roof with you, clear the drains, and hand over photos of the work, including the details that end up covered.",
+  },
+];
+
+// Chapter 6: assessments and maintenance.
+const reportItems = [
+  "A roof plan with areas, drains, units and penetrations marked",
+  "The roof system, number of layers and approximate age, where it can be told",
+  "Seams, flashings, curbs, edges and drains, each with photos",
+  "Ponding areas and where the drainage is falling short",
+  "Wet insulation, where a moisture reading or a small core cut points to it (cores are patched the same day)",
+  "A ranked list: fix now, fix this year, plan for",
+];
+
+const maintenanceItems = [
+  "Clear drains, strainers, scuppers and gutters",
+  "Remove fir needles, leaves, moss and debris, especially at the low points",
+  "Probe seams and check flashings at curbs and penetrations",
+  "Check sealant at terminations, counterflashing and pitch pans",
+  "Check coping and edge metal for loose joints",
+  "Note new penetrations cut by other trades since the last visit",
+  "Photos and a short written summary",
+];
+
+// Chapter 7: what to have ready.
+const quoteNeeds = [
+  {
+    title: "Drawings, if you have them",
+    body: "Roof plans, as-builts or a previous roofing spec. Not required: if nothing's on file, we measure.",
+  },
+  {
+    title: "Roof access",
+    body: "How we get up: an interior hatch, a fixed ladder, or a lift from outside. Keys, codes, and who to call on site.",
+  },
+  {
+    title: "Age and history",
+    body: "When the roof went on, if anyone knows, and what's happened since: repairs, a recover, new units or new penetrations.",
+  },
+  {
+    title: "Known leak spots",
+    body: "Where it leaks and when: steady rain, wind-driven rain from the south, or only in a big storm. Photos of ceiling stains help.",
+  },
+  {
+    title: "How the building runs",
+    body: "Hours, tenants, deliveries, and anything under the roof that can't get wet or dusty.",
+  },
+];
+---
+
+<Page
+  title="Commercial Roofing"
+  description="TPO and PVC single-ply and low-slope roofing for shops, warehouses, offices and light-industrial buildings across the Portland metro. Replacement, repair, condition reports and maintenance from Acosta Roofing."
+  crumbs={crumbs}
+  schema={schema}
+>
+  <PageHero
+    crumbs={crumbs}
+    eyebrow="Commercial roofing"
+    title="Single-ply and low-slope roofs"
+    lead="For shops, warehouses, offices and light-industrial buildings. Built to drain, detailed at every curb and edge, and scheduled around the business underneath."
+    image="/images/commercial/white-membrane-rooftop-units.jpg"
+    imageAlt="White single-ply membrane roof with rooftop HVAC units on curbs, seen from above"
+    treelineOffset={-500}
+  />
+
+  {/* 1. The buildings. */}
+  <section id="buildings" class="section bg-canvas">
+    <div class="container-page">
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:items-start lg:gap-16">
+        <div>
+          <p class="t-eyebrow text-forest">The buildings</p>
+          <h2 class="t-display-lg text-balance mt-4 text-ink">Shops, warehouses and light industrial</h2>
+          <div class="prose-page mt-6">
+            <p>
+              Commercial roofing, for us, means the low-slope roofs on shop buildings, warehouses, flex space with
+              offices up front and a roll-up door out back, small office buildings and strip retail.
+            </p>
+            <p>
+              These roofs have more going on than you'd guess from the parking lot: rooftop units, exhaust fans,
+              skylights, gas lines, conduit, and years of repairs by whoever was closest. We start by walking all of
+              it and writing down what's there.
+            </p>
+          </div>
+
+          <dl class="mt-10 border-t border-hairline">
+            {
+              workTypes.map((item) => (
+                <div class="grid gap-2 border-b border-hairline py-5 sm:grid-cols-[180px_minmax(0,1fr)] sm:gap-6">
+                  <dt class="t-heading-sm text-ink">{item.title}</dt>
+                  <dd class="t-body-sm text-body">{item.body}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <figure class="photo-plate lg:mt-2">
+          <img
+            src={asset("/images/commercial/light-industrial-low-slope.jpg")}
+            alt="Aerial view of a long light-industrial building and a smaller shop building, both with pale low-slope roofs and rooftop units, surrounded by trees"
+            loading="lazy"
+            decoding="async"
+            class="aspect-[4/3]"
+          />
+          <figcaption>
+            Light-industrial buildings like these carry acres of low-slope roof, broken up by units, vents and
+            expansion joints. Every one of those is a detail to get right.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  {/* 2. Single-ply. Extra bottom padding: the low-slope band's treeline
+      stands 64px up into this section. */}
+  <section id="single-ply" class="section bg-cream-deep pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28">
+    <div class="container-page">
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
+        <div class="min-w-0">
+          <p class="t-eyebrow text-forest">Flat &amp; single-ply</p>
+          <h2 class="t-display-lg text-balance mt-4 text-ink">Single-ply membrane: TPO and PVC</h2>
+          <div class="prose-page mt-6">
+            <p class="t-lead text-body">
+              Most low-slope commercial roofs we replace get a single-ply membrane: one layer of reinforced
+              thermoplastic sheet over insulation and cover board, with every seam fused shut.
+            </p>
+
+            <h3>Heat-welded seams</h3>
+            <p>
+              The sheets overlap at the seams, and a hot-air welder melts the two layers together into one piece.
+              There's no tape or glue in the lap to dry out over the years. After welding, we run a probe along
+              every seam to find any spot that didn't fuse, and fix it before we leave the roof.
+            </p>
+
+            <h3>TPO or PVC</h3>
+            <p>
+              Both are white, both are heat-welded, and from the ground they look the same. <strong>TPO</strong>
+              (thermoplastic polyolefin) is the usual choice for re-roofing shops, warehouses and offices. It's
+              economical and holds up well in general use. <strong>PVC</strong> (polyvinyl chloride) costs more,
+              but it stands up better to grease, oils and many chemicals, which is why it's the usual pick around a
+              restaurant's kitchen exhaust or where a process vents onto the roof. We'll tell you which one your
+              building needs, and why.
+            </p>
+
+            <h3>A white surface</h3>
+            <p>
+              A white membrane reflects most of the summer sun instead of soaking it up, so the roof and the space
+              below run cooler in July and August, and the membrane sees less heat stress. In our climate the
+              bigger issue is dirt: under firs and maples, a white roof picks up a gray-green film that dulls it.
+              A rinse on maintenance visits keeps it reflecting.
+            </p>
+          </div>
+        </div>
+
+        {/* The rail: how the sheet is held down. */}
+        <aside class="lg:pt-16">
+          <div class="panel panel-keyline lg:sticky lg:top-28">
+            <div class="plate-label">
+              <span class="t-spaced">Two ways to hold it down</span>
+            </div>
+            <div class="px-6 py-7 sm:px-8">
+              {
+                attachment.map((item, index) => (
+                  <div class:list={[index > 0 && "mt-6 border-t border-hairline pt-6"]}>
+                    <h3 class="t-heading-md text-ink">{item.title}</h3>
+                    <p class="t-body-sm mt-2 text-body">{item.body}</p>
+                  </div>
+                ))
+              }
+              <p class="t-caption mt-6 border-t border-hairline pt-5 text-mute">
+                Which one fits depends on the deck, the building's height and exposure, and the wind design for the
+                site. We spec it for your building, not from a catalog.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      {/* Reference table: single-ply against the other low-slope systems. */}
+      <div class="mt-16 lg:mt-20">
+        <div class="grid gap-4 border-b border-hairline pb-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
+          <h3 class="t-heading-xl text-balance text-ink">How single-ply compares</h3>
+          <p class="t-body-md max-w-2xl text-body">
+            You'll find all five of these on low-slope roofs around the metro, and it helps to know which one you
+            have. The single-ply roofs we install are TPO and PVC.
+          </p>
+        </div>
+        <div class="table-scroll mt-8">
+          <table class="data-table min-w-[720px]">
+            <caption class="sr-only">Low-slope roofing systems compared in general terms</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="w-[18%]">System</th>
+                <th scope="col" class="w-[28%]">What it is</th>
+                <th scope="col" class="w-[18%]">Seams</th>
+                <th scope="col">Worth knowing</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                systems.map((system) => (
+                  <tr>
+                    <th scope="row">{system.name}</th>
+                    <td>{system.what}</td>
+                    <td>{system.seams}</td>
+                    <td>{system.note}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 3. Low-slope drainage, on a forest band with a cross-section. */}
+  <section id="low-slope" class="on-forest relative bg-forest text-on-forest">
+    <Treeline tone="forest" height={64} offset={-262} class="absolute inset-x-0 bottom-full" />
+
+    <div class="container-page pt-24 pb-36 md:pt-28 md:pb-40">
+      <div class="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+        <div>
+          <p class="t-eyebrow text-on-forest-mute">Low-slope systems</p>
+          <h2 class="t-display-lg text-balance mt-4 max-w-xl">Low-slope roofs: drainage is everything</h2>
+        </div>
+        <p class="t-lead max-w-xl text-on-forest-mute">
+          A low-slope roof isn't flat, or shouldn't be. Every square foot needs somewhere to send water, and in a
+          Portland winter the water keeps coming for weeks. If it's still standing 48 hours after the rain stops,
+          the roof isn't draining.
+        </p>
+      </div>
+
+      <figure class="mt-12 border-y border-hairline-dark py-8">
+        <div class="overflow-x-auto">
+          <svg
+            viewBox="0 0 800 300"
+            class="h-auto w-full min-w-[520px]"
+            role="img"
+            aria-labelledby="section-title section-desc"
+          >
+            <title id="section-title">Cross-section of a low-slope roof</title>
+            <desc id="section-desc">
+              A roof deck between two parapet walls. Tapered insulation slopes the membrane down to a drain. An
+              overflow scupper passes through the left parapet above the roof surface. A rooftop unit sits on a
+              curb with a cricket on its uphill side. Metal coping caps both parapets.
+            </desc>
+            <defs>
+              <pattern id="deck-flutes" width="16" height="12" patternUnits="userSpaceOnUse">
+                <path d="M0 0h8v12h8" fill="none" stroke="currentColor" stroke-opacity="0.45" stroke-width="1" />
+              </pattern>
+              <pattern id="insul-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <path d="M0 0v10" stroke="currentColor" stroke-opacity="0.22" stroke-width="1" />
+              </pattern>
+            </defs>
+
+            <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="miter">
+              {/* Steel deck */}
+              <rect x="30" y="236" width="740" height="12" fill="url(#deck-flutes)" />
+              {/* Flat base insulation */}
+              <rect x="60" y="222" width="680" height="14" fill="url(#insul-hatch)" stroke-opacity="0.6" />
+              {/* Tapered insulation: sloping top down to the drain */}
+              <path d="M60 222 V182 L340 214 L740 178 V222 Z" fill="url(#insul-hatch)" stroke-opacity="0.6" />
+
+              {/* Parapets, with the scupper opening through the left one */}
+              <path d="M30 236 V172 H60 V236" />
+              <path d="M30 160 V94 H60 V160" />
+              <path d="M740 236 V94 H770 V236" />
+              {/* Scupper box and spout */}
+              <path d="M30 160 H8 V172 H30" stroke-width="1.6" />
+              {/* Coping caps */}
+              <path d="M22 102 V88 H68 V102" stroke-width="2" />
+              <path d="M732 102 V88 H778 V102" stroke-width="2" />
+
+              {/* Membrane: up the walls, down the taper to the drain */}
+              <path d="M60 108 V182 L340 214 L740 178 V108" stroke-width="3" />
+              {/* Termination bars */}
+              <path d="M56 110 h8 M736 110 h8" stroke-width="3" />
+
+              {/* Drain: dome, bowl and leader through the deck */}
+              <path d="M326 214 Q340 198 354 214" stroke-width="1.6" />
+              <path d="M332 214 V292 M348 214 V292" stroke-width="1.6" />
+
+              {/* Curb, unit and cricket */}
+              <path d="M560 194.2 V160 H620 V188.8" stroke-width="1.6" />
+              <rect x="548" y="104" width="84" height="56" stroke-width="1.6" />
+              <path d="M560 118 H620 M560 128 H620 M560 138 H620" stroke-opacity="0.5" />
+              <path d="M620 188.8 V174 L668 184.5" stroke-width="1.6" />
+            </g>
+
+            {/* Flow arrows along the surface, toward the drain */}
+            <g fill="currentColor" fill-opacity="0.7">
+              <path d="M170 190 l-12 -5 l2 5 l-2 4 z" transform="rotate(6.5 164 190)" />
+              <path d="M250 199 l-12 -5 l2 5 l-2 4 z" transform="rotate(6.5 244 199)" />
+              <path d="M446 199 l12 -4 l-2 5 l2 4 z" transform="rotate(-5 452 199)" />
+              <path d="M700 175 l12 -4 l-2 5 l2 4 z" transform="rotate(-5 706 175)" />
+            </g>
+
+            {/* Keyed markers with dashed leaders */}
+            <g stroke="currentColor" stroke-width="1" stroke-dasharray="3 3" stroke-opacity="0.6">
+              <path d="M24 56 V158" />
+              <path d="M180 56 V194" />
+              <path d="M340 56 V200" />
+              <path d="M644 56 V176" />
+              <path d="M755 56 V86" />
+            </g>
+            <g class="diagram-key">
+              {
+                [
+                  { x: 24, k: "C" },
+                  { x: 180, k: "A" },
+                  { x: 340, k: "B" },
+                  { x: 644, k: "D" },
+                  { x: 755, k: "E" },
+                ].map((m) => (
+                  <g>
+                    <rect x={m.x - 16} y="24" width="32" height="32" fill="var(--color-forest)" stroke="currentColor" stroke-width="1.2" />
+                    <text x={m.x} y="46" text-anchor="middle" fill="currentColor">{m.k}</text>
+                  </g>
+                ))
+              }
+            </g>
+          </svg>
+        </div>
+        <figcaption class="t-caption mt-6 text-on-forest-mute">
+          <span class="sm:hidden">Swipe the drawing to see the whole section. </span>Section through a low-slope roof, not to scale. Water runs down the taper to the drain; the overflow in
+          the wall only works if the drain doesn't.
+        </figcaption>
+      </figure>
+
+      <ol class="mt-4 grid md:grid-cols-2 lg:grid-cols-3">
+        {
+          drainage.map((item) => (
+            <li class="border-b border-hairline-dark py-7 md:pr-8">
+              <h3 class="t-heading-md flex items-baseline gap-3">
+                <span class="inline-flex size-8 shrink-0 items-center justify-center border border-hairline-dark t-heading-sm" aria-hidden="true">
+                  {item.key}
+                </span>
+                <span>{item.title}</span>
+              </h3>
+              <p class="t-body-sm mt-3 text-on-forest-mute">{item.body}</p>
+            </li>
+          ))
+        }
+        <li class="border-b border-hairline-dark py-7 md:pr-8">
+          <h3 class="t-heading-md">Why leaks start at the details</h3>
+          <p class="t-body-sm mt-3 text-on-forest-mute">
+            The field of a membrane roof is one continuous sheet, and the seams are welded and probed. Leaks tend to
+            start where the sheet stops: at a curb, a pipe, a drain, a wall or an edge. That's where we spend the
+            time on a new roof, and where we look first on a repair.
+          </p>
+        </li>
+      </ol>
+    </div>
+
+    <Treeline tone="cream" height={64} offset={-388} class="absolute inset-x-0 bottom-0" />
+  </section>
+
+  {/* 4. The details. */}
+  <section id="details" class="section bg-canvas">
+    <div class="container-page">
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <div>
+          <p class="t-eyebrow text-forest">Detailing</p>
+          <h2 class="t-display-lg text-balance mt-4 text-ink">Curbs, units, pipes, walls and edges</h2>
+          <p class="t-lead mt-5 text-body">
+            Every hole in a membrane roof is a detail somebody has to get right. These are the ones we spend the
+            time on.
+          </p>
+          <figure class="photo-plate mt-10 lg:sticky lg:top-28">
+            <img
+              src={asset("/images/commercial/rooftop-unit-parapet-drain.jpg")}
+              alt="Low-slope roof with a large rooftop unit on a curb, a brick parapet with metal coping, a ladder, a roof drain with staining around it and two small condensers"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[4/5] max-lg:aspect-[4/3]"
+            />
+            <figcaption>
+              A unit on its curb, a parapet with metal coping, and a drain with a stain around it where water sits
+              after rain. Four details in one corner of one roof.
+            </figcaption>
+          </figure>
+        </div>
+
+        <dl class="border-t border-hairline lg:mt-2">
+          {
+            details.map((item) => (
+              <div class="border-b border-hairline py-7">
+                <dt class="t-heading-md text-ink">{item.title}</dt>
+                <dd class="t-body-md mt-2 text-body">{item.body}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  {/* 5. Working around a running business. Extra bottom padding for the
+      forest band's treeline. */}
+  <section id="occupied" class="section bg-cream-deep pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28">
+    <div class="container-page">
+      <div class="grid gap-6 border-b border-hairline pb-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
+        <h2 class="t-display-lg text-balance text-ink">Working around a business that's open</h2>
+        <p class="t-body-md max-w-2xl text-body">
+          The building has to keep working while its roof is replaced. That takes a plan the manager, the tenants
+          and the crew all know before the first sheet comes up.
+        </p>
+      </div>
+
+      <ol class="step-list border-t-0 [&>li]:content-start md:grid md:grid-cols-2 md:gap-x-12 lg:gap-x-16">
+        {
+          steps.map((step) => (
+            <li>
+              <h3 class="t-heading-md text-ink">{step.title}</h3>
+              <p class="t-body-sm text-body">{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* 6. Assessments and maintenance, on a forest band. */}
+  <section id="maintenance" class="on-forest relative bg-forest text-on-forest">
+    <Treeline tone="forest" height={64} offset={-141} class="absolute inset-x-0 bottom-full" />
+
+    <div class="container-page pt-24 pb-36 md:pt-28 md:pb-40">
+      <div class="max-w-3xl">
+        <p class="t-eyebrow text-on-forest-mute">Assessments &amp; maintenance</p>
+        <h2 class="t-display-lg text-balance mt-4">Condition reports and upkeep</h2>
+        <p class="t-lead mt-5 text-on-forest-mute">
+          A roof assessment tells you what you have, how long it's likely to last, and what to spend on first. It's
+          the right start if you're buying a building, setting next year's budget, or tired of paying for the same
+          leak twice.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-12 border-t border-hairline-dark pt-10 md:grid-cols-2 md:gap-16">
+        <div>
+          <h3 class="t-heading-md">What a condition report covers</h3>
+          <ul class="check-list t-body-sm mt-6 text-on-forest-mute">
+            {reportItems.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h3 class="t-heading-md">What a maintenance visit covers</h3>
+          <ul class="check-list t-body-sm mt-6 text-on-forest-mute">
+            {maintenanceItems.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-12 grid gap-6 border-t border-hairline-dark pt-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-16">
+        <p class="t-body-md text-on-forest-mute">
+          <strong class="font-semibold text-on-forest">Twice a year suits most commercial roofs here:</strong> in
+          the fall, before the rain settles in and the needles drop, and in spring, after the winter has done its
+          worst.
+        </p>
+        <p class="t-body-md text-on-forest-mute">
+          <strong class="font-semibold text-on-forest">After an east wind, an ice storm or a hard blow,</strong>
+          it's worth a look at the edges, coping and seams even if nothing is leaking yet. Wind damage at an edge
+          usually leaks later, not the same night.
+        </p>
+      </div>
+    </div>
+
+    <Treeline tone="cream" height={64} offset={-47} class="absolute inset-x-0 bottom-0" />
+  </section>
+
+  {/* 7. What we need to quote. */}
+  <section id="quote" class="section bg-canvas">
+    <div class="container-page">
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
+        <div>
+          <h2 class="t-display-lg text-balance text-ink">What helps us quote it</h2>
+          <p class="t-body-md mt-5 max-w-md text-body">
+            None of this is required to get us out there. Whatever you can pull together means a shorter site visit
+            and a sharper number.
+          </p>
+          <a href={pages.contact} class="btn btn-primary mt-8">
+            Request an estimate
+            <Icon name="arrow" size={18} />
+          </a>
+        </div>
+
+        <div class="panel panel-keyline overflow-hidden">
+          <div class="plate-label">
+            <span class="t-spaced">Before the site visit</span>
+          </div>
+          <ol class="grid px-6 py-4 sm:grid-cols-2 sm:gap-x-10 sm:px-10 sm:py-6">
+            {
+              quoteNeeds.map((item, index) => (
+                <li class="border-b border-hairline py-5">
+                  <p class="t-spaced-sm text-forest-mid">{String(index + 1).padStart(2, "0")}</p>
+                  <h3 class="t-heading-sm mt-2 text-ink">{item.title}</h3>
+                  <p class="t-body-sm mt-1.5 text-body">{item.body}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedServices slugs={["multi-unit", "roof-maintenance", "gutters"]} title="Related work" surface="cream-deep" />
+
+  <ClosingCta
+    surface="canvas"
+    label="Commercial estimate"
+    title="Get the roof walked"
+    body="Tell us about the building and what the roof is doing. We'll walk it, look hard at the details, and give you a written, itemized estimate."
+  />
+</Page>
+
+<style>
+  .diagram-key text {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+</style>
