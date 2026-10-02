@@ -94,8 +94,11 @@ cream/forest seam is `src/components/Treeline.astro`.
 
 | Path | Purpose |
 | --- | --- |
-| `src/data/site.ts` | All business facts. Change them here, not in components. |
-| `src/data/services.ts` | Service registry: titles, summaries, card photos. Nav menu, footer, `/services/` and related-service rows read it. |
+| `src/content/` | Every word, photo and alt text on the site, as JSON the client edits from the portal. See `src/content/README.md`. |
+| `src/lib/cms.ts` | Reads `src/content/` for the pages: field rendering, `{{tokens}}`, and the editor markers of a `CMS_EDIT=1` build. |
+| `portal/` | The client's editing portal at portal.acostaroofingpnw.com: editor, API and setup. See `portal/README.md`. |
+| `src/data/site.ts` | Business facts, read from `src/content/site.json`, plus what is derived from them. |
+| `src/data/services.ts` | Service registry, read from `src/content/services.json`. Nav menu, footer, `/services/` and related-service rows read it. |
 | `src/data/nav.ts` | Page map and nav links. |
 | `src/data/photo-credits.ts` | Photographer, source and licence for every sourced photo; rendered at `/photo-credits/`. Add a line with every new photo. |
 | `src/layouts/Page.astro` | Shell for inner pages (nav, footer, breadcrumb JSON-LD). |
