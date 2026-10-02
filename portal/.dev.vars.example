@@ -1,0 +1,18 @@
+# Copy to .dev.vars (gitignored) for `npm run dev`. Values here override
+# wrangler.toml's [vars].
+
+# A GitHub token that can read and write the repo's contents.
+# Locally: GITHUB_TOKEN=$(gh auth token)
+GITHUB_TOKEN=
+
+# Skip Cloudflare Access locally: requests to localhost/127.0.0.1 act as this
+# (allowlisted) email. Ignored on any other host.
+DEV_AUTH_EMAIL=arankine909@gmail.com
+
+# Point at throwaway branches so local testing never touches the real ones.
+BASE_BRANCH=cms-test/live
+DRAFT_BRANCH=cms-test/draft
+
+# Only needed to test real Access tokens locally.
+# ACCESS_TEAM_DOMAIN=acosta.cloudflareaccess.com
+# ACCESS_AUD=

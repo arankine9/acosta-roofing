@@ -1,0 +1,13 @@
+# Cloudflare Pages project for the content portal (see README.md).
+# Secrets are not here: set GITHUB_TOKEN, ACCESS_TEAM_DOMAIN and ACCESS_AUD in
+# the dashboard (Settings → Variables and Secrets), or in .dev.vars locally.
+name = "acosta-portal"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+
+[vars]
+GITHUB_REPO = "arankine9/acosta-roofing"
+BASE_BRANCH = "main"
+DRAFT_BRANCH = "content-draft"
+ALLOWED_EMAILS = "christian@acostaroofingpnw.com,arankine909@gmail.com"
+PREVIEW_URL = "https://content-draft.acosta-roofing-eb8.pages.dev/"

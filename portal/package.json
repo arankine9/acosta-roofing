@@ -1,0 +1,13 @@
+{
+  "name": "acosta-portal",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "wrangler pages dev dist",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name acosta-portal"
+  },
+  "devDependencies": {
+    "wrangler": "^4.146.0"
+  }
+}

@@ -3,7 +3,7 @@ import SectionHeading from "./SectionHeading.astro";
 import Icon from "./Icon.astro";
 import Text from "./Text.astro";
 import { site, cityLine } from "../data/site";
-import { get, plain } from "../lib/cms";
+import { attrs } from "../lib/cms";
 
 interface Props {
   /* Content key of the heading, form and side-panel words. Every page
@@ -13,8 +13,7 @@ interface Props {
 
 const { k = "shared:contact" } = Astro.props;
 const f = `${k}.form`;
-// Placeholders are attributes, so they are read as plain strings.
-const placeholder = (name: string) => plain(get<string>(`${f}.${name}.placeholder`));
+const placeholder = (name: string) => attrs({ placeholder: `${f}.${name}.placeholder` });
 ---
 
 <section id="contact" class="section bg-cream-deep">
@@ -23,9 +22,8 @@ const placeholder = (name: string) => plain(get<string>(`${f}.${name}.placeholde
 
     <div class="grid gap-5 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
       <!--
-        Static form. There is no backend yet: it posts nowhere, and the note
-        under the submit button says so rather than silently swallowing an
-        enquiry. Wire `action` to a handler before launch.
+        Static form. There is no backend yet: it posts nowhere. Wire
+        `action` to a handler before launch.
       -->
       <form class="panel p-7 md:p-9" method="post" action="#contact">
         <div class="plate-label -mx-7 -mt-7 mb-8 md:-mx-9 md:-mt-9">
@@ -35,7 +33,7 @@ const placeholder = (name: string) => plain(get<string>(`${f}.${name}.placeholde
         <div class="grid gap-5 sm:grid-cols-2">
           <div>
             <Text k={`${f}.name.label`} as="label" for="name" class="label-field" />
-            <input id="name" name="name" type="text" required class="text-input" placeholder={placeholder("name")} />
+            <input id="name" name="name" type="text" required class="text-input" {...placeholder("name")} />
           </div>
           <div>
             <Text k={`${f}.phone.label`} as="label" for="phone" class="label-field" />
@@ -45,16 +43,16 @@ const placeholder = (name: string) => plain(get<string>(`${f}.${name}.placeholde
               type="tel"
               required
               class="text-input"
-              placeholder={placeholder("phone")}
+              {...placeholder("phone")}
             />
           </div>
           <div class="sm:col-span-2">
             <Text k={`${f}.email.label`} as="label" for="email" class="label-field" />
-            <input id="email" name="email" type="email" class="text-input" placeholder={placeholder("email")} />
+            <input id="email" name="email" type="email" class="text-input" {...placeholder("email")} />
           </div>
           <div class="sm:col-span-2">
             <Text k={`${f}.address.label`} as="label" for="address" class="label-field" />
-            <input id="address" name="address" type="text" class="text-input" placeholder={placeholder("address")} />
+            <input id="address" name="address" type="text" class="text-input" {...placeholder("address")} />
           </div>
           <div class="sm:col-span-2">
             <Text k={`${f}.detail.label`} as="label" for="detail" class="label-field" />
@@ -63,7 +61,7 @@ const placeholder = (name: string) => plain(get<string>(`${f}.${name}.placeholde
               name="detail"
               rows="4"
               class="text-input"
-              placeholder={placeholder("detail")}></textarea>
+              {...placeholder("detail")}></textarea>
           </div>
         </div>
 

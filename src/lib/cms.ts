@@ -201,3 +201,11 @@ export const credit = (key: string) => {
   const value = maybe<string>(`${key}.credit`);
   return value ? rich(value) : "";
 };
+
+/* Copy that lives in an attribute, such as a form field's placeholder:
+   attrs({ placeholder: "shared:contact.form.name.placeholder" }) fills the
+   attribute and, in the edit build, tells the editor where it came from. */
+export const attrs = (map: Record<string, string>) => ({
+  ...Object.fromEntries(Object.entries(map).map(([name, key]) => [name, plain(get<string>(key))])),
+  ...(EDIT ? { "data-cms-attrs": JSON.stringify(map) } : {}),
+});
