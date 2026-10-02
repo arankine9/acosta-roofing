@@ -94,8 +94,9 @@ Cloudflare (or with `--install`) it runs `npm ci` at the repo root first.
 | Login | Cloudflare Access in Alex's account (team `green-cloud-0c12.cloudflareaccess.com`): application "Acosta portal" covering `acosta.arankine.com`, `acosta-portal.pages.dev` and `*.acosta-portal.pages.dev`; One-time PIN only; policy "Owners" allows christian@acostaroofingpnw.com and arankine909@gmail.com. Session lasts a week. |
 | `portal.acostaroofingpnw.com` | Redirect rule "Portal" on the client's zone: 302 to `https://acosta.arankine.com`. The zone lives in the client's account, whose Zero Trust only its Super Administrator can enable, so the portal can't be served there behind Access. On `arankine.com`, the "Redirect to LinkedIn" rule exempts `acosta.arankine.com`. |
 
-Project settings (production): `GITHUB_TOKEN` (secret), `ACCESS_TEAM_DOMAIN`,
-`ACCESS_AUD`, plus the plain values in `wrangler.toml`.
+Settings: the plain values, including `ACCESS_TEAM_DOMAIN` and `ACCESS_AUD`,
+are in `wrangler.toml`, which every deploy applies (dashboard edits to them
+are overwritten). The one secret, `GITHUB_TOKEN`, is set on the project.
 
 ## Deploying the portal
 

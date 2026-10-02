@@ -1,6 +1,7 @@
 # Cloudflare Pages project for the content portal (see README.md).
-# Secrets are not here: set GITHUB_TOKEN, ACCESS_TEAM_DOMAIN and ACCESS_AUD in
-# the dashboard (Settings → Variables and Secrets), or in .dev.vars locally.
+# This file is the source of truth for the plain settings: a deploy replaces
+# any set in the dashboard. The one secret, GITHUB_TOKEN, is set on the
+# project (Settings → Variables and Secrets), or in .dev.vars locally.
 name = "acosta-portal"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-09-01"
@@ -11,3 +12,7 @@ BASE_BRANCH = "main"
 DRAFT_BRANCH = "content-draft"
 ALLOWED_EMAILS = "christian@acostaroofingpnw.com,arankine909@gmail.com"
 PREVIEW_URL = "https://content-draft.acosta-roofing-eb8.pages.dev/"
+# Cloudflare Access in Alex's account: the team's login domain and the
+# "Acosta portal" application's audience tag. Identifiers, not secrets.
+ACCESS_TEAM_DOMAIN = "green-cloud-0c12.cloudflareaccess.com"
+ACCESS_AUD = "31c6811f9415d26d6095591ac54d972a1ff7e1ee59346830bcea1048ccd681bb"
