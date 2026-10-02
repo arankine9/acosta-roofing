@@ -25,9 +25,6 @@ import { site } from "../data/site";
 // Photos (public/images/materials/page/):
 //   rain-on-shingles.jpg      Luke Southern, Unsplash (Unsplash License)
 //                             https://unsplash.com/photos/ZzZouwiQWV0
-//   three-tab-shingle.jpg     FASTILY, Wikimedia Commons, CC BY-SA 4.0
-//                             https://commons.wikimedia.org/wiki/File:Shingle_Roof_1_2017-04-21.jpg
-//                             (credited in its caption, as the licence asks)
 //   architectural-shingle.jpg Hal Gatewood, Unsplash (Unsplash License)
 //                             https://unsplash.com/photos/9u5r1XbtMJg
 //   white-single-ply-over-old-roof.jpg
@@ -40,8 +37,8 @@ import { site } from "../data/site";
 const crumbs = [{ label: "Roofing materials", href: pages.materials }];
 
 const systems = [
-  { id: "asphalt-shingle", title: "3-tab asphalt shingle", fit: "Steep slope", life: "15–20" },
   { id: "architectural-shingle", title: "Architectural shingle", fit: "Steep slope", life: "25–30" },
+  { id: "designer-shingle", title: "Designer shingle", fit: "Steep slope", life: "30+" },
   { id: "single-ply", title: "Single-ply (TPO / PVC)", fit: "Flat & low slope", life: "20–30" },
 ];
 
@@ -56,55 +53,55 @@ const compare = [
     label: "Pitch, as a rule",
     cells: [
       "4-in-12 and steeper; 2-in-12 to 4-in-12 with doubled underlayment",
-      "Same as 3-tab",
+      "Same as architectural",
       "Built to drain, usually at least ¼ inch of fall per foot",
     ],
   },
   {
     label: "Expected life*",
-    cells: ["15–20 years", "25–30 years", "20–30 years"],
+    cells: ["25–30 years", "30+ years", "20–30 years"],
   },
   {
     label: "How it's made",
     cells: [
-      "One layer, cut into three even tabs",
       "Two layers laminated together, cut to random widths",
+      "Extra-thick layers, cut in a slate or shake pattern",
       "One continuous sheet with heat-welded seams",
     ],
   },
   {
     label: "Wind",
     cells: [
-      "The lightest of the three; tabs lift and tear first",
-      "Heavier and stiffer; most lines carry higher wind ratings",
+      "Heavy and stiff; most lines carry high wind ratings",
+      "The heaviest asphalt shingle; the weight helps it stay down",
       "Wind works at the edges and corners, so perimeter attachment is everything",
     ],
   },
   {
     label: "Moss and wet",
     cells: [
-      "Moss starts in the flat seams and keyways",
-      "Holds up better, but shaded slopes still need watching",
+      "Holds up well, but shaded slopes still need watching",
+      "The deep profile dries slower; watch shaded slopes",
       "Moss is rare; ponding and blocked drains are the risk",
     ],
   },
   {
     label: "The look",
-    cells: ["Flat, even courses", "Dimensional shadow lines that read like shake", "A flat white or gray sheet, mostly out of sight"],
+    cells: ["Dimensional shadow lines that read like shake", "Reads like slate or hand-split shake", "A flat white or gray sheet, mostly out of sight"],
   },
   {
     label: "Up-front cost",
     cells: [
-      "Lowest of the three",
-      "More than 3-tab",
+      "The standard price for a house re-roof",
+      "More than architectural",
       "Priced by the job: insulation, drains and details drive it",
     ],
   },
   {
     label: "Usual jobs",
     cells: [
-      "Garages, outbuildings, budget re-roofs",
       "Most house re-roofs",
+      "Houses where the roof is part of the look; HOAs that call for a premium profile",
       "Commercial and multi-unit roofs; porch, dormer and addition roofs on houses",
     ],
   },
@@ -150,7 +147,7 @@ const parts = [
   {
     n: 7,
     title: "Ridge caps",
-    body: "Thicker, pre-bent cap shingles made for hips and ridges, not 3-tab cut into pieces. The ridge is where wind pulls hardest, and the cap is what covers the ridge vent.",
+    body: "Thicker, pre-bent cap shingles made for hips and ridges, not field shingles cut into pieces. The ridge is where wind pulls hardest, and the cap is what covers the ridge vent.",
   },
 ];
 
@@ -161,11 +158,11 @@ const choose = [
   },
   {
     title: "Budget",
-    body: "3-tab costs the least today. Architectural costs more, but divide each price by its expected years and the gap narrows. When both fit the roof, we'll price both on the estimate so you can see it for yourself.",
+    body: "Architectural is the standard price for a house re-roof. Designer costs more, but divide each price by its expected years and the gap narrows. When both fit the roof, we'll price both on the estimate so you can see it for yourself.",
   },
   {
     title: "How long you'll stay",
-    body: "Selling in a few years, a sound 3-tab roof may be all the house needs. Staying for twenty, the longer-lived shingle usually makes more sense, because you'll be the one paying for the next roof.",
+    body: "Selling in a few years, a sound architectural roof is what buyers expect to see. Staying for twenty, designer shingle's longer life and looks can make more sense, because you'll be the one living under it.",
   },
   {
     title: "HOA and neighborhood rules",
@@ -180,21 +177,21 @@ const choose = [
 
 <Page
   title="Roofing Materials"
-  description="3-tab asphalt shingle, architectural shingle and single-ply membrane (TPO/PVC): what each one is, where it fits, how it handles Northwest weather, and the underlayment, flashing and ventilation that decide how long a roof lasts."
+  description="Architectural shingle, designer shingle and single-ply membrane (TPO/PVC): what each one is, where it fits, how it handles Northwest weather, and the underlayment, flashing and ventilation that decide how long a roof lasts."
   crumbs={crumbs}
 >
   <PageHero
     crumbs={crumbs}
     eyebrow="Roofing materials"
     title="What goes on your roof, and why"
-    lead="We install three roofing systems: 3-tab asphalt shingle, architectural shingle and single-ply membrane. Here's what each one is, where it fits, how it stands up to an Oregon winter, and the parts under and around it that matter just as much."
+    lead="We install three roofing systems: architectural shingle, designer shingle and single-ply membrane. Here's what each one is, where it fits, how it stands up to an Oregon winter, and the parts under and around it that matter just as much."
     image="/images/materials/page/rain-on-shingles.jpg"
     imageAlt="Rain pouring off the edge of an upper roof onto dark shingles below"
     imageCaption="Water off an upper roof landing on the one below. From October to May, this is a normal day."
     treelineOffset={-220}
   />
 
-  {/* 1. Index of the three systems, then 3-tab: photo left, ruled spec rows right. */}
+  {/* 1. Index of the three systems, then architectural: photo left, ruled spec rows right. */}
   <section class="section bg-canvas">
     <div class="container-page">
       <nav aria-label="The three systems" class="border-y border-hairline">
@@ -227,33 +224,31 @@ const choose = [
         </ul>
       </nav>
 
-      <article id="asphalt-shingle" class="mt-16 grid gap-10 lg:mt-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+      <article id="architectural-shingle" class="mt-16 grid gap-10 lg:mt-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <div>
           <p class="t-eyebrow text-forest">Steep slope</p>
-          <h2 class="t-display-lg mt-4 text-ink">3-tab asphalt shingle</h2>
+          <h2 class="t-display-lg mt-4 text-ink">Architectural shingle</h2>
           <p class="t-lead mt-5 text-body">
-            The original strip shingle: a fiberglass mat soaked in asphalt and coated in ceramic
-            granules, cut into three equal tabs so each strip lies flat and reads as three
-            shingles. One layer thick, so the roof has flat, even courses.
+            Also called laminated or dimensional shingle. Two layers of asphalt-soaked fiberglass
+            mat are bonded together, and the top layer is cut away in random widths so the bottom
+            one shows through. The courses throw shadow lines and read like shake from the street.
+            It's the standard choice on most house re-roofs today.
           </p>
 
           <figure class="photo-plate mt-8">
             <img
-              src={asset("/images/materials/page/three-tab-shingle.jpg")}
-              alt="Close view of gray 3-tab shingles, with needles and leaf litter caught along a course line"
+              src={asset("/images/materials/page/architectural-shingle.jpg")}
+              alt="Courses of gray architectural shingle with random-width tabs and deep shadow lines"
               class="aspect-[4/3]"
               loading="lazy"
               decoding="async"
             />
-            <figcaption>
-              3-tab up close: one flat layer, the keyway slots lined up course to course. Photo:
-              FASTILY, CC BY-SA 4.0.
-            </figcaption>
+            <figcaption>Laminated shingle: tabs cut to random widths over a second layer, so every course casts a shadow.</figcaption>
           </figure>
 
           <dl class="mt-8 flex flex-row-reverse items-end justify-end gap-4 border-t border-hairline pt-6">
             <dt class="t-caption max-w-[22ch] text-mute">years expected life, a typical industry range, not a warranty</dt>
-            <dd class="t-display-lg leading-none text-forest">15–20</dd>
+            <dd class="t-display-lg leading-none text-forest">25–30</dd>
           </dl>
         </div>
 
@@ -274,10 +269,10 @@ const choose = [
             <dt>Strengths</dt>
             <dd>
               <ul class="check-list">
-                <li>The lowest cost per square of the three.</li>
-                <li>Light, so it's easy on older framing.</li>
-                <li>Simple to repair: a damaged tab can be slipped out and replaced.</li>
-                <li>A plain, traditional look that suits older houses and outbuildings.</li>
+                <li>Heavy and stiff, and most lines carry high wind ratings.</li>
+                <li>The widest range of colors and blends, and a profile that suits most houses.</li>
+                <li>Forgiving of an imperfect deck: the random pattern hides small waves in older sheathing.</li>
+                <li>Good value: 25–30 years expected at the standard price for a house re-roof.</li>
               </ul>
             </dd>
           </div>
@@ -285,12 +280,14 @@ const choose = [
             <dt>Trade-offs</dt>
             <dd>
               <ul class="dash-list">
-                <li>The shortest life of the three.</li>
-                <li>Light and flat, so it's the first to lift and tear in a wind storm.</li>
-                <li>Shows every dip and wave in the deck underneath.</li>
                 <li>
-                  Fewer colors, and some lines are being dropped as manufacturers move to laminated
-                  shingle, which can make matching a repair harder later.
+                  It's heavy. On an old house with two layers already on it, the deck and framing get
+                  a look before anything goes up.
+                </li>
+                <li>It won't blend into an older roof of a different profile, so it's not the patch for one.</li>
+                <li>
+                  It's the look on most of the street. If you want the roof to stand out, designer
+                  shingle is the step up.
                 </li>
               </ul>
             </dd>
@@ -299,10 +296,17 @@ const choose = [
             <dt>Northwest weather</dt>
             <dd>
               <p>
-                The flat tabs hold water in their seams, and moss gets its start in the keyways,
-                fastest on north-facing slopes and under firs. Once moss lifts a tab edge,
-                wind-driven rain gets under it. A 3-tab roof here does best with sun on it, clear
-                valleys and gutters, and moss dealt with while it's still a film.
+                Weight and thickness help in wind, which matters in east-wind country out toward
+                Troutdale and the Gorge, and in the southwest gales that come through every winter.
+                The laminated layers dry a little slower than a single one, so moss still needs
+                watching on shaded slopes. Many lines have algae-resistant granules that stop the
+                black streaks you see on older roofs; they don't stop moss.
+              </p>
+              <p class="mt-3">
+                One thing true of any shingle: the sealant strip that bonds each course to the one
+                below needs warmth to set. Shingles laid in a cold snap may not seal until the
+                weather warms, so a winter install can call for hand-sealing, especially on exposed
+                edges.
               </p>
             </dd>
           </div>
@@ -312,8 +316,8 @@ const choose = [
               <p>
                 Clear needles out of the valleys and gutters every fall. Treat moss before it gets
                 thick, and never pressure-wash: it strips the granules that shield the asphalt from
-                the sun. Replace creased or missing tabs soon; with only one layer, a missing tab
-                leaves bare underlayment.
+                the sun. Have the pipe boots and flashings looked at every few years. Of the three
+                systems, a well-kept architectural roof asks the least of you.
               </p>
             </dd>
           </div>
@@ -322,87 +326,72 @@ const choose = [
     </div>
   </section>
 
-  {/* 2. Architectural: long-form prose with a sticky rail (photo + fact plate).
+  {/* 2. Designer: long-form prose with a sticky rail (fact plate).
       Extra bottom padding: the next band's treeline stands up into it. */}
   <section
-    id="architectural-shingle"
+    id="designer-shingle"
     class="section bg-cream-deep pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28"
   >
     <div class="container-page grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
       <div class="min-w-0">
         <p class="t-eyebrow text-forest">Steep slope</p>
-        <h2 class="t-display-lg mt-4 text-ink">Architectural shingle</h2>
+        <h2 class="t-display-lg mt-4 text-ink">Designer shingle</h2>
 
         <div class="prose-page mt-6">
           <p class="t-lead text-body">
-            Also called laminated or dimensional shingle. Two layers of shingle mat are bonded
-            together, and the top layer is cut away in random widths so the bottom one shows
-            through. The courses throw shadow lines and read like shake from the street. It's
-            thicker and heavier than 3-tab, and it's the standard choice on most house re-roofs
-            today.
+            Also called luxury or premium shingle. The thickest, heaviest asphalt shingle made,
+            built up in extra layers and cut so the roof reads like slate or hand-split shake from
+            the street, without the weight of real slate or the upkeep of real cedar.
           </p>
 
           <h3>Where it fits</h3>
           <p>
-            Steep-slope roofs, on the same pitch rules as 3-tab: 4-in-12 and up as standard, down to
-            2-in-12 with doubled underlayment. Its random pattern also hides small waves in an older
-            deck that flat 3-tab would show.
+            Steep-slope roofs, on the same pitch rules as architectural: 4-in-12 and up as standard,
+            down to 2-in-12 with doubled underlayment. It's the choice when the roof is a big part of
+            how the house looks: a steep roof that shows from the street, an older home where slate
+            or shake would suit the style, or an HOA that calls for a premium profile.
           </p>
 
           <h3>Strengths</h3>
           <ul>
-            <li>A longer expected life: 25–30 years against 15–20 for 3-tab.</li>
-            <li>Heavier and stiffer, and most lines carry higher wind ratings than 3-tab.</li>
-            <li>The widest range of colors and blends, and a profile that suits most houses.</li>
-            <li>Forgiving of an imperfect deck.</li>
+            <li>The longest expected life of the shingles we install: 30 years and up.</li>
+            <li>The heaviest asphalt shingle, so it stays down in wind.</li>
+            <li>A slate or shake look at a fraction of the weight and cost of the real thing.</li>
+            <li>Deep shadow lines that hide an imperfect deck even better than architectural.</li>
           </ul>
 
           <h3>Trade-offs</h3>
           <ul>
-            <li>It costs more than 3-tab up front.</li>
+            <li>It costs more than architectural, for the shingle and for the time it takes to lay.</li>
             <li>
-              It's heavier. On an old house with two layers already on it, the deck and framing get a
-              look before anything goes up.
+              It's heavier still. On an old house, the deck and framing get a look before anything
+              goes up.
             </li>
-            <li>It won't blend into an existing 3-tab roof, so it's not the patch for one.</li>
+            <li>
+              Each line has its own look, so pick from samples on the house, and know that a repair
+              years later depends on that line still being made.
+            </li>
           </ul>
 
           <h3>Northwest weather</h3>
           <p>
-            Weight and thickness help in wind, which matters in east-wind country out toward
-            Troutdale and the Gorge, and in the southwest gales that come through every winter. The
-            laminated layers dry a little slower than a single one, so moss still needs watching on
-            shaded slopes. Many lines have algae-resistant granules that stop the black streaks you
-            see on older roofs; they don't stop moss.
-          </p>
-          <p>
-            One thing true of any shingle: the sealant strip that bonds each course to the one below
-            needs warmth to set. Shingles laid in a cold snap may not seal until the weather warms, so
-            a winter install can call for hand-sealing, especially on exposed edges.
+            The weight is a plus in east-wind country out toward Troutdale and the Gorge, and in the
+            southwest gales every winter. The thick, deeply cut profile dries slower than a flatter
+            shingle, so moss needs watching on north-facing slopes and under firs. Like any shingle,
+            the sealant strip needs warmth to set, so a winter install can call for hand-sealing on
+            exposed edges.
           </p>
 
           <h3>Upkeep</h3>
           <p>
-            The same as any shingle roof: keep the valleys and gutters clear, treat moss early, and
-            have the pipe boots and flashings looked at every few years. Of the three systems, a
-            well-kept architectural roof asks the least of you.
+            The same as architectural: keep the valleys and gutters clear, treat moss early, never
+            pressure-wash, and have the pipe boots and flashings looked at every few years.
           </p>
         </div>
       </div>
 
       <aside class="min-w-0">
         <div class="flex flex-col gap-8 lg:sticky lg:top-28">
-          <figure class="photo-plate">
-            <img
-              src={asset("/images/materials/page/architectural-shingle.jpg")}
-              alt="Courses of gray architectural shingle with random-width tabs and deep shadow lines"
-              class="aspect-[4/3]"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>Laminated shingle: tabs cut to random widths over a second layer, so every course casts a shadow.</figcaption>
-          </figure>
-
           <div class="panel panel-keyline overflow-hidden">
             <div class="plate-label">
               <span class="t-spaced-sm">At a glance</span>
@@ -414,15 +403,15 @@ const choose = [
               </div>
               <div>
                 <dt>Expected life</dt>
-                <dd>25–30 years</dd>
+                <dd>30+ years</dd>
               </div>
               <div>
                 <dt>Build</dt>
-                <dd>Two layers, laminated</dd>
+                <dd>Extra-thick, layered</dd>
               </div>
               <div>
                 <dt>Look</dt>
-                <dd>Dimensional, shake-like</dd>
+                <dd>Slate or shake</dd>
               </div>
             </dl>
           </div>
@@ -557,12 +546,12 @@ const choose = [
       <p class="t-caption mt-8 text-mute md:hidden">Swipe the table sideways to see all three.</p>
       <div class="table-scroll mt-3 md:mt-10">
         <table class="data-table compare-table">
-          <caption class="sr-only">Comparison of 3-tab asphalt shingle, architectural shingle and single-ply membrane</caption>
+          <caption class="sr-only">Comparison of architectural shingle, designer shingle and single-ply membrane</caption>
           <thead>
             <tr>
               <th scope="col"><span class="sr-only">Property</span></th>
-              <th scope="col">3-tab asphalt shingle</th>
               <th scope="col">Architectural shingle</th>
+              <th scope="col">Designer shingle</th>
               <th scope="col">Single-ply (TPO / PVC)</th>
             </tr>
           </thead>
@@ -678,7 +667,7 @@ const choose = [
 </Page>
 
 <style>
-  /* Ruled spec rows for the 3-tab section: term in the display cut on the
+  /* Ruled spec rows for the architectural section: term in the display cut on the
      left, the answer on the right; stacked on small screens. */
   .spec-rows {
     border-top: 1px solid var(--color-hairline);
@@ -736,7 +725,7 @@ const choose = [
     background-color: var(--color-cream);
   }
 
-  /* Fact plate in the architectural rail. */
+  /* Fact plate in the designer rail. */
   .glance > div {
     display: flex;
     justify-content: space-between;

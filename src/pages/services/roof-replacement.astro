@@ -29,7 +29,7 @@ import { serviceHref } from "../../data/services";
 //   Commons, https://commons.wikimedia.org/wiki/File:Asphalt_shingles_damage.jpg
 //   (CC BY-SA 4.0; credited in its caption, as the licence requires).
 //
-// Service lives (15–20 / 25–30 years) are the same industry ranges the home
+// Service lives (25–30 / 30+ years) are the same industry ranges the home
 // page's Materials band uses: general guidance, not a warranty.
 
 const crumbs = [
@@ -162,15 +162,15 @@ const onTheDay = [
 ];
 
 const shingleRows = [
-  { label: "Construction", tab: "One flat layer with cutouts that make three tabs", arch: "Two layers laminated together, thicker and heavier" },
-  { label: "Look", tab: "Flat and uniform, even slots", arch: "Shadowed and dimensional; reads like shake from the street" },
-  { label: "Wind", tab: "Lower wind ratings", arch: "Higher wind ratings; the weight helps it stay down" },
-  { label: "Typical life", tab: "15–20 years", arch: "25–30 years" },
-  { label: "Where it fits", tab: "Garages, sheds and outbuildings; the tightest budgets", arch: "Most houses, especially if you plan to stay" },
+  { label: "Construction", arch: "Two layers laminated together", designer: "Extra-thick layers, the heaviest asphalt shingle made" },
+  { label: "Look", arch: "Shadowed and dimensional; reads like shake from the street", designer: "Cut to read like slate or hand-split shake, with deeper shadow lines" },
+  { label: "Wind", arch: "High wind ratings; the weight helps it stay down", designer: "Heavier still, so it stays down in wind" },
+  { label: "Typical life", arch: "25–30 years", designer: "30+ years" },
+  { label: "Where it fits", arch: "Most houses; the standard re-roof", designer: "Houses where the roof is part of the look, and HOAs that call for a premium profile" },
 ];
 
 const signs = [
-  "It's old for what it is: 3-tab past about 15–20 years, architectural past 25 or so.",
+  "It's old for what it is: past 25 years or so for architectural shingle, sooner for older, thinner shingles.",
   "Granules collecting in the gutters and at the downspout, and dark, bare patches on the shingles.",
   "Edges curling up or cupping, or shingles gone brittle enough to crack when they're lifted.",
   "Leaks in more than one place, or the same leak back after a repair.",
@@ -345,7 +345,7 @@ const signs = [
         <h2 id="shingle-heading" class="t-display-lg text-ink">Choosing the shingle</h2>
         <div class="prose-page mt-5">
           <p>
-            On a house, the choice is usually between 3-tab and architectural shingle. The layers under them are the
+            On a house, the choice is between architectural and designer shingle. The layers under them are the
             same either way; the difference is weight, wind resistance, looks and how long they last.
           </p>
           <p>
@@ -362,12 +362,12 @@ const signs = [
       <div class="min-w-0 self-start">
         <div class="table-scroll">
           <table class="data-table min-w-[560px]">
-            <caption class="sr-only">3-tab and architectural shingle compared</caption>
+            <caption class="sr-only">Architectural and designer shingle compared</caption>
             <thead>
               <tr>
                 <th scope="col"><span class="sr-only">Feature</span></th>
-                <th scope="col">3-tab asphalt shingle</th>
                 <th scope="col">Architectural shingle</th>
+                <th scope="col">Designer shingle</th>
               </tr>
             </thead>
             <tbody>
@@ -375,8 +375,8 @@ const signs = [
                 shingleRows.map((row) => (
                   <tr>
                     <th scope="row">{row.label}</th>
-                    <td>{row.tab}</td>
                     <td>{row.arch}</td>
+                    <td>{row.designer}</td>
                   </tr>
                 ))
               }
@@ -411,7 +411,7 @@ const signs = [
       <figure class="photo-plate">
         <img
           src={asset("/images/roof-replacement/cracked-shingles.jpg")}
-          alt="Worn 3-tab shingles with cracked, split and buckled tabs across the slope"
+          alt="Worn asphalt shingles, cracked, split and buckled across the slope"
           loading="lazy"
           decoding="async"
           class="aspect-[4/3]"

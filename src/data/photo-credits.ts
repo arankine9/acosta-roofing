@@ -270,13 +270,6 @@ export const photoCredits: CreditGroup[] = [
         license: "unsplash",
       },
       {
-        file: "/images/materials/page/three-tab-shingle.jpg",
-        subject: "Shingle roof",
-        author: "FASTILY",
-        source: "https://commons.wikimedia.org/wiki/File:Shingle_Roof_1_2017-04-21.jpg",
-        license: "by-sa-4.0",
-      },
-      {
         file: "/images/materials/page/architectural-shingle.jpg",
         subject: "Architectural shingle courses",
         author: "Hal Gatewood",

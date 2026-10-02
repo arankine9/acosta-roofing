@@ -18,22 +18,25 @@ import { asset } from "../lib/url";
 //
 // `life` is the typical service life for each material with proper
 // installation and upkeep, as published across manufacturer and industry
-// guides: 3-tab 15-20 years, architectural 25-30, TPO/PVC 20-30. They are
-// industry ranges, not a warranty or a promise about any one roof.
+// guides: architectural 25-30 years, designer 30 and up, TPO/PVC 20-30. They
+// are industry ranges, not a warranty or a promise about any one roof.
+//
+// No 3-tab: it's rarely installed in Oregon now, and Acosta only puts on
+// architectural and designer shingle.
 const materials = [
-  {
-    image: "/images/materials/asphalt-shingle.png",
-    fit: "Steep slope",
-    title: "Asphalt shingle",
-    life: "15–20",
-    body: "Flat, single-layer 3-tab shingle. The most economical way to put a sound, clean-looking roof on a house, garage or outbuilding.",
-  },
   {
     image: "/images/materials/architectural-shingle.png",
     fit: "Steep slope",
     title: "Architectural shingle",
     life: "25–30",
-    body: "Thicker, laminated shingle with a dimensional profile that reads like shake. Heavier, longer-lasting and better in wind than 3-tab, in a wide range of colors.",
+    body: "Thicker, laminated shingle with a dimensional profile that reads like shake. Heavy and wind-rated, in a wide range of colors. The standard choice on most house re-roofs.",
+  },
+  {
+    image: "/images/materials/asphalt-shingle.png",
+    fit: "Steep slope",
+    title: "Designer shingle",
+    life: "30+",
+    body: "Premium, extra-thick shingle cut to look like slate or hand-split shake. Deeper shadow lines and the heaviest weight of any asphalt shingle, for a roof that shows from the street.",
   },
   {
     image: "/images/materials/single-ply-membrane.png",
@@ -63,7 +66,7 @@ const brands = [
     <div class="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
       <h2 class="t-display-lg max-w-xl">Roofing materials for every roof and budget</h2>
       <p class="t-lead max-w-xl text-on-forest-mute">
-        Three systems, from economical 3-tab shingle to low-slope membrane.
+        Architectural and designer shingle for steep roofs, membrane for flat ones.
         We'll recommend the one that suits the pitch, the budget and an Oregon
         winter, and tell you why.
       </p>
