@@ -11,11 +11,18 @@ import Breadcrumbs from "./Breadcrumbs.astro";
 import Treeline from "./Treeline.astro";
 import { site } from "../data/site";
 import { estimateHref } from "../data/nav";
+import Text from "./Text.astro";
+import Img from "./Img.astro";
 import { asset } from "../lib/url";
+import { maybe, credit } from "../lib/cms";
 import type { Crumb } from "../layouts/Page.astro";
 
 interface Props {
-  title: string;
+  /* Content key of this hero's words and photo, e.g. "pages/about:hero":
+     an object with title and, optionally, eyebrow, lead, image ({ src,
+     alt, credit? }) and caption. With `k` set, those props below are ignored. */
+  k?: string;
+  title?: string;
   lead?: string;
   eyebrow?: string;
   crumbs: Crumb[];
@@ -33,6 +40,7 @@ interface Props {
 }
 
 const {
+  k,
   title,
   lead,
   eyebrow,
@@ -44,6 +52,16 @@ const {
   actions = true,
   treelineOffset = 0,
 } = Astro.props;
+
+// From content: which optional parts this hero has.
+const has = k
+  ? {
+      eyebrow: maybe(`${k}.eyebrow`) !== undefined,
+      lead: maybe(`${k}.lead`) !== undefined,
+      image: maybe(`${k}.image`) !== undefined,
+      caption: maybe(`${k}.caption`) !== undefined,
+    }
+  : { eyebrow: !!eyebrow, lead: !!lead, image: !!image, caption: !!imageCaption };
 
 const aspect = {
   landscape: "aspect-[4/3]",
@@ -59,13 +77,29 @@ const aspect = {
     <div
       class:list={[
         "mt-10 grid gap-12 lg:mt-14",
-        image && "lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-16",
+        has.image && "lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-16",
       ]}
     >
       <div class="min-w-0">
-        {eyebrow && <p class="t-eyebrow mb-5 text-on-forest-mute">{eyebrow}</p>}
-        <h1 class:list={["t-display-xl text-balance", image ? "max-w-[16ch]" : "max-w-[20ch]"]}>{title}</h1>
-        {lead && <p class="t-lead mt-6 max-w-2xl text-on-forest-mute">{lead}</p>}
+        {
+          k ? (
+            <>
+              {has.eyebrow && <Text k={`${k}.eyebrow`} class="t-eyebrow mb-5 text-on-forest-mute" />}
+              <Text
+                k={`${k}.title`}
+                as="h1"
+                class={`t-display-xl text-balance ${has.image ? "max-w-[16ch]" : "max-w-[20ch]"}`}
+              />
+              {has.lead && <Text k={`${k}.lead`} class="t-lead mt-6 max-w-2xl text-on-forest-mute" />}
+            </>
+          ) : (
+            <>
+              {eyebrow && <p class="t-eyebrow mb-5 text-on-forest-mute">{eyebrow}</p>}
+              <h1 class:list={["t-display-xl text-balance", image ? "max-w-[16ch]" : "max-w-[20ch]"]}>{title}</h1>
+              {lead && <p class="t-lead mt-6 max-w-2xl text-on-forest-mute">{lead}</p>}
+            </>
+          )
+        }
 
         {
           actions && (
@@ -84,20 +118,32 @@ const aspect = {
       </div>
 
       {
-        image && (
+        has.image && (
           <figure class="photo-plate relative mx-auto w-full max-w-[560px] lg:max-w-none">
             {/* A keyline standing off the photo's edge, the routed groove of
                 the panels, drawn as a frame the photo sits inside. */}
             <div class="relative p-2 outline outline-1 outline-hairline-dark">
-              <img
-                src={asset(image)}
-                alt={imageAlt}
-                class={`${aspect} border-0!`}
-                fetchpriority="high"
-                decoding="async"
-              />
+              {k ? (
+                <Img k={`${k}.image`} class={`${aspect} border-0!`} fetchpriority="high" decoding="async" />
+              ) : (
+                <img
+                  src={asset(image!)}
+                  alt={imageAlt}
+                  class={`${aspect} border-0!`}
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              )}
             </div>
-            {imageCaption && <figcaption>{imageCaption}</figcaption>}
+            {k
+              ? (has.caption || credit(`${k}.image`)) && (
+                  <figcaption>
+                    {has.caption && <Text k={`${k}.caption`} bare />}
+                    {has.caption && credit(`${k}.image`) && " "}
+                    <Fragment set:html={credit(`${k}.image`)} />
+                  </figcaption>
+                )
+              : imageCaption && <figcaption>{imageCaption}</figcaption>}
           </figure>
         )
       }

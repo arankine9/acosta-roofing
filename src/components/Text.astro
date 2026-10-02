@@ -1,0 +1,25 @@
+---
+// One editable text field from src/content/, rendered as the element that
+// holds it: <Text k="pages/about:hero.title" as="h1" class="t-display-xl" />.
+// `type` is the field kind from src/lib/cms.ts (text, rich or block). Any
+// other attribute passes through to the element.
+//
+// `bare` is for a field that is only part of an element's text, such as a
+// caption followed by a photo credit: the public site gets the words with
+// no element around them, and the edit build a <span> to click on.
+import { get, html, field, EDIT, type FieldType } from "../lib/cms";
+
+interface Props {
+  k: string;
+  as?: string;
+  type?: FieldType;
+  bare?: boolean;
+  [attr: string]: unknown;
+}
+
+const { k, as, type = "text", bare = false, ...rest } = Astro.props;
+const Tag = as ?? (bare ? "span" : "p");
+const value = html(get<string>(k), type);
+---
+
+{bare && !EDIT ? <Fragment set:html={value} /> : <Tag {...rest} {...field(k, type)} set:html={value} />}

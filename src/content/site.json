@@ -1,0 +1,30 @@
+{
+  "name": "Acosta Roofing",
+  "legalName": "Acosta Roofing LLC",
+  "tagline": "Built to protect. Built to last.",
+  "description": "Residential and commercial roofing in Beaverton, Oregon. Roof installation, repairs, maintenance and gutter systems from a licensed, bonded and insured contractor.",
+  "phone": "(971) 280-9253",
+  "email": "Christian@acostaroofingpnw.com",
+  "address": {
+    "street": "",
+    "city": "Beaverton",
+    "state": "OR",
+    "zip": ""
+  },
+  "ccb": "263343",
+  "serviceArea": "the Portland metro",
+  "hours": [
+    {
+      "days": "Monday – Friday",
+      "time": "7:00 AM – 6:00 PM"
+    },
+    {
+      "days": "Saturday",
+      "time": "By appointment"
+    },
+    {
+      "days": "Sunday",
+      "time": "Closed"
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 import { asset } from "../lib/url";
 import "../styles/global.css";
 import { site, counties } from "../data/site";
+import { EDIT, tokens } from "../lib/cms";
 
 interface Props {
   title?: string;
@@ -10,6 +11,10 @@ interface Props {
      rendered alongside the site-wide RoofingContractor block. */
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
+  /* The content file this page's words come from ("pages/about"). The
+     portal's editor reads it to find the page's search title and
+     description; it is only emitted in an edit build. */
+  cmsFile?: string;
 }
 
 const {
@@ -17,6 +22,7 @@ const {
   description = site.description,
   schema: pageSchema,
   noindex = false,
+  cmsFile,
 } = Astro.props;
 // Link previews (iMessage, Slack, Facebook) show the plain name on the home
 // page; the <title> keeps "Portland Metro Roofing Contractor" for search.
@@ -63,9 +69,13 @@ const schema = {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    {EDIT && cmsFile && <meta name="cms-file" content={cmsFile} />}
+    {/* Edit build only: the token values this page was built with, for the
+        portal's editor to render {{tokens}} the same way. */}
+    {EDIT && <script type="application/json" id="cms-tokens" set:html={JSON.stringify(tokens)} />}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {(noindex || EDIT) && <meta name="robots" content="noindex" />}
 
     <title>{title}</title>
     <meta name="description" content={description} />

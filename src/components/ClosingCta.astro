@@ -4,35 +4,45 @@
 // treeline stands 64px into this section, so the bottom padding is deeper
 // than a normal section's.
 import Icon from "./Icon.astro";
+import Text from "./Text.astro";
 import { site } from "../data/site";
 import { estimateHref } from "../data/nav";
 
 interface Props {
-  title?: string;
-  body?: string;
+  /* Content key of the label, title and body. Every page shares the one in
+     shared.json unless it passes its own. */
+  k?: string;
   /* Which paper this chapter sits on; alternate it against the chapter above. */
   surface?: "canvas" | "cream-deep";
+  /* TODO(cms): legacy plain-prop words, removed once every page passes `k`. */
+  title?: string;
+  body?: string;
   label?: string;
 }
 
-const {
-  title = "Get a number on it",
-  body = "Free on-site estimates across the Portland metro, written down and itemized, so you can see what you're paying for before anyone climbs a ladder.",
-  surface = "cream-deep",
-  label = "Free estimate",
-} = Astro.props;
+const { k = "shared:closingCta", surface = "cream-deep", title, body, label } = Astro.props;
+const legacy = title !== undefined || body !== undefined || label !== undefined;
 ---
 
 <section class:list={["pt-[88px] pb-[152px] max-[900px]:pt-16 max-[900px]:pb-32 max-[560px]:pt-11 max-[560px]:pb-28", surface === "canvas" ? "bg-canvas" : "bg-cream-deep"]}>
   <div class="container-page">
     <div class="panel panel-keyline mx-auto max-w-4xl overflow-hidden">
       <div class="plate-label">
-        <span class="t-spaced">{label}</span>
+        {legacy ? <span class="t-spaced">{label ?? "Free estimate"}</span> : <Text k={`${k}.label`} as="span" class="t-spaced" />}
       </div>
       <div class="grid gap-8 px-6 py-10 sm:px-10 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-12 md:py-12">
         <div>
-          <h2 class="t-heading-xl text-ink">{title}</h2>
-          <p class="t-body-md mt-3 max-w-xl text-body">{body}</p>
+          {legacy ? (
+            <>
+              <h2 class="t-heading-xl text-ink">{title ?? "Get a number on it"}</h2>
+              <p class="t-body-md mt-3 max-w-xl text-body">{body ?? "Free on-site estimates across the Portland metro, written down and itemized, so you can see what you're paying for before anyone climbs a ladder."}</p>
+            </>
+          ) : (
+            <>
+              <Text k={`${k}.title`} as="h2" class="t-heading-xl text-ink" />
+              <Text k={`${k}.body`} class="t-body-md mt-3 max-w-xl text-body" />
+            </>
+          )}
         </div>
         <div class="flex flex-col gap-3">
           <a href={site.phoneHref} class="btn btn-primary">

@@ -11,6 +11,7 @@ import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import { site } from "../data/site";
 import { home } from "../lib/url";
+import { get, plain } from "../lib/cms";
 
 export interface Crumb {
   label: string;
@@ -18,14 +19,20 @@ export interface Crumb {
 }
 
 interface Props {
-  title: string;
-  description: string;
+  /* The page's content file ("pages/about"). Its `seo.title` and
+     `seo.description` become the <title> and meta description. */
+  k?: string;
+  /* Without `k`: the title and description as plain props. */
+  title?: string;
+  description?: string;
   crumbs?: Crumb[];
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
 }
 
-const { title, description, crumbs = [], schema, noindex } = Astro.props;
+const { k, crumbs = [], schema, noindex } = Astro.props;
+const title = k ? plain(get(`${k}:seo.title`)) : Astro.props.title!;
+const description = k ? plain(get(`${k}:seo.description`)) : Astro.props.description!;
 
 const absolute = (href: string) => new URL(href, Astro.site).toString();
 const trail = [{ label: "Home", href: home }, ...crumbs];
@@ -48,7 +55,7 @@ const extra = [
 ];
 ---
 
-<Base title={`${title} | ${site.name}`} description={description} schema={extra} noindex={noindex}>
+<Base title={`${title} | ${site.name}`} description={description} schema={extra} noindex={noindex} cmsFile={k}>
   <Nav />
   <main id="main">
     <slot />

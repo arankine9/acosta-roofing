@@ -1,0 +1,11 @@
+{
+  "closingCta": {
+    "label": "Free estimate",
+    "title": "Get a number on it",
+    "body": "Free on-site estimates across {{serviceArea}}, written down and itemized, so you can see what you're paying for before anyone climbs a ladder."
+  },
+  "ctaStrip": {
+    "title": "Ready to get a number on it?",
+    "body": "Free on-site estimates across {{serviceArea}}, in writing and itemized."
+  }
+}

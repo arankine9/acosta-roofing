@@ -1,0 +1,206 @@
+{
+  "seo": {
+    "title": "About",
+    "description": "How Acosta Roofing works: a small Beaverton crew where the person who quotes your roof is on it. What a written estimate includes, how we treat your property, and how to check our Oregon CCB license #{{ccb}}."
+  },
+  "hero": {
+    "eyebrow": "About Acosta Roofing",
+    "title": "The person who quotes your roof is on it",
+    "lead": "{{legalName}} is a small roofing contractor in {{city}}, licensed, bonded and insured in Oregon. This page is about how we work, and about what you can check for yourself.",
+    "image": {
+      "src": "/images/about/crew-on-shingle-roof.jpg",
+      "alt": "Two workers on a dark laminated shingle roof above cedar-shingled walls, one kneeling at a bracket near the eave, a ladder against the gutter",
+      "credit": "Photo: Jon Callas, CC BY 2.0."
+    },
+    "caption": "Every bracket, vent and pipe that goes through a roof is a place water can get in, so each one is flashed and sealed."
+  },
+  "howWeWork": {
+    "title": "A small crew, on purpose",
+    "body": "<p class=\"t-lead text-body\">We replace, repair and maintain roofs on houses across {{serviceArea}}, hang gutter systems, and work on low-slope commercial and multi-unit buildings. All of it from one shop in {{city}}.</p><p>We keep the company small because it keeps the job straight. The person who walks your roof and writes your estimate is the person on your roof when the work gets done, so what was promised at the kitchen table is what gets built. If something turns up halfway through, you hear about it from someone who has seen it with their own eyes.</p><p>Below is how a job runs from the first call to the last walk-through, what goes into a written estimate, how we treat your house while we're on it, and how to look up our license yourself. Those are the things you can hold us to.</p>",
+    "recordLabel": "Company record",
+    "record": [
+      {
+        "label": "Legal name",
+        "value": "{{legalName}}"
+      },
+      {
+        "label": "Based in",
+        "value": "{{city}}, {{state}}"
+      },
+      {
+        "label": "Oregon CCB #",
+        "value": "{{ccb}}"
+      },
+      {
+        "label": "Coverage",
+        "value": "Licensed · Bonded · Insured"
+      },
+      {
+        "label": "Work",
+        "value": "Residential & commercial"
+      }
+    ],
+    "serviceAreaLabel": "Service area"
+  },
+  "process": {
+    "eyebrow": "How a job runs",
+    "title": "From first call to final <span class=\"whitespace-nowrap\">walk-through</span>",
+    "intro": "This is a full replacement, start to finish. A repair runs the same way with fewer days in the middle.",
+    "steps": [
+      {
+        "title": "You call or send the form",
+        "body": "We ask what you're seeing, roughly how old the roof is if you know, and where the house is. If water is coming in, say so first; that changes the order of everything."
+      },
+      {
+        "title": "We walk the roof",
+        "body": "On the roof when it's safe to be, and in the attic if there's access. From below, the underside of the deck shows old leaks, condensation and how well the attic breathes. We take photos as we go so you can see what we saw."
+      },
+      {
+        "title": "You get a written estimate",
+        "body": "Itemized, in plain words, with the materials named. What goes in it is set out further down this page. Take your time with it and compare it against anyone else's."
+      },
+      {
+        "title": "We schedule and order materials",
+        "body": "You get a start window and a heads-up on what the days will look like: noise, where the truck and debris container go, when you'll need the driveway. We watch the forecast and only open as much roof as we can dry in the same day."
+      },
+      {
+        "title": "Tear-off and deck check",
+        "body": "The old roof comes off to the wood. Soft or delaminated sheathing only shows once it's bare, so the estimate already says how replacement decking is handled. If we find it, we show you before we fix it."
+      },
+      {
+        "title": "The new roof goes on",
+        "body": "Drip edge, underlayment, ice-and-water shield in the valleys and around penetrations, new step and chimney flashing, pipe boots, shingles, and ridge vent where the attic needs it. The parts you'll never see get the most attention."
+      },
+      {
+        "title": "Cleanup and the final walk-through",
+        "body": "A last magnetic sweep of the lawn, beds and driveway, then we walk the job with you, from the ground or the attic, and answer whatever's left. You get the paperwork for your records."
+      }
+    ]
+  },
+  "estimate": {
+    "title": "What a written estimate from us includes",
+    "intro": "Free, on paper, and specific enough to compare. If another estimate you're holding leaves one of these out, it's worth asking why.",
+    "items": [
+      {
+        "title": "Scope in plain words",
+        "body": "Full tear-off to the deck, an overlay, or a repair to one area, and exactly which slopes."
+      },
+      {
+        "title": "Materials by name",
+        "body": "Shingle or membrane type, product line and color, so you can look it up."
+      },
+      {
+        "title": "Underlayment and ice-and-water shield",
+        "body": "What goes under the shingles, and where the self-adhering membrane goes."
+      },
+      {
+        "title": "Flashing",
+        "body": "Which step, wall, chimney and valley flashing is being replaced, and which pipe boots."
+      },
+      {
+        "title": "Ventilation",
+        "body": "Ridge vent, roof vents and soffit intake: what's there now and what changes."
+      },
+      {
+        "title": "Decking",
+        "body": "How damaged sheathing is handled if the tear-off finds it, written down before we start."
+      },
+      {
+        "title": "Gutters and drainage",
+        "body": "If gutters or downspouts are part of the job, the size and layout."
+      },
+      {
+        "title": "Cleanup and disposal",
+        "body": "Who hauls the old roof away, and the magnetic sweep."
+      },
+      {
+        "title": "Permits",
+        "body": "Whether your city or county wants one for this job, and who pulls it."
+      },
+      {
+        "title": "Schedule and payment terms",
+        "body": "The expected start window, how long the work should take, and when payments are due."
+      }
+    ],
+    "note": "Oregon also requires residential contractors to give homeowners certain written notices with the contract, including one about construction liens. You'll get those with ours."
+  },
+  "property": {
+    "title": "How we treat your property",
+    "intro": "A roof job is loud and messy for a few days. The mess is ours to manage, not yours to clean up after we've gone.",
+    "items": [
+      {
+        "title": "Tarps over the landscaping",
+        "body": "Beds, shrubs and anything along the drip line get covered before tear-off starts. Tell us about the plants you care most about and we'll plan around them."
+      },
+      {
+        "title": "A dry roof every night",
+        "body": "An unfinished roof is dried in with underlayment or tarps before we leave. Oregon weather turns fast, and a forecast is not a promise."
+      },
+      {
+        "title": "Daily cleanup",
+        "body": "Loose debris, wrappers and offcuts are picked up at the end of each day, not left for the last one. You should be able to use your yard in the evening."
+      },
+      {
+        "title": "The magnetic sweep",
+        "body": "Roofing nails end up in lawns and gravel. A rolling magnet goes over the grass, beds, driveway and street edge each day, and once more at the end."
+      },
+      {
+        "title": "Your attic",
+        "body": "Tear-off shakes the rafters, and dust and old granules can sift down. If you store things up there, cover them before we start; we'll remind you."
+      },
+      {
+        "title": "No surprises on the bill",
+        "body": "If the job turns up something the estimate didn't cover, like rotten decking or a cracked chimney crown, we stop, show you and agree the change before doing it."
+      }
+    ]
+  },
+  "licensed": {
+    "title": "Licensed, bonded and insured, in plain terms",
+    "body": "<p>Every roofer says it. Here is what each word means in Oregon, and how to check it for any contractor, us included.</p><h3>Licensed</h3><p>Anyone paid to do construction work in Oregon, roofing included, has to be licensed by the Construction Contractors Board (CCB). Getting a license means completing training and an exam, and keeping a bond and liability insurance on file with the state. A license also carries endorsements that say whether a contractor may work on residential jobs, commercial jobs or both.</p><h3>Bonded</h3><p>A licensed contractor keeps a surety bond on file with the CCB. If a contractor breaks a contract or does improper work, a homeowner can file a complaint with the CCB, and the bond can pay toward what's owed. It's a backstop, not a warranty, but a contractor without one can't legally take your job.</p><h3>Insured</h3><p>Liability insurance covers damage the work causes to your property or to someone else's, like a dropped bundle through a skylight or water through an open roof. Without it, that bill can land with you. Contractors with employees also need workers' compensation coverage.</p><h3>Check any contractor in two minutes</h3><ol><li>Open the <a href=\"https://search.ccb.state.or.us/search/\" target=\"_blank\" rel=\"noopener\">Oregon CCB license search</a>.</li><li>Search by license number, which should be printed on the contractor's ads, website and estimate, or by business name.</li><li>Confirm the license is active and the endorsement fits your job: residential for a house.</li><li>Look at the bond and insurance on file, and at any complaint history.</li></ol><h3>Why our number is on every page</h3><p>Oregon requires contractors to show their CCB license number in their advertising, websites included. Ours is {{ccb}}. It's in the footer of every page, so you never have to ask for it.</p>",
+    "card": {
+      "label": "Oregon CCB license",
+      "numberLabel": "CCB #",
+      "coverage": "Licensed · Bonded · Insured",
+      "body": "Search the number or \"{{legalName}}\". The result shows license status, endorsements, and the bond and insurance on file.",
+      "button": "Open the CCB search",
+      "note": "Opens search.ccb.state.or.us in a new tab."
+    }
+  },
+  "oregon": {
+    "title": "Rooted in Oregon",
+    "intro": "The mark is a stand of firs behind a gable roof: a house with the timber at its back, which is what most of the roofs we work on look like from the street. The firs are also why this is roofing country. They drop needles in the valleys, shade the north slopes and keep the moss going all winter.",
+    "image": {
+      "src": "/images/about/west-union-farmhouse.jpg",
+      "alt": "A white farmhouse with a gray shingle roof and green front door, a tall Douglas fir behind it and a wet lawn in front",
+      "credit": "Photo: M.O. Stevens, <a href=\"https://commons.wikimedia.org/wiki/File:22097_West_Union_Road_-_West_Union,_Oregon.JPG\" class=\"underline underline-offset-2 hover:text-forest\" target=\"_blank\" rel=\"noopener\">Wikimedia Commons</a>, <a href=\"https://creativecommons.org/licenses/by-sa/3.0/\" class=\"underline underline-offset-2 hover:text-forest\" target=\"_blank\" rel=\"noopener\">CC BY-SA 3.0</a>."
+    },
+    "caption": "A farmhouse in West Union, Washington County, in January, with the timber at its back.",
+    "claims": [
+      {
+        "icon": "quality",
+        "label": "Quality workmanship",
+        "body": "Judged in the parts you never see: the nailing line, the underlayment laps, the flashing at every wall."
+      },
+      {
+        "icon": "honest",
+        "label": "Honest & reliable",
+        "body": "An estimate you can compare line by line, a call before any change, and a straight answer when the weather moves a start date."
+      },
+      {
+        "icon": "built",
+        "label": "Built to last",
+        "body": "Details chosen for a long wet season, fir needles in the valleys and the odd ice storm off the Gorge."
+      },
+      {
+        "icon": "oregon",
+        "label": "Rooted in Oregon",
+        "body": "Based in {{city}}, licensed with the Oregon CCB, and working within reach of the shop."
+      }
+    ]
+  },
+  "closingCta": {
+    "label": "Free estimate",
+    "title": "Come see how we work",
+    "body": "The estimate is the easiest way to judge us: we walk the roof, show you what we found and write it all down. It's free and there's no follow-up pressure."
+  }
+}

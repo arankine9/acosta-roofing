@@ -1,0 +1,17 @@
+---
+// One replaceable photo from src/content/, whose value is { src, alt } with
+// `src` a path under public/: <Img k="pages/about:hero.image" class="..." />.
+// Any other attribute (loading, decoding, class) passes through.
+import { get, image, plain } from "../lib/cms";
+import { asset } from "../lib/url";
+
+interface Props {
+  k: string;
+  [attr: string]: unknown;
+}
+
+const { k, ...rest } = Astro.props;
+const { src, alt } = get<{ src: string; alt: string }>(k);
+---
+
+<img src={asset(src)} alt={plain(alt)} {...rest} {...image(k)} />

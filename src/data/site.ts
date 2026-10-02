@@ -1,44 +1,21 @@
 // Single source of truth for business facts. Everything here comes from the
 // Acosta Roofing brand board or was supplied by the business (phone, email,
 // CCB number). Nothing in this file is inherited from any other contractor:
-// if a detail is not confirmed, it is empty rather than guessed.
+// if a detail is not confirmed, it is empty rather than guessed. The street
+// address and ZIP render only when set; the hours are a placeholder until
+// the owner confirms them.
+//
+// The editable values live in src/content/site.json, which the owner changes
+// from the portal; what is derived from them, or isn't theirs to change, is
+// added here.
+import data from "../content/site.json";
+
 export const site = {
-  name: "Acosta Roofing",
-  legalName: "Acosta Roofing LLC",
-  tagline: "Built to protect. Built to last.",
-  description:
-    "Residential and commercial roofing in Beaverton, Oregon. Roof installation, repairs, maintenance and gutter systems from a licensed, bonded and insured contractor.",
-
-  // Drives the nav, the hero sign, the CTA strip, the footer and the JSON-LD.
-  phone: "(971) 280-9253",
-  phoneHref: "tel:+19712809253",
-
-  email: "Christian@acostaroofingpnw.com",
+  ...data,
+  // tel: link for the phone number: its digits, with the US country code.
+  phoneHref: `tel:+1${data.phone.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "")}`,
   domain: "acostaroofingpnw.com",
-
-  // TODO: street address not on the brand board. It renders only when set, so
-  // the site shows "Beaverton, OR" until it is confirmed.
-  address: {
-    street: "",
-    city: "Beaverton",
-    state: "OR",
-    zip: "",
-  },
-
-  // Oregon CCB licence number. State law requires it in contractor
-  // advertising, including the website; it prints on the hero sign and in
-  // the footer.
-  ccb: "263343",
-
-  serviceArea: "the Portland metro",
-
-  // TODO: placeholder hours. Confirm before launch.
-  hours: [
-    { days: "Monday – Friday", time: "7:00 AM – 6:00 PM" },
-    { days: "Saturday", time: "By appointment" },
-    { days: "Sunday", time: "Closed" },
-  ],
-} as const;
+};
 
 /*
   Counties the service area reaches, north to south.

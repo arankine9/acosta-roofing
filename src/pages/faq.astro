@@ -297,12 +297,7 @@ const questionCount = topics.reduce((sum, topic) => sum + topic.items.length, 0)
           );
         })}
         {groupIndex === 0 && (
-          <CtaStrip
-            href={estimateHref}
-            offset={-305}
-            title="Rather ask in person?"
-            body="We'll answer it on your roof. Estimates are free, on site and in writing."
-          />
+          <CtaStrip k="pages/faq:ctaStrip" href={estimateHref} offset={-305} />
         )}
       </>
     ))
