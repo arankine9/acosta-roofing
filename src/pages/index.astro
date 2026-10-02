@@ -10,9 +10,21 @@ import CtaStrip from "../components/CtaStrip.astro";
 import ServiceArea from "../components/ServiceArea.astro";
 import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
+import { site } from "../data/site";
+import { get, plain } from "../lib/cms";
+
+// The home page's own words are in src/content/pages/home.json, read by the
+// home-only sections (Hero, TrustStrip, Services, Materials); the bands it
+// shares with other pages read src/content/shared.json.
+//
+// `seo.title` is what follows the name in the <title> ("Acosta Roofing |
+// Portland Metro Roofing Contractor"); link previews show the name alone.
+const k = "pages/home";
+const title = `${site.name} | ${plain(get(`${k}:seo.title`))}`;
+const description = plain(get(`${k}:seo.description`));
 ---
 
-<Base>
+<Base title={title} description={description} socialTitle={site.name} cmsFile={k}>
   <Nav />
   <Hero />
   {/* Cream body chapters alternate canvas / cream-deep between forest bands. */}

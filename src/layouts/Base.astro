@@ -7,6 +7,9 @@ import { EDIT, tokens } from "../lib/cms";
 interface Props {
   title?: string;
   description?: string;
+  /* The title link previews (og:title, twitter:title) show. Defaults to
+     `title`, or the plain site name when there is no title. */
+  socialTitle?: string;
   /* Extra JSON-LD for this page (a Service, an FAQPage, a BreadcrumbList),
      rendered alongside the site-wide RoofingContractor block. */
   schema?: Record<string, unknown> | Record<string, unknown>[];
@@ -25,9 +28,10 @@ const {
   cmsFile,
 } = Astro.props;
 // Link previews (iMessage, Slack, Facebook) show the plain name on the home
-// page; the <title> keeps "Portland Metro Roofing Contractor" for search.
-// Inner pages pass their own title, which previews use as is.
-const socialTitle = Astro.props.title ?? site.name;
+// page, which passes it as `socialTitle`; the <title> keeps "Portland Metro
+// Roofing Contractor" for search. Inner pages pass their own title, which
+// previews use as is.
+const socialTitle = Astro.props.socialTitle ?? Astro.props.title ?? site.name;
 const extraSchema = pageSchema ? (Array.isArray(pageSchema) ? pageSchema : [pageSchema]) : [];
 
 const canonical = new URL(Astro.url.pathname, Astro.site);

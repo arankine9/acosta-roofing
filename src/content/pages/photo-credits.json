@@ -1,0 +1,14 @@
+{
+  "seo": {
+    "title": "Photo Credits",
+    "description": "Credits and licences for the photographs used on the {{name}} website."
+  },
+  "hero": {
+    "eyebrow": "Photo credits",
+    "title": "Photo credits"
+  },
+  "lead": "The {{photoCount}} photographs on this site that we didn't take ourselves, who took them, and the licence each one is used under.",
+  "intro": "Photos marked CC BY or CC BY-SA are used under Creative Commons licences that ask for this credit. Unsplash and Pexels photos are free to use without credit; they're listed anyway. Every photo is resized and recompressed for the web; any other change is noted. Captions describe the kind of work shown, not whose crew is in the picture.",
+  "photoLabel": "Photo:",
+  "sourceLabel": "Source"
+}

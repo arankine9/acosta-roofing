@@ -1,0 +1,251 @@
+{
+  "seo": {
+    "title": "Gutter systems",
+    "description": "Seamless gutters formed on site, 5\" and 6\" K-style sizing, 2×3 and 3×4 downspouts, hidden hangers, drip edge and gutter apron, for homes across {{serviceArea}}. From {{name}} in {{city}}."
+  },
+  "hero": {
+    "eyebrow": "Residential",
+    "title": "Gutter systems",
+    "lead": "Seamless gutters and downspouts sized for the rain we actually get, pitched to drain and hung to carry a winter's load. The job is simple: take the water off the roof and put it somewhere that isn't your foundation.",
+    "image": {
+      "src": "/images/gutters/gutter-running-full-in-rain.jpg",
+      "alt": "A white K-style gutter running full in a heavy rain, with water sheeting off the roof edge into it and conifers behind"
+    },
+    "caption": "A gutter running full in a downpour. Sized right and kept clear, it carries every drop to the downspout."
+  },
+  "waterPath": {
+    "title": "Where the water should go",
+    "intro": "A gutter is the last few inches of the roof. Most of the gutter problems we're called out for are water getting behind the gutter, spilling over it, or landing next to the foundation. This is the path it should take instead.",
+    "caption": "Section through an eave, with the drop from gutter to ground shortened at the break.",
+    "legend": [
+      {
+        "title": "Shingle edge",
+        "body": "The first course overhangs the eave a little, so water drops off the shingle instead of curling back underneath it."
+      },
+      {
+        "title": "Drip edge",
+        "body": "Metal flashing along the edge of the roof deck. It stiffens the edge, keeps water off the deck and fascia, and turns it downward."
+      },
+      {
+        "title": "Gutter apron",
+        "body": "A second strip of flashing tucked under the shingles and lapped into the gutter. It closes the gap between roof and gutter, so water ends up in the trough, not on the fascia behind it."
+      },
+      {
+        "title": "Hidden hanger",
+        "body": "A bracket inside the gutter, screwed through the back into the fascia. Nothing shows from the ground, and a screw holds where an old spike works loose."
+      },
+      {
+        "title": "K-style gutter",
+        "body": "The flat-backed profile on most houses here. The front lip sits a little lower than the back, so if it ever overflows, it spills out the front, away from the house."
+      },
+      {
+        "title": "Downspout",
+        "body": "Sized to the roof area feeding it, with elbows that bring it back tight to the wall."
+      },
+      {
+        "title": "Extension",
+        "body": "Carries the water out onto ground that slopes away from the foundation. A downspout that empties at the wall just moves the problem to the crawlspace."
+      },
+      {
+        "title": "Fascia",
+        "body": "The board the gutter hangs on. If it's soft, it gets replaced before a new gutter goes up; no hanger holds in rotten wood."
+      }
+    ]
+  },
+  "sizing": {
+    "title": "Five inches or six",
+    "intro": "Most houses in {{serviceArea}} carry a 5\" or 6\" K-style gutter with 2×3 or 3×4 downspouts. The right pair depends on how much roof drains to each run, how steep it is, and what's growing over it.",
+    "table": {
+      "name": "Size",
+      "carries": "Carries",
+      "fits": "Usually right for",
+      "watch": "Watch for",
+      "rows": [
+        {
+          "name": "5\" K-style gutter",
+          "carries": "The baseline",
+          "fits": "Most houses with moderate roof planes and an ordinary pitch.",
+          "watch": "Fills with needles sooner than a 6\" under firs."
+        },
+        {
+          "name": "6\" K-style gutter",
+          "carries": "Roughly 40% more water than a 5\"",
+          "fits": "Big or steep roof planes, long runs, valleys that empty into one spot, heavy tree cover.",
+          "watch": "Needs a fascia tall enough to carry it. Reads a little heavier on a small house."
+        },
+        {
+          "name": "2×3 downspout",
+          "carries": "About 6 sq in of opening. Roughly 600 sq ft of roof each.",
+          "fits": "Short runs and small roof areas on a 5\" gutter.",
+          "watch": "Needles and fir cones plug it at the outlet and the first elbow."
+        },
+        {
+          "name": "3×4 downspout",
+          "carries": "About 12 sq in of opening. Roughly twice a 2×3.",
+          "fits": "6\" gutters, long runs, and anywhere trees drop debris.",
+          "watch": "Needs a gutter bottom wide enough to take the bigger outlet."
+        }
+      ]
+    },
+    "note": "Rules of thumb, not a calculation. The real answer depends on the roof area feeding each outlet, the pitch, and how hard it rains in a short burst. We measure each run before recommending a size.",
+    "upsize": {
+      "title": "When to go bigger, or add a downspout",
+      "items": [
+        {
+          "title": "Big roof planes draining to one run.",
+          "body": "The more square feet shedding into a single gutter, the more it has to carry at the peak of a downpour."
+        },
+        {
+          "title": "Steep pitch.",
+          "body": "Water comes off a steep roof fast enough to shoot past the front of a small gutter. A wider trough catches it."
+        },
+        {
+          "title": "A long valley emptying into one corner.",
+          "body": "A valley gathers two roof planes into one stream and aims it at a single spot. That corner often needs its own downspout, or a splash guard so water can't jump the lip."
+        },
+        {
+          "title": "Runs longer than about 40 feet.",
+          "body": "Better pitched both ways to a downspout at each end than asked to carry everything to one."
+        },
+        {
+          "title": "An upper roof draining onto a lower one.",
+          "body": "A downspout emptying onto shingles wears a stripe down the lower roof. It should run to the lower gutter, or be spread."
+        },
+        {
+          "title": "Firs, cedars and big maples overhead.",
+          "body": "Bigger outlets and 3×4 downspouts pass the needles and cones that plug a 2×3."
+        }
+      ]
+    },
+    "image": {
+      "src": "/images/gutters/gutter-outlet-and-downspout.jpg",
+      "alt": "Close view of a white seamless gutter at a house corner, with the outlet dropping into two elbows and a downspout held against the wall"
+    },
+    "caption": "Outlet, elbows and downspout on a seamless run. Debris stops at the outlet first, so its size matters as much as the gutter's."
+  },
+  "install": {
+    "eyebrow": "Seamless, formed on site",
+    "title": "How a gutter run goes up",
+    "lead": "A seamless gutter is formed from a coil of aluminum at your house and cut to the length of each run. The only joints are where they have to be: corners, end caps and outlets. Fewer joints, fewer places to drip.",
+    "steps": [
+      {
+        "title": "Measure and plan the outlets",
+        "body": "Every run is measured, and downspouts go where the water can go somewhere useful, not just where they're easiest to hang."
+      },
+      {
+        "title": "Check the fascia and the roof edge",
+        "body": "Soft fascia is replaced and missing drip edge or apron is added first. A new gutter on a bad board pulls loose in its first heavy winter."
+      },
+      {
+        "title": "Form each run on site",
+        "body": "Prefinished aluminum coil runs through a forming machine at the curb, and each run comes off in one length. Corners and end caps are riveted and sealed."
+      },
+      {
+        "title": "Hang it on hidden hangers",
+        "body": "Roughly every two feet, closer under big trees or where snow and ice slide off the roof. A gutter full of wet needles and slush is heavy."
+      },
+      {
+        "title": "Set the pitch toward the outlet",
+        "body": "About a quarter inch of fall for every ten feet. Enough to drain, not so much that the gutter visibly tilts along the house."
+      },
+      {
+        "title": "Downspouts, elbows and extensions",
+        "body": "Strapped tight to the wall, with each one ending somewhere the water can soak in or drain away."
+      },
+      {
+        "title": "Run water through it",
+        "body": "A hose at the high end of each run shows the pitch and every seam before the job is called done."
+      }
+    ],
+    "image": {
+      "src": "/images/gutters/seamless-gutter-machine.jpg",
+      "alt": "A gutter installer at a trailer-mounted seamless gutter machine parked on a residential street, with coils of aluminum on the trailer"
+    },
+    "caption": "A seamless gutter machine on a trailer at the curb. Coil goes in one end; a finished run comes out the other.",
+    "facts": [
+      {
+        "label": "Hidden hangers",
+        "value": "Every 2 ft"
+      },
+      {
+        "label": "Fall",
+        "value": "¼\" per 10 ft"
+      },
+      {
+        "label": "K-style gutter",
+        "value": "5\" or 6\""
+      },
+      {
+        "label": "Downspouts",
+        "value": "2×3 or 3×4"
+      }
+    ]
+  },
+  "discharge": {
+    "title": "Get the water away from the house",
+    "body": "<p>An inch of rain on 1,000 square feet of roof is about 620 gallons, and all of it comes out of the downspouts. Where they empty matters as much as the gutter. Water dumped at the wall soaks down beside the footing, and that's how crawlspaces and basements get damp.</p><ul><li><strong>Extensions or splash blocks</strong> carry water several feet out, 4 to 6 is a common target, onto ground that slopes away from the house.</li><li><strong>Downspouts go where the yard can take the water:</strong> not onto a walkway that ices over, not toward the neighbor's side, not into a bed that already stays wet.</li><li><strong>Many older houses here have downspouts that run into a pipe in the ground,</strong> to a drywell, a drain line or the sewer. Whether to keep, repair or disconnect one depends on the property and on what the city or county allows. We'll look at where yours go and check what applies before recommending anything.</li></ul><p>Clearing is part of it too. Under Douglas firs, a gutter can need attention more than once between October and spring. Our <a href=\"/services/roof-maintenance/\">roof maintenance</a> page has a seasonal calendar.</p>",
+    "guards": {
+      "label": "Gutter guards, honestly",
+      "title": "They cut down how often a gutter needs clearing. They don't end it.",
+      "items": [
+        "Screens and micro-mesh keep leaves and cones out of the trough, which is most of the battle under maples and oaks.",
+        "Fir needles are the hard case. They slip through coarse screens, and on fine mesh they mat on top and hold water. Moss can start on the mat.",
+        "A guard still needs brushing off, often once or twice a year under firs, and it makes the gutter harder to clean when something does get in.",
+        "Solid hood guards that curl water around a rounded nose can shed it straight over the edge in a hard rain.",
+        "No guard fixes a gutter that's too small, pitched wrong, or draining to the wrong place."
+      ],
+      "note": "If a guard makes sense for your trees, we'll say so, and tell you what it won't do."
+    }
+  },
+  "signs": {
+    "title": "Signs your gutters aren't keeping up",
+    "intro": "Most of these show up from the ground, and the best time to look is during a real rain. Stand under the eaves with a coat on and watch where the water goes.",
+    "image": {
+      "src": "/images/gutters/standing-water-in-gutter.jpg",
+      "alt": "Looking along a white gutter under gray asphalt shingles, with leaves floating in standing water"
+    },
+    "caption": "Leaves floating in a gutter that isn't draining. Water that sits in the trough means the pitch is off or a hanger has let go.",
+    "items": [
+      {
+        "sign": "Water spilling over the front in an ordinary rain",
+        "means": "A clogged outlet or downspout, or a gutter too small for the roof above it."
+      },
+      {
+        "sign": "Water running down behind the gutter",
+        "means": "A gap between roof and gutter: no gutter apron, or a drip edge that stops short."
+      },
+      {
+        "sign": "Standing water long after the rain stops",
+        "means": "The pitch is wrong, or a hanger has let go and made a low spot."
+      },
+      {
+        "sign": "A sagging run, or a gap at the fascia",
+        "means": "Hangers pulled loose, often from rotten wood or a winter's weight of debris and ice."
+      },
+      {
+        "sign": "Peeling paint or soft wood on the fascia",
+        "means": "Water has been getting behind the gutter for a while. The rafter tails are next."
+      },
+      {
+        "sign": "Drip lines and water stains on the siding",
+        "means": "Overflow, or a leaking seam or corner, usually at the same spot every storm."
+      },
+      {
+        "sign": "A trench worn in the bed under the eave",
+        "means": "Water is coming over the edge instead of down the downspout."
+      },
+      {
+        "sign": "A damp basement or crawlspace, or puddles by the foundation",
+        "means": "Downspouts emptying too close to the house, or an underground line that's broken or plugged."
+      }
+    ]
+  },
+  "closingCta": {
+    "label": "Free estimate",
+    "title": "Get your gutters looked at",
+    "body": "We'll walk the eaves, check the fascia and the downspouts, and tell you whether it's a cleaning, a repair or a new system. The estimate is free and written down."
+  },
+  "related": {
+    "title": "Other work we do"
+  }
+}

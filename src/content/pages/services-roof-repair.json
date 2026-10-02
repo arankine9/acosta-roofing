@@ -1,0 +1,165 @@
+{
+  "seo": {
+    "title": "Roof Repair",
+    "description": "Roof repair for houses across {{serviceArea}}: leaks traced to the source, pipe boots, flashing, valleys, ridge caps, nail pops and storm damage, fixed with matching shingles by a licensed, bonded and insured contractor."
+  },
+  "hero": {
+    "eyebrow": "Residential",
+    "title": "Roof repair",
+    "lead": "Most leaks start in a handful of places: a cracked pipe boot, a lifted shingle, flashing that has let go. We find which one, fix it with shingles that match, and tell you straight if the roof is past repairing.",
+    "image": {
+      "src": "/images/roof-repair/opened-roof-section.jpg",
+      "alt": "Roofer standing on a section of shingle roof opened up over a brick house, torn shingles folded back around him and a ladder against the wall"
+    }
+  },
+  "repairs": {
+    "title": "What we repair most",
+    "intro": "Nearly every leak on a house comes back to one of these eight. Most of them are small jobs when they're caught early, and all of them get worse in a wet winter.",
+    "photos": [
+      {
+        "image": {
+          "src": "/images/roof-repair/failed-chimney-flashing.jpg",
+          "alt": "Brick chimney on a shingle roof with its metal flashing bent, rusted at the nail heads and smeared with old patching compound",
+          "credit": "Photo: Sandul1234, CC BY-SA 4.0."
+        },
+        "caption": "Chimney flashing that's been face-nailed, patched and patched again. It needs replacing, stepped in properly and counter-flashed into the mortar."
+      },
+      {
+        "image": {
+          "src": "/images/roof-repair/limb-through-shingles.jpg",
+          "alt": "A broken tree limb speared through the shingles of a roof, with the snapped trunk of the tree behind",
+          "credit": "Photo: Sandul1234, CC BY-SA 4.0."
+        },
+        "caption": "A limb through the shingles. What matters is underneath: the deck and the rafter it hit."
+      }
+    ],
+    "items": [
+      {
+        "title": "Missing or lifted shingles",
+        "body": "Wind breaks the seal strip and the tab flaps until it tears off. New shingles are slipped in under the course above, nailed where they should be and sealed down."
+      },
+      {
+        "title": "Pipe boots",
+        "body": "The rubber collar around a plumbing vent cracks in the sun long before the rest of the roof is old. One of the most common leaks on any house, and one of the simplest to fix."
+      },
+      {
+        "title": "Chimney, wall and skylight flashing",
+        "body": "Where the roof meets something vertical, metal does the waterproofing. Rusted, loose or tarred-over flashing comes out and is replaced: stepped in with the shingles, then counter-flashed."
+      },
+      {
+        "title": "Valley leaks",
+        "body": "Two slopes pour into one channel, and needles pile up in it. A worn valley is opened up, lined with ice-and-water shield and relaid."
+      },
+      {
+        "title": "Ridge caps",
+        "body": "The caps along the ridge and hips take the most wind and sun. Cracked or missing ones are replaced, with every nail covered by the cap above it."
+      },
+      {
+        "title": "Nail pops",
+        "body": "A nail working its way up lifts the shingle over it and leaves a hole. We reset or replace it, seal the old hole and bond the shingle back down."
+      },
+      {
+        "title": "Storm and wind damage",
+        "body": "After a blow we check every slope, not only the side you can see from the street, and photograph what we find so you have a record."
+      },
+      {
+        "title": "Tree-limb damage",
+        "body": "Once the limb is off (a tree service's job if it's big), we check the deck and rafters under the impact, not just the shingles, and rebuild from there."
+      }
+    ]
+  },
+  "trace": {
+    "eyebrow": "Finding the leak",
+    "title": "The stain is rarely under the hole",
+    "lead": "Water that gets past the shingles runs downhill on the underside of the deck and along the rafters until it finds a place to drop. Patch the roof right above the stain and, more often than not, the leak comes back.",
+    "plateLabel": "Section through roof and ceiling",
+    "legend": [
+      {
+        "title": "Where water gets in",
+        "body": "Here, a split in the pipe boot's rubber collar."
+      },
+      {
+        "title": "Where it travels",
+        "body": "Down the underside of the deck and along the rafter, downhill."
+      },
+      {
+        "title": "Where it shows up",
+        "body": "Wherever it finally drips: the insulation, then the ceiling."
+      },
+      {
+        "title": "The gap between",
+        "body": "Often several feet, and sometimes a different room."
+      }
+    ],
+    "methodTitle": "How we trace it",
+    "method": [
+      {
+        "title": "Start in the attic",
+        "body": "Water leaves a trail on the wood: dark streaks, rusty nail tips, a drip line along a rafter. We follow it uphill toward where it started."
+      },
+      {
+        "title": "Then the roof above the trail",
+        "body": "Whatever sits up-slope of it is the suspect: a pipe, a vent, a chimney, a valley, a skylight, a wall."
+      },
+      {
+        "title": "Water-test if it's still not clear",
+        "body": "A hose run on the roof one section at a time, starting low and working up, with someone in the attic watching for the first drip."
+      },
+      {
+        "title": "Fix the cause, then say what got wet",
+        "body": "The repair goes where the water got in. We'll tell you what else got wet underneath, so it can dry out or be replaced."
+      }
+    ]
+  },
+  "before": {
+    "title": "Before we get there",
+    "lead": "Everything worth doing about a leak today can be done from inside the house. The roof can wait for us.",
+    "safeLabel": "Safe to do, from inside",
+    "safe": [
+      "Put a bucket or tub under the drip, with an old towel in it to stop the splashing.",
+      "Move furniture, electronics, rugs and anything valuable out from under the leak.",
+      "If water is running near a light fixture or an outlet, switch that circuit off at the panel.",
+      "Photograph the stain, the drip and anything damaged, with the date, for your own records and any insurance claim.",
+      "Note when it leaks: every rain, only in wind from one direction, or only after a long storm. It helps us find it."
+    ],
+    "leaveLabel": "Leave for us",
+    "leave": [
+      {
+        "title": "Don't climb a wet roof",
+        "body": "Wet shingles, moss and fir needles are as slick as ice, and the ladder is no better."
+      },
+      {
+        "title": "Don't go up in wind or after dark",
+        "body": "Nothing on a house roof is worth that. Wait for us, and for daylight."
+      },
+      {
+        "title": "Don't smear roof cement over it",
+        "body": "Tar from above tends to trap water rather than stop it, and hides the real source when we go looking."
+      }
+    ],
+    "note": "Depending on the situation, we may be able to tarp or dry in the area to keep water out until the permanent repair is made."
+  },
+  "match": {
+    "title": "Matching the roof you have",
+    "body": "<p>A repair should be hard to find from the street. The first thing we match is the shingle's type and size: different profiles don't mix, and older roofs may use a shingle size that newer ones don't, so the courses won't line up unless the size is right. Then profile, then color.</p><p>Color is the hard part. Manufacturers retire colors and whole product lines, and ten years of Oregon weather fades a roof from the shade it came out of the bundle. We bring samples up to compare against the roof itself, not a brochure. On an older roof a patch can read a shade different for a season or two until it weathers in; we'll tell you that before we start, not after.</p><p><strong>Kept spare bundles from the original job?</strong> Check the garage and the attic. Leftovers from the same roof are the best match there is.</p>",
+    "notWorthIt": {
+      "label": "When a repair isn't worth it",
+      "intro": "Sometimes the honest answer is that the roof is done. These are the signs, and when we see them we'll say so:",
+      "items": [
+        "Shingles so brittle they crack when we lift them to slip new ones in.",
+        "Leaks turning up in new places every season.",
+        "Soft decking over a wide area, not just one spot.",
+        "A repair that would cost a real share of a new roof, on a roof near the end of its life."
+      ],
+      "more": "If you need time to plan, we can talk about a repair that holds until then. See <a href=\"/services/roof-replacement/\" class=\"link-inline\">roof replacement</a>, or the <a href=\"/services/residential/#repair-or-replace\" class=\"link-inline\">repair-or-replace guide</a>."
+    }
+  },
+  "closingCta": {
+    "label": "Free estimate",
+    "title": "Get the leak looked at",
+    "body": "Tell us where you're seeing water and when it shows up. We'll find where it's getting in and write down what it takes to fix. The estimate is free."
+  },
+  "related": {
+    "title": "Also on a house"
+  }
+}

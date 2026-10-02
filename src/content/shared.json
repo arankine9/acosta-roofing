@@ -7,5 +7,133 @@
   "ctaStrip": {
     "title": "Ready to get a number on it?",
     "body": "Free on-site estimates across {{serviceArea}}, in writing and itemized."
+  },
+  "nav": {
+    "links": {
+      "services": "Services",
+      "materials": "Materials",
+      "serviceArea": "Service Area",
+      "about": "About",
+      "faq": "FAQ",
+      "contact": "Contact"
+    },
+    "estimate": "Free Estimate",
+    "menu": {
+      "residential": {
+        "heading": "Residential",
+        "link": "Overview"
+      },
+      "commercial": {
+        "heading": "Commercial & multi-unit",
+        "link": "All services"
+      },
+      "planning": {
+        "heading": "Planning a roof",
+        "links": {
+          "materials": "Roofing materials",
+          "serviceArea": "Service area",
+          "faq": "Questions & answers"
+        }
+      },
+      "sign": {
+        "eyebrow": "Free estimate",
+        "title": "Not sure what the roof needs?",
+        "body": "We'll walk it, show you what we find and write it down. No charge, no pressure.",
+        "button": "Request an estimate"
+      }
+    },
+    "drawer": {
+      "call": "Call {{phone}}",
+      "estimate": "Request an Estimate"
+    }
+  },
+  "footer": {
+    "blurb": "Residential and commercial roofing across {{serviceArea}}, from {{city}}.",
+    "button": "Free Estimate",
+    "columns": {
+      "residential": {
+        "heading": "Residential"
+      },
+      "commercial": {
+        "heading": "Commercial",
+        "links": {
+          "singlePly": "Flat & single-ply",
+          "lowSlope": "Low-slope systems",
+          "multiUnit": "Multi-unit buildings",
+          "materials": "Roofing materials"
+        }
+      },
+      "company": {
+        "heading": "Company",
+        "links": {
+          "about": "About us",
+          "serviceArea": "Service area",
+          "faq": "Questions & answers",
+          "contact": "Contact"
+        }
+      }
+    },
+    "coverage": "Licensed · Bonded · Insured",
+    "rights": "{{legalName}} All rights reserved.",
+    "privacy": "Privacy",
+    "photoCredits": "Photo credits",
+    "statement": "Bonded and insured in the State of Oregon.",
+    "ccb": "CCB #{{ccb}}"
+  },
+  "contact": {
+    "title": "Free estimates, no pressure",
+    "description": "Call during shop hours and you'll get someone who has been on a roof today. Leave a message after hours and you'll hear back the next working morning.",
+    "form": {
+      "label": "Request an estimate",
+      "name": {
+        "label": "Name",
+        "placeholder": "Your name"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "(503) 000-0000"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "you@example.com"
+      },
+      "address": {
+        "label": "Property address",
+        "placeholder": "Street, city"
+      },
+      "detail": {
+        "label": "What's going on with the roof?",
+        "placeholder": "Leak, age of the roof, storm damage, or just due for a look."
+      },
+      "submit": "Send it over",
+      "call": "Call {{phone}}"
+    },
+    "card": {
+      "coverage": "Licensed · Bonded · Insured"
+    },
+    "hours": {
+      "title": "Shop hours"
+    }
+  },
+  "leakCall": {
+    "title": "Roof leaking right now?",
+    "lead": "Call us directly at",
+    "note": "Same-day emergency response may be available depending on scope."
+  },
+  "serviceArea": {
+    "title": "Where we work",
+    "description": "Anywhere in Oregon within about {{driveMinutes}} minutes' drive of our {{city}} shop: the Portland metro, the north Willamette Valley and out toward the Coast Range, the Cascades and the Gorge. Just past the line? Call anyway; depending on the job we may still schedule it.",
+    "map": {
+      "label": "Service area",
+      "region": "Northwest Oregon",
+      "legendArea": "In service area",
+      "legendShop": "Our shop"
+    },
+    "countiesLabel": "Counties in reach"
+  },
+  "buttons": {
+    "call": "Call {{phone}}",
+    "freeEstimate": "Request a Free Estimate",
+    "estimate": "Request an Estimate"
   }
 }

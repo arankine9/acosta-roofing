@@ -1,0 +1,190 @@
+{
+  "seo": {
+    "title": "Residential Roofing",
+    "description": "Roof replacement, roof repair, roof maintenance and gutter systems for houses across {{serviceArea}}, with an honest guide to repairing versus replacing and how the free estimate works."
+  },
+  "hero": {
+    "eyebrow": "Residential",
+    "title": "Roofing for your house",
+    "lead": "Replacement, repair, maintenance and gutters for houses, garages and outbuildings across {{serviceArea}}. If you own the house and aren't sure yet what the roof needs, start here.",
+    "image": {
+      "src": "/images/residential/portland-bungalow-winter.jpg",
+      "alt": "Portland craftsman bungalow with a gray shingle roof and eyebrow dormers, a tall conifer behind it under an overcast winter sky",
+      "credit": "Photo: Ian Poellet, CC BY-SA 4.0."
+    },
+    "caption": "A Portland bungalow in winter: shingle roof, low sky, a big conifer next door."
+  },
+  "work": {
+    "title": "Four kinds of work on a house",
+    "intro": "Almost everything a house roof needs falls under one of these. If you can't tell which, that's normal, and it's what the estimate visit is for.",
+    "allServices": "All services, including commercial",
+    "usuallyWhenLabel": "Usually when",
+    "usuallyWhen": {
+      "roof-replacement": "The roof is near the end of its life, or leaking in more than one place.",
+      "roof-repair": "One leak, a storm, a missing shingle, a cracked pipe boot.",
+      "roof-maintenance": "The roof is sound and you want it to stay that way: moss, needles, a yearly look.",
+      "gutters": "Gutters overflow, pull away from the fascia or dump water beside the foundation."
+    },
+    "readMore": "Read more"
+  },
+  "decide": {
+    "title": "Repair or replace?",
+    "intro": "Roofs rarely fail all at once. They wear out slope by slope, and the real question is whether a repair buys years or just buys time until the next leak. These are the signs we weigh, and which way each one usually points.",
+    "columns": {
+      "sign": "What you're seeing",
+      "means": "What it usually means",
+      "verdict": "Points to"
+    },
+    "verdicts": {
+      "repair": "Repair",
+      "maintenance": "Maintenance",
+      "depends": "Depends",
+      "replace": "Replace"
+    },
+    "rows": [
+      {
+        "sign": "One leak, in one place",
+        "means": "Usually a pipe boot, a flashing detail or a single damaged shingle.",
+        "verdict": "repair"
+      },
+      {
+        "sign": "Shingles missing or lifted after a windstorm",
+        "means": "Wind broke the seal on a few courses. The rest of the roof may be fine.",
+        "verdict": "repair"
+      },
+      {
+        "sign": "A ceiling stain",
+        "means": "Water getting in somewhere up-slope of it, not necessarily right above.",
+        "verdict": "repair",
+        "note": "once the source is found"
+      },
+      {
+        "sign": "Moss on the roof",
+        "means": "It holds water against the shingles and lifts their edges as it grows.",
+        "verdict": "maintenance",
+        "note": "if caught early"
+      },
+      {
+        "sign": "Soft or springy decking underfoot",
+        "means": "Wet or rotted sheathing under the shingles.",
+        "verdict": "depends",
+        "note": "one area can be cut out; widespread means replace"
+      },
+      {
+        "sign": "Heavy granule loss, dark bare patches",
+        "means": "The shingles' weather surface is wearing off. A little grit from a brand-new roof is normal; a lot from an old one isn't.",
+        "verdict": "replace"
+      },
+      {
+        "sign": "Curling, cupping or brittle shingles",
+        "means": "Shingles past their life. South and west faces usually go first.",
+        "verdict": "replace"
+      },
+      {
+        "sign": "Leaks in several places, or the same leak back",
+        "means": "Wear across the whole roof rather than one failure.",
+        "verdict": "replace"
+      },
+      {
+        "sign": "Past its typical life with no trouble yet",
+        "means": "Architectural shingle lasts about 25–30 years, older, thinner shingles less. After that it's borrowed time.",
+        "verdict": "depends",
+        "note": "have it looked at yearly and plan ahead"
+      }
+    ],
+    "image": {
+      "src": "/images/residential/worn-out-shingles.jpg",
+      "alt": "Close-up of old asphalt shingles at the eave, their granules worn away, edges curled and tabs broken off",
+      "credit": "Photo: Dale Mahalko, CC BY-SA 3.0."
+    },
+    "caption": "Granules gone, tabs curled and breaking off along the eave. No repair brings this back.",
+    "rule": {
+      "label": "Our rule of thumb",
+      "body": "If the problem is in one place and the rest of the roof has years left, repair it. If the same wear shows up all over, repairs end up chasing it. When it's close, we'll tell you it's close and price both."
+    }
+  },
+  "climate": {
+    "title": "What an Oregon roof is up against",
+    "intro": "West of the Cascades, roofs don't usually fail from heat or hail. They fail slowly, from water that never quite leaves.",
+    "image": {
+      "src": "/images/residential/bungalow-under-trees.jpg",
+      "alt": "Green bungalow with a light gray shingle roof, shaded by big street trees and a neighbor's conifers",
+      "credit": "Photo: Ian Poellet, CC BY-SA 4.0."
+    },
+    "caption": "Shade is pleasant in August and hard on a roof in February. Trees overhead mean needles in the valleys and a slope that never quite dries.",
+    "items": [
+      {
+        "title": "A long wet season",
+        "body": "From October well into spring, a roof here can go weeks without drying out. A small gap that would never matter in a dry climate gets months to soak in."
+      },
+      {
+        "title": "Moss and lichen",
+        "body": "Moss roots into the granules, holds water like a sponge and pries shingle edges up as it grows. Shade and a north slope are all it needs."
+      },
+      {
+        "title": "Fir needles and debris",
+        "body": "Needles and cones pile up in valleys, behind chimneys and in gutters, and hold water exactly where a roof is most likely to leak."
+      },
+      {
+        "title": "Wind-driven rain",
+        "body": "Winter storms push rain sideways and even uphill, under shingle laps and behind flashing. That's what sealed starter strips and ice-and-water shield are for."
+      },
+      {
+        "title": "Ice storms and east wind",
+        "body": "Some winters, cold air pours out of the Gorge. Ice brings limbs down onto roofs and gutters, and east wind lifts shingles that have lost their seal."
+      },
+      {
+        "title": "North slopes that stay damp",
+        "body": "They grow moss first and dry out last, while south and west faces bake in August. One roof often wears out on two schedules."
+      }
+    ],
+    "materialsLink": "Roofing materials",
+    "materialsNote": "Which shingle holds up to all that, and which roofs need membrane instead."
+  },
+  "estimate": {
+    "title": "How the free estimate works",
+    "intro": "One visit to the house. You'll hear what we found and what we'd do before we leave, and the written estimate follows.",
+    "steps": [
+      {
+        "title": "Tell us what you're seeing",
+        "body": "Call or send the form: the problem, roughly how old the roof is, and photos if you have them."
+      },
+      {
+        "title": "We come out and look",
+        "body": "From the ground, on the roof if it's safe to walk, and in the attic if there's a hatch. The attic often tells us more than the shingles."
+      },
+      {
+        "title": "We show you what we found",
+        "body": "Photos of what you can't see from the yard: the pipe boots, the valleys, the flashing at the chimney, the underside of the deck."
+      },
+      {
+        "title": "You get it in writing",
+        "body": "An itemized estimate that says what we'd do and with what. If a repair and a replacement are both reasonable, we'll lay out both."
+      }
+    ],
+    "helpful": {
+      "title": "What helps us help you",
+      "intro": "None of this is required. Each one saves a question.",
+      "items": [
+        "The roof's age, if you know it, and what's on it now.",
+        "Where and when it has leaked, and any repairs since.",
+        "A clear path to the attic hatch.",
+        "HOA rules on roof color or material, if you have an HOA.",
+        "Whether an insurance claim is already open."
+      ]
+    },
+    "facts": {
+      "label": "Good to know",
+      "cost": { "label": "Cost", "value": "Free, no obligation" },
+      "format": { "label": "Format", "value": "Written, itemized" },
+      "credentials": { "label": "Credentials", "value": "Licensed, bonded, insured" },
+      "ccb": { "label": "Oregon CCB", "value": "#{{ccb}}" },
+      "areaLabel": "Area"
+    }
+  },
+  "closingCta": {
+    "label": "Free estimate",
+    "title": "Start with a look at the roof",
+    "body": "Tell us what you're seeing, or just how old the roof is. We'll come out, show you what we find and write it down. The estimate is free."
+  }
+}

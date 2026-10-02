@@ -1,0 +1,18 @@
+{
+  "seo": {
+    "title": "Page Not Found",
+    "description": "This page doesn't exist. Find {{name}}'s services, contact details and phone number here."
+  },
+  "hero": {
+    "eyebrow": "Error 404",
+    "title": "This page blew off the roof",
+    "lead": "The address may have changed, or the link was mistyped. Everything else is still where it should be."
+  },
+  "links": {
+    "title": "Try one of these",
+    "home": { "label": "Home", "note": "Start from the top" },
+    "services": { "label": "Services", "note": "Replacement, repair, maintenance, gutters, commercial" },
+    "contact": { "label": "Contact", "note": "Request a free estimate" },
+    "phone": { "label": "{{phone}}", "note": "Call during shop hours" }
+  }
+}

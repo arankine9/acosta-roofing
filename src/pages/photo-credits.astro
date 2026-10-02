@@ -1,40 +1,38 @@
 ---
 import Page from "../layouts/Page.astro";
 import PageHero from "../components/PageHero.astro";
+import Text from "../components/Text.astro";
 import { asset, page } from "../lib/url";
-import { photoCredits, licenseInfo } from "../data/photo-credits";
+import { photoCredits as groups, licenseInfo } from "../data/photo-credits";
+import { get, text, field, EDIT } from "../lib/cms";
 
-// Photo credits: every sourced photograph on the site, by page, with its
-// photographer, source and licence. The data is src/data/photo-credits.ts;
-// this page only lays it out. Each page is a ruled block, each photo a row
-// with a thumbnail so the credit can be matched to the picture.
+// Photo credits: every sourced photograph still on the site, by page, with
+// its photographer, source and licence. The data is src/data/photo-credits.ts,
+// which also drops photos the owner has replaced; this page only lays it out.
+// Each page is a ruled block, each photo a row with a thumbnail so the credit
+// can be matched to the picture.
 const crumbs = [{ label: "Photo credits", href: page("/photo-credits/") }];
-const groups = photoCredits.filter((group) => group.credits.length > 0);
 const total = groups.reduce((sum, group) => sum + group.credits.length, 0);
+
+const k = "pages/photo-credits";
+
+// The lead counts the photos listed, a number that falls as the owner swaps
+// in his own, so it carries a {{photoCount}} token of this page's own. It is
+// filled in here, as a locked chip in the edit build like any other token,
+// and rendered under the hero's title in place of a content `hero.lead`.
+const leadKey = `${k}:lead`;
+const count = EDIT ? `<span data-cms-token="photoCount" contenteditable="false">${total}</span>` : String(total);
+const lead = text(get<string>(leadKey).replace(/\{\{\s*photoCount\s*\}\}/g, "\u0000")).split("\u0000").join(count);
 ---
 
-<Page
-  title="Photo Credits"
-  description="Credits and licences for the photographs used on the Acosta Roofing website."
-  crumbs={crumbs}
->
-  <PageHero
-    crumbs={crumbs}
-    eyebrow="Photo credits"
-    title="Photo credits"
-    lead={`The ${total} photographs on this site that we didn't take ourselves, who took them, and the licence each one is used under.`}
-    actions={false}
-    treelineOffset={-445}
-  />
+<Page k={k} crumbs={crumbs}>
+  <PageHero k={`${k}:hero`} crumbs={crumbs} actions={false} treelineOffset={-445}>
+    <p class="t-lead mt-6 max-w-2xl text-on-forest-mute" {...field(leadKey)} set:html={lead} />
+  </PageHero>
 
   <section class="section bg-canvas pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28">
     <div class="container-page">
-      <p class="t-body-md max-w-2xl text-body">
-        Photos marked CC BY or CC BY-SA are used under Creative Commons licences that ask for
-        this credit. Unsplash and Pexels photos are free to use without credit; they're listed
-        anyway. Every photo is resized and recompressed for the web; any other change is noted.
-        Captions describe the kind of work shown, not whose crew is in the picture.
-      </p>
+      <Text k={`${k}:intro`} class="t-body-md max-w-2xl text-body" />
 
       <div class="mt-14 space-y-14">
         {
@@ -60,12 +58,12 @@ const total = groups.reduce((sum, group) => sum + group.credits.length, 0);
                       <div class="min-w-0">
                         <p class="t-body-strong text-ink">{credit.subject}</p>
                         <p class="t-body-sm mt-1 text-body">
-                          Photo: {credit.author}
+                          <Text k={`${k}:photoLabel`} bare /> {credit.author}
                           {credit.source && (
                             <>
                               {" "}&middot;{" "}
                               <a href={credit.source} class="link-inline font-medium" rel="noopener" target="_blank">
-                                Source
+                                <Text k={`${k}:sourceLabel`} bare />
                               </a>
                             </>
                           )}

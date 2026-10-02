@@ -1,0 +1,269 @@
+{
+  "seo": {
+    "title": "Roof maintenance",
+    "description": "Moss removal and treatment without pressure washing, needle and debris clearing, gutter cleaning, and a close roof and attic inspection with photos and written findings. A seasonal guide for Portland metro roofs from {{name}}."
+  },
+  "hero": {
+    "eyebrow": "Residential",
+    "title": "Roof maintenance",
+    "lead": "Most roofs in {{serviceArea}} don't wear out from age alone. They go early where moss holds water against the shingles, where needles dam a valley, and where a pipe boot cracked two winters ago and nobody looked. Maintenance is how you find those first.",
+    "image": {
+      "src": "/images/roof-maintenance/moss-shingle-roof-skylight.jpg",
+      "alt": "Moss growing in rows along the courses of a shingle roof, around a skylight and two roof vents, with fir branches overhead"
+    },
+    "caption": "Moss working along the courses of an Oregon shingle roof, around a skylight and two vents. Every one of those is a place water can get in."
+  },
+  "moss": {
+    "eyebrow": "Moss and lichen",
+    "title": "Why moss wins on a Portland roof",
+    "body": "<h3>Why it grows where it grows</h3><p>Moss needs shade, moisture and something to root in, and a roof here supplies all three from October to May. North-facing slopes get almost no direct sun in winter and stay wet for days after a rain. Roofs under firs and big maples stay shaded year round, and the needles and leaves that settle in the gaps between shingles break down into the grit moss starts in.</p><h3>What it does to shingles</h3><p>Moss starts in the gaps between shingles and along the lower edges. As the cushion thickens it lifts the edge of the shingle above it, which breaks the seal strip and lets wind get under it. The cushion also holds water like a sponge, right on the shingle, through every rain. Water wicks sideways and up under the laps, where a shingle was never meant to be wet, and when it freezes it pries a little further. Over a few winters, that's how a roof with years left in it starts leaking early.</p><p>The clumps that break loose wash into the gutters and settle at the outlets, which is why a mossy roof usually comes with plugged downspouts.</p><h3>Why we don't pressure wash</h3><p>It's fast and it looks clean. It also strips the granules that shield the asphalt from the sun, drives water up under the laps, and can break the seal strips holding the shingles down. Most shingle manufacturers warn against it. A pressure-washed roof can look new for a season and have given up a good share of its life to get there.</p><h3>How it comes off instead</h3><ol><li><strong>Loose debris first,</strong> by hand and blower, working from the ridge down.</li><li><strong>Thick moss by hand,</strong> with brushes and plastic scrapers, always pushing down the slope with the shingles, never prying up against an edge.</li><li><strong>Treatment on what's left,</strong> using a moss treatment labeled for roofs, applied with dry weather ahead. It kills what's rooted between the shingles, and the dead moss lets go and washes off over the next few weeks of rain. The roof won't look finished the day we leave; it gets there.</li><li><strong>Gutters and downspouts last,</strong> since that's where everything ends up.</li></ol><p>Zinc or copper strips near the ridge can slow regrowth, as rain carries a trace of metal down the roof. They help most on open slopes and don't replace clearing on a roof under trees. Cutting back overhanging branches often does more than any product: light and moving air dry the roof out.</p><h3>Lichen is different</h3><p>Lichen is the crusty gray-green or orange patches. It grips the granules hard, and scraping it off takes the granules with it. We treat it and let it weather away rather than force it.</p>",
+    "photos": [
+      {
+        "image": {
+          "src": "/images/roof-maintenance/moss-in-shingle-keyways.jpg",
+          "alt": "Low view across an asphalt shingle roof with small tufts of moss growing between the shingles and along their edges"
+        },
+        "caption": "Moss starting between the shingles. This is the stage to treat it, before it lifts the edges."
+      },
+      {
+        "image": {
+          "src": "/images/roof-maintenance/moss-on-shingles-close.jpg",
+          "alt": "Close view of a shingle roof covered in a thick green cushion of moss, with needles and twigs caught in it"
+        },
+        "caption": "A full cushion, with needles caught in it. By now it holds water against the shingles through every rain."
+      }
+    ],
+    "dontLabel": "What we don't do",
+    "dont": [
+      "Pressure wash a shingle roof.",
+      "Scrape lichen off by force.",
+      "Walk a roof that's soaked, frosted or slick with moss when it can wait for a dry day."
+    ]
+  },
+  "debris": {
+    "title": "Needles, debris and the places water backs up",
+    "intro": "Douglas firs drop needles all year, and heaviest in fall. One needle is nothing. A season of them mats into a sponge that holds water, dams it, and composts into the soil moss grows in. It collects in the same four places on almost every roof.",
+    "items": [
+      {
+        "title": "Valleys",
+        "body": "Where two slopes meet, a valley carries the water of both. A dam of needles pushes that water sideways, under the shingles along the valley's edges."
+      },
+      {
+        "title": "Behind chimneys",
+        "body": "The uphill side of a chimney is a pocket. Debris piles against it, water pools, and the flashing there sits under water every storm. A wide chimney should have a cricket, a small peaked saddle that splits the flow around it."
+      },
+      {
+        "title": "Above skylights and at walls",
+        "body": "The same thing on a smaller scale. Anything that interrupts the flow down the roof collects whatever is coming down with it."
+      },
+      {
+        "title": "Gutters and downspouts",
+        "body": "Where everything ends up. A plugged outlet turns the gutter into a trough that spills over the front, or behind it onto the fascia."
+      }
+    ],
+    "clearing": {
+      "title": "Clearing is part of every visit",
+      "body": "Valleys, chimney backs and skylight curbs are cleared by hand. Gutters are emptied, downspouts flushed to make sure they run, and outlets and extensions checked. If a gutter needs more than a clean, because it sags, holds water or spills behind, the findings say so.",
+      "link": "How gutters should be sized and hung"
+    }
+  },
+  "inspection": {
+    "eyebrow": "The inspection",
+    "title": "What we check, roof to attic",
+    "lead": "Most leaks start at a detail, not in the middle of a slope. This is the list we walk, and every item on it gets a look, not just the ones that are easy to reach.",
+    "groups": [
+      {
+        "title": "On the roof",
+        "items": [
+          {
+            "name": "Pipe boots.",
+            "note": "The rubber collars around plumbing vents crack with sun and age. A split boot sends water straight down the pipe."
+          },
+          {
+            "name": "Flashing.",
+            "note": "Step and counter flashing at walls and chimneys: lifted, rusted, or patched with caulk where there should be metal."
+          },
+          {
+            "name": "Sealant.",
+            "note": "Dried out, cracked, or shrunk away from flashing edges and exposed nail heads."
+          },
+          {
+            "name": "Nail pops.",
+            "note": "Nails backing out and pushing up the shingle above them. Each one is a hole waiting to open."
+          },
+          {
+            "name": "Granule loss.",
+            "note": "Bare patches on the shingles and granules piling up in the gutters, the clearest sign of an aging roof."
+          },
+          {
+            "name": "Ridge caps.",
+            "note": "Cracked, lifted or missing. They take the wind first, and an east wind finds the loose ones."
+          },
+          {
+            "name": "Valleys.",
+            "note": "Debris dams, worn shingles, and nails showing where they shouldn't."
+          },
+          {
+            "name": "Skylights.",
+            "note": "The flashing kit, the seals, and debris packed against the uphill side."
+          }
+        ]
+      },
+      {
+        "title": "At the edges",
+        "items": [
+          {
+            "name": "Drip edge and apron.",
+            "note": "Present, fastened, and sending water into the gutter rather than behind it."
+          },
+          {
+            "name": "Gutters and downspouts.",
+            "note": "Clear, pitched to drain, hangers tight, outlets open."
+          },
+          {
+            "name": "Fascia and soffit.",
+            "note": "Soft wood, peeling paint, and gaps where birds and squirrels get in."
+          },
+          {
+            "name": "Branches.",
+            "note": "Anything touching the roof, rubbing it in the wind, or hanging over it."
+          }
+        ]
+      },
+      {
+        "title": "In the attic",
+        "items": [
+          {
+            "name": "Daylight.",
+            "note": "Light through the deck, around pipes, vents and the chimney."
+          },
+          {
+            "name": "Damp or stained sheathing.",
+            "note": "Dark rings on the underside of the deck, especially around penetrations."
+          },
+          {
+            "name": "Frost or mold.",
+            "note": "On nail tips and sheathing in winter: warm, moist house air collecting where it can't get out."
+          },
+          {
+            "name": "Ventilation.",
+            "note": "Soffit vents open and not buried in insulation, roof or ridge vents clear, and bath and kitchen fans ducted outside, not into the attic."
+          },
+          {
+            "name": "Insulation.",
+            "note": "Wet, matted or pushed out of place."
+          }
+        ]
+      }
+    ]
+  },
+  "calendar": {
+    "title": "A year on a Northwest roof",
+    "intro": "The weather sets the schedule. Clear and inspect before the rain, look again after the storms, treat moss while it's growing, and save real repairs for the dry months.",
+    "rows": {
+      "weather": "The weather",
+      "todo": "On the roof",
+      "why": "Why then"
+    },
+    "seasons": [
+      {
+        "name": "Fall",
+        "months": "September – November",
+        "weather": "The rain comes back, usually by mid-October. Firs, cedars and maples drop needles, cones and leaves onto every roof under them.",
+        "todo": "Clear gutters, valleys and the uphill side of chimneys once the leaves are down. A full inspection, roof and attic.",
+        "why": "Anything found now gets fixed before six months of rain find it first."
+      },
+      {
+        "name": "Winter",
+        "months": "December – February",
+        "weather": "Long wet stretches, wind-driven rain, the odd east wind out of the Gorge, and now and then an ice storm or snow.",
+        "todo": "After a big storm, look from the ground: missing or lifted shingles, a ridge cap out of line, branches on the roof, a gutter pulled away. Check ceilings and the attic for new stains.",
+        "why": "Winter is for catching problems and keeping water out. Temporary dry-in may be possible, depending on the situation, until the weather allows a proper repair."
+      },
+      {
+        "name": "Spring",
+        "months": "March – May",
+        "weather": "Still damp and warming up. Moss is at its greenest and growing fastest, and the trees shed pollen, catkins and cones.",
+        "todo": "Moss removal and treatment. Clear the gutters again after the spring drop, and look over what winter left behind.",
+        "why": "Treatments work best on moss that's actively growing, and they want a dry day or two after they go on. Spring has both."
+      },
+      {
+        "name": "Summer",
+        "months": "June – August",
+        "weather": "The dry window. Weeks without rain, and warm enough for sealants to cure and new shingles to seal down.",
+        "todo": "Repairs, flashing and sealant work, and anything bigger: replacement, skylights, new gutters. Cut back branches over the roof.",
+        "why": "Work done dry doesn't have to wait on a forecast, and it's done before the rain comes back to test it."
+      }
+    ],
+    "intervals": {
+      "title": "How often, roughly",
+      "intro": "General guidance, not a plan we sell. Your roof's age, pitch, shade and material all move these numbers, and we'll tell you what yours needs once we've been up there.",
+      "task": "Task",
+      "open": "Open, sunny roof",
+      "shaded": "Under firs or big trees",
+      "rows": [
+        {
+          "task": "Inspection",
+          "open": "Once a year, in fall",
+          "shaded": "Once a year, plus after big storms"
+        },
+        {
+          "task": "Gutter and valley clearing",
+          "open": "Once a year, late fall",
+          "shaded": "Two or three times, fall into winter"
+        },
+        {
+          "task": "Moss treatment",
+          "open": "Every few years, or when it shows",
+          "shaded": "Every year or two, north slopes first"
+        },
+        {
+          "task": "A look from the ground",
+          "open": "After any big wind or ice storm",
+          "shaded": "After any big wind or ice storm"
+        }
+      ]
+    }
+  },
+  "report": {
+    "title": "What you get back after a visit",
+    "lead": "You shouldn't have to climb up to know what's on your roof.",
+    "items": [
+      {
+        "title": "Photos",
+        "body": "Of everything we flag, taken close enough to see the problem and wide enough to see where it is on the house."
+      },
+      {
+        "title": "Written findings",
+        "body": "In plain language: what we found, where, and what it means for the roof."
+      },
+      {
+        "title": "What can wait, and what can't",
+        "body": "Every item sorted by urgency, with a written price for anything that needs doing. Nothing is done without your say."
+      }
+    ],
+    "tiersLabel": "Findings, sorted",
+    "tiers": [
+      {
+        "label": "Fix now",
+        "body": "Anything letting water in or about to: a split pipe boot, lifted flashing, missing shingles, a valley that's dammed."
+      },
+      {
+        "label": "Before next winter",
+        "body": "Wear that won't leak this month but will: dried sealant, a few nail pops, moss starting to lift edges, a gutter that holds water."
+      },
+      {
+        "label": "Keep an eye on",
+        "body": "Normal aging worth tracking year to year: granule loss on the south slope, lichen, ridge caps getting brittle."
+      }
+    ]
+  },
+  "closingCta": {
+    "label": "Free estimate",
+    "title": "Have your roof looked over",
+    "body": "Tell us roughly how old the roof is and what's growing over it. We'll come look, clear what needs clearing, and give you the findings in writing."
+  },
+  "related": {
+    "title": "Other work we do"
+  }
+}

@@ -31,8 +31,8 @@ const { k = "shared:ctaStrip", href = "#contact", offset = -190 } = Astro.props;
       <Text k={`${k}.body`} class="t-body-md mt-3 max-w-xl text-on-forest-mute" />
     </div>
     <div class="flex shrink-0 flex-col gap-3 sm:flex-row">
-      <a href={site.phoneHref} class="btn btn-cream">Call {site.phone}</a>
-      <a href={href} class="btn btn-outline-cream">Request an Estimate</a>
+      <a href={site.phoneHref} class="btn btn-cream"><Text k="shared:buttons.call" bare /></a>
+      <a href={href} class="btn btn-outline-cream"><Text k="shared:buttons.estimate" bare /></a>
     </div>
   </div>
 </section>

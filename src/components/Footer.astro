@@ -1,39 +1,47 @@
 ---
 import Logo from "./Logo.astro";
 import Treeline from "./Treeline.astro";
+import Text from "./Text.astro";
 import { site, cityLine } from "../data/site";
 import { pages, estimateHref } from "../data/nav";
 import { serviceHref, servicesByGroup } from "../data/services";
 
 const year = new Date().getFullYear();
 
+// The footer's words are in src/content/shared.json under `footer`.
+const k = "shared:footer";
+
 // Three link columns, not six. A four-person roofing company does not have six
 // columns of real pages, and inventing them to satisfy a grid would be worse
 // than the grid. The county list lives on the service-area page, not here.
-const columns = [
+//
+// A link with `k` takes its label from content; the residential column lists
+// the services by their registry titles.
+type FooterLink = { href: string } & ({ k: string } | { label: string });
+const columns: { k: string; links: FooterLink[] }[] = [
   {
-    heading: "Residential",
+    k: `${k}.columns.residential`,
     links: servicesByGroup("residential").map((service) => ({
       label: service.title,
       href: serviceHref(service.slug),
     })),
   },
   {
-    heading: "Commercial",
+    k: `${k}.columns.commercial`,
     links: [
-      { label: "Flat & single-ply", href: `${serviceHref("commercial")}#single-ply` },
-      { label: "Low-slope systems", href: `${serviceHref("commercial")}#low-slope` },
-      { label: "Multi-unit buildings", href: serviceHref("multi-unit") },
-      { label: "Roofing materials", href: pages.materials },
+      { k: `${k}.columns.commercial.links.singlePly`, href: `${serviceHref("commercial")}#single-ply` },
+      { k: `${k}.columns.commercial.links.lowSlope`, href: `${serviceHref("commercial")}#low-slope` },
+      { k: `${k}.columns.commercial.links.multiUnit`, href: serviceHref("multi-unit") },
+      { k: `${k}.columns.commercial.links.materials`, href: pages.materials },
     ],
   },
   {
-    heading: "Company",
+    k: `${k}.columns.company`,
     links: [
-      { label: "About us", href: pages.about },
-      { label: "Service area", href: pages.serviceArea },
-      { label: "Questions & answers", href: pages.faq },
-      { label: "Contact", href: pages.contact },
+      { k: `${k}.columns.company.links.about`, href: pages.about },
+      { k: `${k}.columns.company.links.serviceArea`, href: pages.serviceArea },
+      { k: `${k}.columns.company.links.faq`, href: pages.faq },
+      { k: `${k}.columns.company.links.contact`, href: pages.contact },
     ],
   },
 ];
@@ -46,17 +54,18 @@ const columns = [
     <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))]">
       <div class="max-w-xs">
         <Logo tone="cream" />
+        {/* The tagline is the business's own (site.json), followed by this
+            footer's line about it. */}
         <p class="t-body-sm mt-6 text-on-forest-mute">
-          {site.tagline} Residential and commercial roofing across
-          {" "}{site.serviceArea}, from Beaverton.
+          <Text k="site:tagline" bare /> <Text k={`${k}.blurb`} bare />
         </p>
-        <a href={estimateHref} class="btn btn-cream mt-6">Free Estimate</a>
+        <a href={estimateHref} class="btn btn-cream mt-6"><Text k={`${k}.button`} bare /></a>
       </div>
 
       {
         columns.map((column) => (
           <div>
-            <h2 class="t-spaced-sm text-on-forest">{column.heading}</h2>
+            <Text k={`${column.k}.heading`} as="h2" class="t-spaced-sm text-on-forest" />
             <ul class="mt-5 space-y-1 border-t border-hairline-dark pt-2">
               {column.links.map((link) => (
                 <li>
@@ -64,7 +73,7 @@ const columns = [
                     href={link.href}
                     class="t-body-sm flex min-h-11 items-center text-on-forest-mute hover:text-on-forest"
                   >
-                    {link.label}
+                    {"k" in link ? <Text k={link.k} bare /> : link.label}
                   </a>
                 </li>
               ))}
@@ -77,7 +86,7 @@ const columns = [
     <div
       class="mt-16 flex flex-col gap-5 border-t border-hairline-dark pt-7 md:flex-row md:items-center md:justify-between"
     >
-      <p class="t-spaced text-on-forest">Licensed &middot; Bonded &middot; Insured</p>
+      <Text k={`${k}.coverage`} class="t-spaced text-on-forest" />
       <address class="t-body-sm not-italic text-on-forest-mute">
         {site.address.street && <>{site.address.street} &middot; </>}{cityLine}
         &middot; <a href={`mailto:${site.email}`} class="hover:text-on-forest">{site.email}</a>
@@ -95,12 +104,12 @@ const columns = [
       class="container-page flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between"
     >
       <p class="t-spaced-sm text-on-forest-mute">
-        &copy; {year} {site.legalName} All rights reserved.
-        <a href={pages.privacy} class="ml-3 underline underline-offset-4 hover:text-on-forest">Privacy</a>
-        <a href={pages.photoCredits} class="ml-3 underline underline-offset-4 hover:text-on-forest">Photo credits</a>
+        &copy; {year} <Text k={`${k}.rights`} bare />
+        <a href={pages.privacy} class="ml-3 underline underline-offset-4 hover:text-on-forest"><Text k={`${k}.privacy`} bare /></a>
+        <a href={pages.photoCredits} class="ml-3 underline underline-offset-4 hover:text-on-forest"><Text k={`${k}.photoCredits`} bare /></a>
       </p>
       <p class="t-spaced-sm text-on-forest-mute">
-        Bonded and insured in the State of Oregon.{site.ccb && <> &middot; CCB #{site.ccb}</>}
+        <Text k={`${k}.statement`} bare />{site.ccb && <> &middot; <Text k={`${k}.ccb`} bare /></>}
       </p>
     </div>
   </div>

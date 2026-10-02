@@ -1,0 +1,137 @@
+{
+  "seo": {
+    "title": "Portland Metro Roofing Contractor",
+    "description": "Residential and commercial roofing in {{city}}, Oregon. Roof installation, repairs, maintenance and gutter systems from a licensed, bonded and insured contractor."
+  },
+  "hero": {
+    "lead": "Installation, repairs, maintenance and gutter systems across {{serviceArea}}, from a crew small enough that the person who quotes your job is the person on your roof.",
+    "call": "Call {{phone}}",
+    "estimate": "Request a Free Estimate",
+    "proof": [
+      {
+        "value": "5",
+        "label": "Services under one roof"
+      },
+      {
+        "value": "{{countyCount}}",
+        "label": "Counties served"
+      },
+      {
+        "value": "Free",
+        "label": "On-site estimates"
+      }
+    ],
+    "sign": {
+      "coverage": "Licensed · Bonded · Insured",
+      "ccbLabel": "CCB #",
+      "callLabel": "Call"
+    }
+  },
+  "trust": [
+    {
+      "icon": "quality",
+      "label": "Quality workmanship"
+    },
+    {
+      "icon": "honest",
+      "label": "Honest & reliable"
+    },
+    {
+      "icon": "built",
+      "label": "Built to last"
+    },
+    {
+      "icon": "oregon",
+      "label": "Rooted in Oregon"
+    }
+  ],
+  "services": {
+    "title": "Our services",
+    "tiles": [
+      {
+        "title": "Residential",
+        "body": "Roof replacement, leak repairs and seasonal maintenance for homes across {{serviceArea}}, plus the gutters and custom flashing that keep water moving off the roof and away from the house.",
+        "image": {
+          "src": "/images/roof-maintenance.jpg",
+          "alt": "Aerial view of a brick house with a new architectural shingle roof"
+        }
+      },
+      {
+        "title": "Commercial",
+        "body": "Single-ply and low-slope systems for shops, warehouses and light-industrial buildings, installed to spec and detailed properly at every curb, drain and penetration.",
+        "image": {
+          "src": "/images/commercial-roofing.jpg",
+          "alt": "Crew rolling out and detailing white membrane on a low-slope commercial roof"
+        }
+      },
+      {
+        "title": "Multi-unit",
+        "body": "Apartments, condos and townhome rows: replacement, repair and scheduled maintenance, planned building by building around the people living underneath.",
+        "image": {
+          "src": "/images/multi-unit.jpg",
+          "alt": "Aerial view of rows of townhomes with gray shingle roofs"
+        }
+      }
+    ],
+    "allServices": "See all services",
+    "appointment": "Request an Appointment"
+  },
+  "materials": {
+    "title": "Roofing materials for every roof and budget",
+    "lead": "Architectural and designer shingle for steep roofs, membrane for flat ones. We'll recommend the one that suits the pitch, the budget and an Oregon winter, and tell you why.",
+    "items": [
+      {
+        "image": {
+          "src": "/images/materials/architectural-shingle.png",
+          "alt": ""
+        },
+        "fit": "Steep slope",
+        "title": "Architectural shingle",
+        "body": "Thicker, laminated shingle with a dimensional profile that reads like shake. Heavy and wind-rated, in a wide range of colors. The standard choice on most house re-roofs.",
+        "life": "25–30",
+        "lifeLabel": "Years expected life"
+      },
+      {
+        "image": {
+          "src": "/images/materials/asphalt-shingle.png",
+          "alt": ""
+        },
+        "fit": "Steep slope",
+        "title": "Designer shingle",
+        "body": "Premium, extra-thick shingle cut to look like slate or hand-split shake. Deeper shadow lines and the heaviest weight of any asphalt shingle, for a roof that shows from the street.",
+        "life": "30+",
+        "lifeLabel": "Years expected life"
+      },
+      {
+        "image": {
+          "src": "/images/materials/single-ply-membrane.png",
+          "alt": ""
+        },
+        "fit": "Flat & low slope",
+        "title": "Single-ply membrane (TPO / PVC)",
+        "body": "Heat-welded membrane for flat and low-slope roofs, residential or commercial. Seams are fused into one continuous, watertight sheet.",
+        "life": "20–30",
+        "lifeLabel": "Years expected life"
+      }
+    ],
+    "brandsLabel": "Brands we install",
+    "brands": [
+      {
+        "src": "/images/brands/gaf.svg",
+        "alt": "GAF"
+      },
+      {
+        "src": "/images/brands/certainteed.svg",
+        "alt": "CertainTeed"
+      },
+      {
+        "src": "/images/brands/malarkey.svg",
+        "alt": "Malarkey Roofing Products"
+      },
+      {
+        "src": "/images/brands/duro-last.svg",
+        "alt": "Duro-Last"
+      }
+    ]
+  }
+}

@@ -1,9 +1,11 @@
 ---
-import { asset } from "../lib/url";
 import SectionHeading from "./SectionHeading.astro";
 import Icon from "./Icon.astro";
+import Text from "./Text.astro";
+import Img from "./Img.astro";
 import { residentialHref, serviceHref } from "../data/services";
 import { pages } from "../data/nav";
+import { file } from "../lib/cms";
 
 // Three full-photo service tiles. At rest each shows its photo and title;
 // on hover (or keyboard focus) the photo settles under a forest shade, the
@@ -11,43 +13,24 @@ import { pages } from "../data/nav";
 // description opens up from below. The whole tile is the link. The motion
 // lives in global.css under `.service-tile`.
 //
-// `href` is where a tile goes: the residential hub, and the commercial and
-// multi-unit pages.
+// The tiles' words and photos are in src/content/pages/home.json under
+// `services.tiles`, in this order; `hrefs` is where each one goes: the
+// residential hub, and the commercial and multi-unit pages. Three tiles
+// always, so the row is not a list the owner can add to.
 //
-// Photos live in public/images/ under the filenames below; swap a photo by
-// replacing the file. multi-unit.jpg is Eric Dahm's "Aerial view of new
-// townhouses with gray roofs" from Unsplash (Unsplash License: free for
-// commercial use, no attribution required).
-const services = [
-  {
-    title: "Residential",
-    body: "Roof replacement, leak repairs and seasonal maintenance for homes across the Portland metro, plus the gutters and custom flashing that keep water moving off the roof and away from the house.",
-    image: "/images/roof-maintenance.jpg",
-    alt: "Aerial view of a brick house with a new architectural shingle roof",
-    href: residentialHref,
-  },
-  {
-    title: "Commercial",
-    body: "Single-ply and low-slope systems for shops, warehouses and light-industrial buildings, installed to spec and detailed properly at every curb, drain and penetration.",
-    image: "/images/commercial-roofing.jpg",
-    alt: "Crew rolling out and detailing white membrane on a low-slope commercial roof",
-    href: serviceHref("commercial"),
-  },
-  {
-    title: "Multi-unit",
-    body: "Apartments, condos and townhome rows: replacement, repair and scheduled maintenance, planned building by building around the people living underneath.",
-    image: "/images/multi-unit.jpg",
-    alt: "Aerial view of rows of townhomes with gray shingle roofs",
-    href: serviceHref("multi-unit"),
-  },
-];
+// multi-unit.jpg is Eric Dahm's "Aerial view of new townhouses with gray
+// roofs" from Unsplash (Unsplash License: free for commercial use, no
+// attribution required).
+const k = "pages/home:services";
+const tiles = file("pages/home").services.tiles as unknown[];
+const hrefs = [residentialHref, serviceHref("commercial"), serviceHref("multi-unit")];
 ---
 
 {/* Extra bottom padding: the Materials band's treeline stands 64px into
     this section. */}
 <section id="services" class="section bg-canvas pb-28 lg:pb-36">
   <div class="container-page">
-    <SectionHeading title="Our services" align="center" class="mb-12" />
+    <SectionHeading k={k} align="center" class="mb-12" />
   </div>
 
   {/* The photos are landscape, so from 1024px the row runs wider than the
@@ -56,21 +39,15 @@ const services = [
   <div class="mx-auto max-w-[1720px] px-6 min-[1440px]:px-12">
     <div class="mx-auto grid max-w-2xl grid-cols-1 gap-2 lg:max-w-none lg:grid-cols-3">
       {
-        services.map((service) => (
-          <a href={service.href} class="service-tile">
-            <img
-              src={asset(service.image)}
-              alt={service.alt}
-              loading="lazy"
-              decoding="async"
-              class="service-tile__photo"
-            />
+        tiles.map((_, i) => (
+          <a href={hrefs[i]} class="service-tile">
+            <Img k={`${k}.tiles.${i}.image`} loading="lazy" decoding="async" class="service-tile__photo" />
             <span class="service-tile__scrim" aria-hidden="true" />
             <span class="service-tile__shade" aria-hidden="true" />
 
             <div class="service-tile__body">
               <h3 class="service-tile__title t-display-lg">
-                <span>{service.title}</span>
+                <Text k={`${k}.tiles.${i}.title`} as="span" />
                 <span class="service-tile__icon" aria-hidden="true">
                   <svg class="service-tile__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square">
                     <path d="M12 4v16M4 12h16" />
@@ -81,7 +58,7 @@ const services = [
               <span class="service-tile__rule" aria-hidden="true" />
               <div class="service-tile__reveal">
                 <div class="service-tile__clip">
-                  <p class="service-tile__text t-body-md">{service.body}</p>
+                  <Text k={`${k}.tiles.${i}.body`} class="service-tile__text t-body-md" />
                 </div>
               </div>
             </div>
@@ -91,8 +68,8 @@ const services = [
     </div>
 
     <div class="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
-      <a href={pages.services} class="btn btn-outline">See all services</a>
-      <a href="#contact" class="btn btn-primary">Request an Appointment</a>
+      <a href={pages.services} class="btn btn-outline"><Text k={`${k}.allServices`} bare /></a>
+      <a href="#contact" class="btn btn-primary"><Text k={`${k}.appointment`} bare /></a>
     </div>
   </div>
 </section>

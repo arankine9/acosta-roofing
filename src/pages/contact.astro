@@ -4,9 +4,10 @@ import PageHero from "../components/PageHero.astro";
 import Contact from "../components/Contact.astro";
 import LeakCall from "../components/LeakCall.astro";
 import Icon from "../components/Icon.astro";
-import { site, counties } from "../data/site";
+import Text from "../components/Text.astro";
+import { site } from "../data/site";
 import { pages } from "../data/nav";
-import { serviceMap } from "../data/service-map";
+import { file, list, item } from "../lib/cms";
 
 // Contact. The form, business card and hours are the home page's Contact
 // component, reused unchanged (including its note that the form isn't wired
@@ -22,53 +23,15 @@ import { serviceMap } from "../data/service-map";
 // (Unsplash License).
 const crumbs = [{ label: "Contact", href: pages.contact }];
 
-const nextSteps = [
-  {
-    title: "We call you back",
-    body: "If we miss your call, or you send the form or an email, we call you back; after hours, that's the next working morning. We'll ask a few questions so we come prepared.",
-  },
-  {
-    title: "We set a time to visit",
-    body: "A time that suits you. If we can judge the job from outside, you don't have to be home; if we need the attic, or you want to walk it with us, we'll come when you are.",
-  },
-  {
-    title: "We walk the roof",
-    body: "Slopes, flashing, penetrations, gutters and, if there's access, the attic. We take photos as we go and show you what we found.",
-  },
-  {
-    title: "You get a written estimate",
-    body: "Itemized and in plain words, with the materials named and the schedule set out. It's free, and there's no follow-up pressure.",
-  },
-];
-
-const haveReady = [
-  { title: "The roof's age, if you know it", body: "Or roughly when you bought the house. Closing paperwork and old invoices often have it." },
-  { title: "Photos", body: "Of the roof from the ground, a stain on the ceiling, a sagging gutter. A phone photo tells us a lot before we arrive." },
-  { title: "Where you see water", body: "Which room, how close to an outside wall or chimney, and whether it shows only in wind-driven rain." },
-  { title: "Anything done before", body: "Past repairs, a previous claim, or a second layer of shingles you know about." },
-  { title: "Access", body: "Gates, dogs, attic hatch location, and where a truck can park." },
-];
+const k = "pages/contact";
+const c = file(k);
 ---
 
-<Page
-  title="Contact"
-  description={`Call ${site.phone} or request a free on-site roofing estimate from Acosta Roofing in Beaverton. Serving the Portland metro and northwest Oregon. Oregon CCB #${site.ccb}.`}
-  crumbs={crumbs}
->
-  <PageHero
-    crumbs={crumbs}
-    eyebrow="Contact"
-    title="Tell us about the roof"
-    lead="Call, email or send the form. Say what you're seeing and where the house is, and we'll set a time to come look. The estimate is free and written down."
-    actions={false}
-    image="/images/contact/ladder-at-the-ridge.jpg"
-    imageAlt="An aluminum ladder laid up a brown shingle roof beside a brick chimney, under a blue sky"
-    imageCaption="Most estimates start the same way: up the ladder for a close look at the shingles and the flashing."
-    treelineOffset={-280}
-  >
+<Page k={k} crumbs={crumbs}>
+  <PageHero k={`${k}:hero`} crumbs={crumbs} actions={false} treelineOffset={-280}>
     <dl class="mt-10 grid max-w-xl border-t border-hairline-dark sm:grid-cols-2">
       <div class="border-b border-hairline-dark py-4 sm:border-r sm:pr-6">
-        <dt class="t-spaced-sm text-on-forest-mute">Call</dt>
+        <Text k={`${k}:hero.callLabel`} as="dt" class="t-spaced-sm text-on-forest-mute" />
         <dd class="mt-1">
           <a href={site.phoneHref} class="t-heading-md inline-flex min-h-11 items-center whitespace-nowrap hover:underline">
             {site.phone}
@@ -76,7 +39,7 @@ const haveReady = [
         </dd>
       </div>
       <div class="min-w-0 border-b border-hairline-dark py-4 sm:pl-6">
-        <dt class="t-spaced-sm text-on-forest-mute">Email</dt>
+        <Text k={`${k}:hero.emailLabel`} as="dt" class="t-spaced-sm text-on-forest-mute" />
         <dd class="mt-1">
           <a href={`mailto:${site.email}`} class="t-body-md inline-flex min-h-11 items-center break-all text-on-forest hover:underline">
             {site.email}
@@ -95,43 +58,37 @@ const haveReady = [
   <section id="next" class="section bg-cream-deep">
     <div class="container-page grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
       <div class="min-w-0">
-        <h2 class="t-display-lg text-ink">What happens next</h2>
-        <ol class="step-list mt-10">
+        <Text k={`${k}:next.title`} as="h2" class="t-display-lg text-ink" />
+        <ol class="step-list mt-10" {...list(`${k}:next.steps`)}>
           {
-            nextSteps.map((step) => (
-              <li>
-                <h3 class="t-heading-md text-ink">{step.title}</h3>
-                <p class="t-body-md text-body">{step.body}</p>
+            c.next.steps.map((_: unknown, i: number) => (
+              <li {...item(i)}>
+                <Text k={`${k}:next.steps.${i}.title`} as="h3" class="t-heading-md text-ink" />
+                <Text k={`${k}:next.steps.${i}.body`} class="t-body-md text-body" />
               </li>
             ))
           }
         </ol>
-        <p class="t-body-md mt-8 max-w-2xl text-body">
-          We work anywhere in Oregon within about {serviceMap.drive.minutes} minutes' drive of our {site.address.city} shop,
-          across {counties.length} counties from the Portland metro into the north Willamette Valley.
-          <a href={pages.serviceArea} class="link-inline">See the service area map</a>.
-        </p>
+        <Text k={`${k}:next.area`} type="rich" class="t-body-md mt-8 max-w-2xl text-body" />
       </div>
 
       <aside class="min-w-0 lg:sticky lg:top-28 lg:self-start" aria-labelledby="have-ready">
         <div class="panel panel-keyline overflow-hidden">
           <div class="plate-label">
             <Icon name="check" size={18} />
-            <span id="have-ready" class="t-spaced">Useful to have ready</span>
+            <Text k={`${k}:haveReady.label`} as="span" id="have-ready" class="t-spaced" />
           </div>
-          <ul class="check-list px-6 pt-7 pb-8 sm:px-8">
+          <ul class="check-list px-6 pt-7 pb-8 sm:px-8" {...list(`${k}:haveReady.items`)}>
             {
-              haveReady.map((item) => (
-                <li>
-                  <p class="t-body-strong text-ink">{item.title}</p>
-                  <p class="t-body-sm text-body">{item.body}</p>
+              c.haveReady.items.map((_: unknown, i: number) => (
+                <li {...item(i)}>
+                  <Text k={`${k}:haveReady.items.${i}.title`} class="t-body-strong text-ink" />
+                  <Text k={`${k}:haveReady.items.${i}.body`} class="t-body-sm text-body" />
                 </li>
               ))
             }
           </ul>
-          <p class="t-caption border-t border-hairline px-6 py-4 text-mute sm:px-8">
-            None of it is required. If all you know is that there's a drip, call.
-          </p>
+          <Text k={`${k}:haveReady.note`} class="t-caption border-t border-hairline px-6 py-4 text-mute sm:px-8" />
         </div>
       </aside>
     </div>

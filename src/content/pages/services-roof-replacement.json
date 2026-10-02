@@ -1,0 +1,219 @@
+{
+  "seo": {
+    "title": "Roof Replacement",
+    "description": "How {{name}} replaces a house roof in {{serviceArea}}: tear-off to the deck, deck repair, drip edge, ice-and-water shield, synthetic underlayment, flashing, shingles and ridge ventilation, step by step."
+  },
+  "hero": {
+    "eyebrow": "Residential",
+    "title": "Roof replacement",
+    "lead": "Everything comes off, down to the wood. Then the roof goes back on in layers, and each layer is there for a reason. This is the whole job, in the order we do it.",
+    "image": {
+      "src": "/images/roof-replacement/shingles-over-underlayment.jpg",
+      "alt": "Roofer nailing a new course of architectural shingles over gray synthetic underlayment"
+    }
+  },
+  "layers": {
+    "title": "What's under the shingles",
+    "intro": "The shingles shed most of the water. The layers under them deal with what gets past, and the flashing deals with every place the roof is interrupted. A roof that leaks young usually has a layer missing or done cheaply, not a bad shingle.",
+    "plateLabel": "Section at the eave · not to scale",
+    "caption": "Shingles cut back part way up the slope to show the layers beneath. The dashed line is attic air, in at the soffit and out at the ridge.",
+    "items": [
+      {
+        "title": "Roof deck",
+        "body": "The plywood or OSB sheathing nailed to the rafters. Everything above is fastened to it, so soft or delaminated sheets are replaced, never covered over."
+      },
+      {
+        "title": "Drip edge",
+        "body": "Bent metal along the eaves and rakes. It carries water past the fascia and into the gutter instead of letting it wick back into the wood."
+      },
+      {
+        "title": "Ice-and-water shield",
+        "body": "Self-adhering membrane at the eaves, in the valleys and around every penetration. It seals around each nail, which is what stops water that gets pushed back up under the shingles."
+      },
+      {
+        "title": "Synthetic underlayment",
+        "body": "Covers the rest of the deck, lapped over the ice-and-water shield. Tougher than the old felt paper, and it keeps the house dry while the shingles go on."
+      },
+      {
+        "title": "Starter course",
+        "body": "An adhesive strip along the eaves and rakes, so the first course and the roof edges are sealed down against wind."
+      },
+      {
+        "title": "Shingles",
+        "body": "Nailed where the manufacturer's instructions put the nails, at the exposure they call for. The wind rating depends on it."
+      },
+      {
+        "title": "Flashing and pipe boots",
+        "body": "Metal and rubber at every place the roof is interrupted: pipes, chimneys, walls, skylights. It is where most leaks start."
+      },
+      {
+        "title": "Ridge vent",
+        "body": "A continuous opening along the peak under a vented cap, where warm, damp attic air leaves."
+      },
+      {
+        "title": "Attic airflow",
+        "body": "Air comes in at the soffit vents and out at the ridge. In a wet climate, that draft is what keeps condensation off the underside of the deck."
+      }
+    ]
+  },
+  "steps": {
+    "eyebrow": "Twelve steps",
+    "title": "The job, start to finish",
+    "lead": "Every roof we replace goes through the same sequence. The order matters: each layer laps over the one before it, the way water runs downhill.",
+    "items": [
+      {
+        "title": "Estimate and deck assessment",
+        "body": "We walk the roof, look in the attic if there's a hatch, and count how many layers are on. Soft spots underfoot, sags between rafters and stained sheathing tell us how much deck may need work before anything comes off. You get the estimate in writing, itemized."
+      },
+      {
+        "title": "Tear-off to the deck",
+        "body": "Tarps go down over beds and along the walls first. Then the old shingles, underlayment and nails come off, down to bare wood, straight into the trailer or bin. A new roof laid over an old one hides the deck and wears out sooner, so everything comes off."
+      },
+      {
+        "title": "Deck repair and re-sheathing",
+        "body": "Soft, rotted or delaminated sheets are cut out and replaced. Older houses with board decking and wide gaps between the boards may need new sheathing over the whole roof. We show you what we found before we replace it."
+      },
+      {
+        "title": "Drip edge",
+        "body": "Metal along the eaves goes on first, under the membrane. The rakes get theirs after the underlayment, over it. Each piece laps the way water runs."
+      },
+      {
+        "title": "Ice-and-water shield",
+        "body": "Along the eaves, up every valley and around chimneys, skylights and pipes: the places where water slows down, collects or gets driven sideways by wind."
+      },
+      {
+        "title": "Synthetic underlayment",
+        "body": "Across the rest of the deck, lapped over the shield and fastened on the manufacturer's schedule. From here the house is dried in, so a rain shower between steps doesn't reach the attic."
+      },
+      {
+        "title": "Starter course",
+        "body": "Along the eaves and up the rakes, so the first row of shingles and the roof edges have a sealed strip under them."
+      },
+      {
+        "title": "Flashing",
+        "body": "Step flashing woven in with each course where the roof meets a wall. Counter-flashing let into the chimney's mortar joints and lapped over the step flashing. New pipe boots and vent flashing at every penetration. It is where roofs leak, so it's replaced rather than patched around."
+      },
+      {
+        "title": "Shingles",
+        "body": "Courses snapped to chalk lines and kept straight, nails where the wrapper says, valleys cut clean, hips and ridge capped."
+      },
+      {
+        "title": "Ridge vent and attic ventilation",
+        "body": "A continuous vent along the ridge, balanced against the intake at the soffits. If the attic doesn't have enough intake, we'll tell you, because a ridge vent with no air coming in at the bottom doesn't move much air."
+      },
+      {
+        "title": "Cleanup and magnetic nail sweep",
+        "body": "Debris to the trailer, gutters flushed of grit and stray nails, then a rolling magnet over the lawn, beds, driveway and the street edge."
+      },
+      {
+        "title": "Final walk-through",
+        "body": "We walk the job with you and go over what we found under the old roof, what we replaced and why, with photos of anything you couldn't see from the ground."
+      }
+    ],
+    "image": {
+      "src": "/images/roof-replacement/deck-and-underlayment.jpg",
+      "alt": "A crew mid-replacement on an old two-story house: bare wood decking on one roof section, synthetic underlayment already down on the main roof"
+    },
+    "caption": "Mid-job. On the right the deck is bare and waiting; on the main roof the underlayment is down, so that part of the house is dry even before a shingle goes on.",
+    "deck": {
+      "label": "The part nobody can see yet",
+      "body": "Nobody knows the exact state of the deck until the old roof is off. The estimate tells you what we expect from the attic and the walk, and how deck repair is handled if there's more. If there is, we show you before we replace it."
+    }
+  },
+  "day": {
+    "title": "What to expect on the day",
+    "lead": "A tear-off is loud, busy and fast. Here's what it looks like from inside the house, and what makes it easier.",
+    "stat": {
+      "value": "1–3",
+      "label": "Days for a typical house"
+    },
+    "note": "A simple single-story roof can be one long day. Steep pitches, a roof cut up by dormers and valleys, a second layer coming off or a lot of deck repair all add time, and so does rain. We only open up as much roof as can be dried in the same day.",
+    "items": [
+      {
+        "title": "Noise",
+        "body": "Hammers and nail guns overhead for most of the day. If you work from home, plan to work somewhere else for the tear-off."
+      },
+      {
+        "title": "Driveway",
+        "body": "We need it for the trailer and the materials. Park on the street the night before, and take the car out of the garage if the driveway is the only way out."
+      },
+      {
+        "title": "Pets and kids",
+        "body": "The noise upsets most dogs and cats; a quiet room at the other end of the house, or a day away, helps. Keep everyone clear of the drip line, where debris comes down."
+      },
+      {
+        "title": "Walls and attic",
+        "body": "Hammering shakes the top floor. Take down mirrors and framed pictures up there. Anything stored in the attic will collect dust and grit, so cover it or move it."
+      },
+      {
+        "title": "Yard",
+        "body": "Point out sprinkler heads, a fragile plant or a spot you'd rather the trailer didn't sit. It's easier before the tarps go down."
+      }
+    ]
+  },
+  "shingle": {
+    "title": "Choosing the shingle",
+    "body": "<p>On a house, the choice is between architectural and designer shingle. The layers under them are the same either way; the difference is weight, wind resistance, looks and how long they last.</p><p>Shingles need enough pitch to shed water. A near-flat porch roof or a low addition gets single-ply membrane (TPO or PVC) instead, flashed into the shingles where the two meet.</p>",
+    "button": "Compare materials",
+    "table": {
+      "arch": "Architectural shingle",
+      "designer": "Designer shingle",
+      "rows": [
+        {
+          "label": "Construction",
+          "arch": "Two layers laminated together",
+          "designer": "Extra-thick layers, the heaviest asphalt shingle made"
+        },
+        {
+          "label": "Look",
+          "arch": "Shadowed and dimensional; reads like shake from the street",
+          "designer": "Cut to read like slate or hand-split shake, with deeper shadow lines"
+        },
+        {
+          "label": "Wind",
+          "arch": "High wind ratings; the weight helps it stay down",
+          "designer": "Heavier still, so it stays down in wind"
+        },
+        {
+          "label": "Typical life",
+          "arch": "25–30 years",
+          "designer": "30+ years"
+        },
+        {
+          "label": "Where it fits",
+          "arch": "Most houses; the standard re-roof",
+          "designer": "Houses where the roof is part of the look, and HOAs that call for a premium profile"
+        }
+      ]
+    },
+    "note": "Lifespans are typical industry ranges with proper installation and upkeep, not a promise about any one roof. Moss, shade and ventilation all move the number."
+  },
+  "signs": {
+    "title": "Signs it's time",
+    "lead": "One of these on one slope may be a repair. Several of them, across the roof, usually aren't.",
+    "items": [
+      "It's old for what it is: past 25 years or so for architectural shingle, sooner for older, thinner shingles.",
+      "Granules collecting in the gutters and at the downspout, and dark, bare patches on the shingles.",
+      "Edges curling up or cupping, or shingles gone brittle enough to crack when they're lifted.",
+      "Leaks in more than one place, or the same leak back after a repair.",
+      "Decking that feels soft or springy underfoot, or a roofline that dips between rafters.",
+      "Years of moss grown in under the shingle edges and lifting them.",
+      "Dark staining on the underside of the deck in the attic, or daylight between the boards."
+    ],
+    "more": "Not sure which side of the line you're on? Start with <a href=\"/services/roof-repair/\" class=\"link-inline\">roof repair</a>, or read the <a href=\"/services/residential/#repair-or-replace\" class=\"link-inline\">repair-or-replace guide</a>. If a repair buys you real years, we'll say so.",
+    "image": {
+      "src": "/images/roof-replacement/cracked-shingles.jpg",
+      "alt": "Worn asphalt shingles, cracked, split and buckled across the slope",
+      "credit": "Photo: Samuel Bolton, CC BY-SA 4.0."
+    },
+    "caption": "Cracks and splits running across many courses, not one. That's a roof wearing out, not a repair."
+  },
+  "closingCta": {
+    "label": "Free estimate",
+    "title": "Get a replacement estimate",
+    "body": "We'll walk the roof, look in the attic and count the layers, then write down exactly what the job includes. Free, and no pressure to decide on the spot."
+  },
+  "related": {
+    "title": "Also on a house"
+  }
+}

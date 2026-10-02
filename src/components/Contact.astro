@@ -1,16 +1,25 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
 import Icon from "./Icon.astro";
+import Text from "./Text.astro";
 import { site, cityLine } from "../data/site";
+import { get, plain } from "../lib/cms";
+
+interface Props {
+  /* Content key of the heading, form and side-panel words. Every page
+     shares the one in shared.json unless it passes its own. */
+  k?: string;
+}
+
+const { k = "shared:contact" } = Astro.props;
+const f = `${k}.form`;
+// Placeholders are attributes, so they are read as plain strings.
+const placeholder = (name: string) => plain(get<string>(`${f}.${name}.placeholder`));
 ---
 
 <section id="contact" class="section bg-cream-deep">
   <div class="container-page">
-    <SectionHeading
-      title="Free estimates, no pressure"
-      description="Call during shop hours and you'll get someone who has been on a roof today. Leave a message after hours and you'll hear back the next working morning."
-      class="mb-14"
-    />
+    <SectionHeading k={k} class="mb-14" />
 
     <div class="grid gap-5 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
       <!--
@@ -20,47 +29,47 @@ import { site, cityLine } from "../data/site";
       -->
       <form class="panel p-7 md:p-9" method="post" action="#contact">
         <div class="plate-label -mx-7 -mt-7 mb-8 md:-mx-9 md:-mt-9">
-          <span class="t-spaced">Request an estimate</span>
+          <Text k={`${f}.label`} as="span" class="t-spaced" />
         </div>
 
         <div class="grid gap-5 sm:grid-cols-2">
           <div>
-            <label for="name" class="label-field">Name</label>
-            <input id="name" name="name" type="text" required class="text-input" placeholder="Your name" />
+            <Text k={`${f}.name.label`} as="label" for="name" class="label-field" />
+            <input id="name" name="name" type="text" required class="text-input" placeholder={placeholder("name")} />
           </div>
           <div>
-            <label for="phone" class="label-field">Phone</label>
+            <Text k={`${f}.phone.label`} as="label" for="phone" class="label-field" />
             <input
               id="phone"
               name="phone"
               type="tel"
               required
               class="text-input"
-              placeholder="(503) 000-0000"
+              placeholder={placeholder("phone")}
             />
           </div>
           <div class="sm:col-span-2">
-            <label for="email" class="label-field">Email</label>
-            <input id="email" name="email" type="email" class="text-input" placeholder="you@example.com" />
+            <Text k={`${f}.email.label`} as="label" for="email" class="label-field" />
+            <input id="email" name="email" type="email" class="text-input" placeholder={placeholder("email")} />
           </div>
           <div class="sm:col-span-2">
-            <label for="address" class="label-field">Property address</label>
-            <input id="address" name="address" type="text" class="text-input" placeholder="Street, city" />
+            <Text k={`${f}.address.label`} as="label" for="address" class="label-field" />
+            <input id="address" name="address" type="text" class="text-input" placeholder={placeholder("address")} />
           </div>
           <div class="sm:col-span-2">
-            <label for="detail" class="label-field">What's going on with the roof?</label>
+            <Text k={`${f}.detail.label`} as="label" for="detail" class="label-field" />
             <textarea
               id="detail"
               name="detail"
               rows="4"
               class="text-input"
-              placeholder="Leak, age of the roof, storm damage, or just due for a look."></textarea>
+              placeholder={placeholder("detail")}></textarea>
           </div>
         </div>
 
         <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <button type="submit" class="btn btn-primary">Send it over</button>
-          <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
+          <button type="submit" class="btn btn-primary"><Text k={`${f}.submit`} bare /></button>
+          <a href={site.phoneHref} class="btn btn-outline"><Text k={`${f}.call`} bare /></a>
         </div>
 
       </form>
@@ -96,15 +105,13 @@ import { site, cityLine } from "../data/site";
               <span class="t-body-sm text-on-forest-mute">{site.domain}</span>
             </li>
           </ul>
-          <p class="t-spaced-sm mt-6 border-t border-hairline-dark pt-4 text-on-forest-mute">
-            Licensed &middot; Bonded &middot; Insured
-          </p>
+          <Text k={`${k}.card.coverage`} class="t-spaced-sm mt-6 border-t border-hairline-dark pt-4 text-on-forest-mute" />
         </div>
 
         <div class="panel p-7">
           <h3 class="t-heading-sm flex items-center gap-3 text-forest">
             <Icon name="clock" size={20} />
-            Shop hours
+            <Text k={`${k}.hours.title`} bare />
           </h3>
           <dl class="mt-5 border-t border-hairline">
             {

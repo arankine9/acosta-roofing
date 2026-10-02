@@ -1,4 +1,7 @@
 @import "tailwindcss";
+/* The portal's editor UI is its own app; its markup must not add utilities
+   to the public site's stylesheet. */
+@source not "../../portal";
 
 /*
   Token layer transcribed from DESIGN.md. Three inks (forest green, cream,

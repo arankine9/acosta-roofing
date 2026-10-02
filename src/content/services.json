@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "roof-replacement",
+    "group": "residential",
+    "title": "Roof replacement",
+    "summary": "Tear-off to deck, new underlayment, flashing and ventilation, and a shingle roof built for a wet Oregon winter.",
+    "tagline": "Tear-off to the deck, built new",
+    "image": {
+      "src": "/images/roof-replacement/shingles-over-underlayment.jpg",
+      "alt": "Roofer nailing new architectural shingles over synthetic underlayment",
+      "thumb": "/images/thumbs/roof-replacement.jpg"
+    }
+  },
+  {
+    "slug": "roof-repair",
+    "group": "residential",
+    "title": "Roof repair",
+    "summary": "Leaks, lifted or missing shingles, failed flashing and storm damage, found at the source and fixed to match.",
+    "tagline": "Leaks, flashing, missing shingles",
+    "image": {
+      "src": "/images/roof-repair/opened-roof-section.jpg",
+      "alt": "Roofer standing on a section of roof opened up for repair",
+      "thumb": "/images/thumbs/roof-repair.jpg"
+    }
+  },
+  {
+    "slug": "roof-maintenance",
+    "group": "residential",
+    "title": "Roof maintenance",
+    "summary": "Moss treatment, debris clearing and a close inspection, so small problems are caught before they reach the ceiling.",
+    "tagline": "Moss, debris and inspections",
+    "image": {
+      "src": "/images/roof-maintenance/moss-shingle-roof-skylight.jpg",
+      "alt": "Moss growing along the courses of a shingle roof around a skylight",
+      "thumb": "/images/thumbs/roof-maintenance.jpg"
+    }
+  },
+  {
+    "slug": "gutters",
+    "group": "residential",
+    "title": "Gutter systems",
+    "summary": "Seamless gutters and downspouts sized for Northwest rain, pitched to drain and hung to carry the load.",
+    "tagline": "Seamless gutters and downspouts",
+    "image": {
+      "src": "/images/gutters/gutter-outlet-and-downspout.jpg",
+      "alt": "Seamless aluminum gutter with its outlet, elbows and downspout",
+      "thumb": "/images/thumbs/gutters.jpg"
+    }
+  },
+  {
+    "slug": "commercial",
+    "group": "commercial",
+    "title": "Commercial roofing",
+    "summary": "Single-ply and low-slope systems for shops, warehouses and light-industrial buildings, detailed at every curb and drain.",
+    "tagline": "TPO, PVC and low-slope systems",
+    "image": {
+      "src": "/images/commercial/white-membrane-rooftop-units.jpg",
+      "alt": "White membrane roof with rooftop units on a commercial building",
+      "thumb": "/images/thumbs/commercial.jpg"
+    }
+  },
+  {
+    "slug": "multi-unit",
+    "group": "multi-unit",
+    "title": "Multi-unit roofing",
+    "summary": "Apartments, condos and townhome rows, planned building by building around the people living underneath.",
+    "tagline": "Apartments, condos, townhomes",
+    "image": {
+      "src": "/images/multi-unit.jpg",
+      "alt": "Aerial view of rows of townhomes with gray shingle roofs",
+      "thumb": "/images/thumbs/multi-unit.jpg"
+    }
+  }
+]

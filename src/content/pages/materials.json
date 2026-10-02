@@ -1,0 +1,314 @@
+{
+  "seo": {
+    "title": "Roofing Materials",
+    "description": "Architectural shingle, designer shingle and single-ply membrane (TPO/PVC): what each one is, where it fits, how it handles Northwest weather, and the underlayment, flashing and ventilation that decide how long a roof lasts."
+  },
+  "hero": {
+    "eyebrow": "Roofing materials",
+    "title": "What goes on your roof, and why",
+    "lead": "We install three roofing systems: architectural shingle, designer shingle and single-ply membrane. Here's what each one is, where it fits, how it stands up to an Oregon winter, and the parts under and around it that matter just as much.",
+    "image": {
+      "src": "/images/materials/page/rain-on-shingles.jpg",
+      "alt": "Rain pouring off the edge of an upper roof onto dark shingles below"
+    },
+    "caption": "Water off an upper roof landing on the one below. From October to May, this is a normal day."
+  },
+  "index": {
+    "unit": "years",
+    "items": [
+      {
+        "fit": "Steep slope",
+        "title": "Architectural shingle",
+        "life": "25–30"
+      },
+      {
+        "fit": "Steep slope",
+        "title": "Designer shingle",
+        "life": "30+"
+      },
+      {
+        "fit": "Flat & low slope",
+        "title": "Single-ply (TPO / PVC)",
+        "life": "20–30"
+      }
+    ]
+  },
+  "architectural": {
+    "eyebrow": "Steep slope",
+    "title": "Architectural shingle",
+    "lead": "Also called laminated or dimensional shingle. Two layers of asphalt-soaked fiberglass mat are bonded together, and the top layer is cut away in random widths so the bottom one shows through. The courses throw shadow lines and read like shake from the street. It's the standard choice on most house re-roofs today.",
+    "image": {
+      "src": "/images/materials/page/architectural-shingle.jpg",
+      "alt": "Courses of gray architectural shingle with random-width tabs and deep shadow lines"
+    },
+    "caption": "Laminated shingle: tabs cut to random widths over a second layer, so every course casts a shadow.",
+    "life": {
+      "value": "25–30",
+      "label": "years expected life, a typical industry range, not a warranty"
+    },
+    "specs": [
+      {
+        "term": "Where it fits",
+        "body": "<p>Steep-slope roofs: houses, garages, sheds and outbuildings. Shingles shed water by overlap, so they need pitch. As a rule, 4-in-12 or steeper is a standard install; between 2 and 4 in 12 it takes a double layer of underlayment; below 2 in 12, shingles aren't the right roof. Most manufacturers and the building code draw the same lines.</p>"
+      },
+      {
+        "term": "Strengths",
+        "body": "<ul class=\"check-list\"><li>Heavy and stiff, and most lines carry high wind ratings.</li><li>The widest range of colors and blends, and a profile that suits most houses.</li><li>Forgiving of an imperfect deck: the random pattern hides small waves in older sheathing.</li><li>Good value: 25–30 years expected at the standard price for a house re-roof.</li></ul>"
+      },
+      {
+        "term": "Trade-offs",
+        "body": "<ul class=\"dash-list\"><li>It's heavy. On an old house with two layers already on it, the deck and framing get a look before anything goes up.</li><li>It won't blend into an older roof of a different profile, so it's not the patch for one.</li><li>It's the look on most of the street. If you want the roof to stand out, designer shingle is the step up.</li></ul>"
+      },
+      {
+        "term": "Northwest weather",
+        "body": "<p>Weight and thickness help in wind, which matters in east-wind country out toward Troutdale and the Gorge, and in the southwest gales that come through every winter. The laminated layers dry a little slower than a single one, so moss still needs watching on shaded slopes. Many lines have algae-resistant granules that stop the black streaks you see on older roofs; they don't stop moss.</p><p class=\"mt-3\">One thing true of any shingle: the sealant strip that bonds each course to the one below needs warmth to set. Shingles laid in a cold snap may not seal until the weather warms, so a winter install can call for hand-sealing, especially on exposed edges.</p>"
+      },
+      {
+        "term": "Upkeep",
+        "body": "<p>Clear needles out of the valleys and gutters every fall. Treat moss before it gets thick, and never pressure-wash: it strips the granules that shield the asphalt from the sun. Have the pipe boots and flashings looked at every few years. Of the three systems, a well-kept architectural roof asks the least of you.</p>"
+      }
+    ]
+  },
+  "designer": {
+    "eyebrow": "Steep slope",
+    "title": "Designer shingle",
+    "body": "<p class=\"t-lead text-body\">Also called luxury or premium shingle. The thickest, heaviest asphalt shingle made, built up in extra layers and cut so the roof reads like slate or hand-split shake from the street, without the weight of real slate or the upkeep of real cedar.</p><h3>Where it fits</h3><p>Steep-slope roofs, on the same pitch rules as architectural: 4-in-12 and up as standard, down to 2-in-12 with doubled underlayment. It's the choice when the roof is a big part of how the house looks: a steep roof that shows from the street, an older home where slate or shake would suit the style, or an HOA that calls for a premium profile.</p><h3>Strengths</h3><ul><li>The longest expected life of the shingles we install: 30 years and up.</li><li>The heaviest asphalt shingle, so it stays down in wind.</li><li>A slate or shake look at a fraction of the weight and cost of the real thing.</li><li>Deep shadow lines that hide an imperfect deck even better than architectural.</li></ul><h3>Trade-offs</h3><ul><li>It costs more than architectural, for the shingle and for the time it takes to lay.</li><li>It's heavier still. On an old house, the deck and framing get a look before anything goes up.</li><li>Each line has its own look, so pick from samples on the house, and know that a repair years later depends on that line still being made.</li></ul><h3>Northwest weather</h3><p>The weight is a plus in east-wind country out toward Troutdale and the Gorge, and in the southwest gales every winter. The thick, deeply cut profile dries slower than a flatter shingle, so moss needs watching on north-facing slopes and under firs. Like any shingle, the sealant strip needs warmth to set, so a winter install can call for hand-sealing on exposed edges.</p><h3>Upkeep</h3><p>The same as architectural: keep the valleys and gutters clear, treat moss early, never pressure-wash, and have the pipe boots and flashings looked at every few years.</p>",
+    "glance": {
+      "label": "At a glance",
+      "rows": [
+        {
+          "term": "Fits",
+          "value": "Steep slope, 4-in-12 and up"
+        },
+        {
+          "term": "Expected life",
+          "value": "30+ years"
+        },
+        {
+          "term": "Build",
+          "value": "Extra-thick, layered"
+        },
+        {
+          "term": "Look",
+          "value": "Slate or shake"
+        }
+      ]
+    },
+    "note": "Life figures are typical industry ranges for a correctly installed, maintained roof. They aren't a warranty or a promise about any one roof."
+  },
+  "singlePly": {
+    "eyebrow": "Flat & low slope",
+    "title": "Single-ply membrane <span class=\"whitespace-nowrap\">(TPO / PVC)</span>",
+    "lead": "A flat roof is a different animal. Instead of overlapping pieces that shed water downhill, single-ply is one continuous sheet, and it has to hold water until the water finds a drain.",
+    "image": {
+      "src": "/images/materials/page/white-single-ply-over-old-roof.jpg",
+      "alt": "Looking down on a low-slope roof mid-job: new white membrane over the near sections, turned up the parapet walls and around exhaust fans and equipment curbs, with the old black roof still showing beyond",
+      "credit": "Photo: Daniel X. O'Neil, CC BY 2.0."
+    },
+    "caption": "White single-ply going on, section by section: the sheet runs up the parapets and around every fan and curb, and the old black roof beyond is still waiting its turn.",
+    "what": {
+      "title": "What it is",
+      "body": [
+        "Rolls of thermoplastic membrane, TPO or PVC, are laid over insulation or cover board and fastened or fully adhered. The seams are welded with hot air, so the laps fuse into one sheet. Flashings at walls, curbs and drains are welded in the same way.",
+        "TPO is the common choice and usually the lower cost of the two. PVC stands up better to grease and oils, which is why it goes on restaurant roofs under the kitchen exhaust."
+      ]
+    },
+    "life": {
+      "value": "20–30",
+      "label": "years expected life, a typical industry range, not a warranty"
+    },
+    "fits": {
+      "title": "Where it fits",
+      "body": "Flat and low-slope roofs, where shingles can't go: commercial buildings and apartment roofs, and on houses, the flat porch roof, the dormer, the addition or the modern low-slope roof. Low slope still isn't dead flat. It needs fall to drain, usually at least a quarter inch per foot, built in with tapered insulation and crickets that steer water to drains and scuppers."
+    },
+    "strengths": {
+      "title": "Strengths",
+      "items": [
+        "Welded seams: no glued laps or tar joints to dry out.",
+        "Light and reflective, so the top floor runs cooler in summer.",
+        "Repairable by welding in a patch of new membrane.",
+        "Light enough to go over most existing low-slope structure."
+      ]
+    },
+    "tradeoffs": {
+      "title": "Trade-offs",
+      "items": [
+        "Only as good as its drainage and its welds. A bad seam or a blocked drain is where it leaks.",
+        "A dropped tool or a careless boot can puncture it; walk pads belong on paths to equipment.",
+        "It takes a crew that welds membrane regularly. It isn't shingle work."
+      ]
+    },
+    "weather": {
+      "title": "Northwest weather",
+      "body": "Rain on a flat roof doesn't run off in minutes; it has to find the drain. Months of it means any low spot ponds, fir needles and leaves pile up at drains and scuppers, and standing water finds any weak seam. Moss is rarely the problem on membrane up here. Debris and drainage are."
+    },
+    "upkeep": {
+      "title": "Upkeep",
+      "body": "Clear drains, scuppers and gutters in the fall and again in midwinter. Walk the roof twice a year and after big storms, looking at seams, the flashing at curbs and walls, and anything the last contractor left behind. Anyone who cuts into the roof for a vent, a unit or solar should have the penetration flashed properly.",
+      "link": "Commercial roofing"
+    }
+  },
+  "compare": {
+    "title": "Side by side",
+    "lead": "The three systems on one sheet. Pitch decides which of them your roof can take; the rest is budget, time and taste.",
+    "swipeHint": "Swipe the table sideways to see all three.",
+    "columns": [
+      "Architectural shingle",
+      "Designer shingle",
+      "Single-ply (TPO / PVC)"
+    ],
+    "rows": [
+      {
+        "label": "Roof type",
+        "cells": [
+          "Steep slope",
+          "Steep slope",
+          "Flat and low slope"
+        ]
+      },
+      {
+        "label": "Pitch, as a rule",
+        "cells": [
+          "4-in-12 and steeper; 2-in-12 to 4-in-12 with doubled underlayment",
+          "Same as architectural",
+          "Built to drain, usually at least ¼ inch of fall per foot"
+        ]
+      },
+      {
+        "label": "Expected life*",
+        "cells": [
+          "25–30 years",
+          "30+ years",
+          "20–30 years"
+        ]
+      },
+      {
+        "label": "How it's made",
+        "cells": [
+          "Two layers laminated together, cut to random widths",
+          "Extra-thick layers, cut in a slate or shake pattern",
+          "One continuous sheet with heat-welded seams"
+        ]
+      },
+      {
+        "label": "Wind",
+        "cells": [
+          "Heavy and stiff; most lines carry high wind ratings",
+          "The heaviest asphalt shingle; the weight helps it stay down",
+          "Wind works at the edges and corners, so perimeter attachment is everything"
+        ]
+      },
+      {
+        "label": "Moss and wet",
+        "cells": [
+          "Holds up well, but shaded slopes still need watching",
+          "The deep profile dries slower; watch shaded slopes",
+          "Moss is rare; ponding and blocked drains are the risk"
+        ]
+      },
+      {
+        "label": "The look",
+        "cells": [
+          "Dimensional shadow lines that read like shake",
+          "Reads like slate or hand-split shake",
+          "A flat white or gray sheet, mostly out of sight"
+        ]
+      },
+      {
+        "label": "Up-front cost",
+        "cells": [
+          "The standard price for a house re-roof",
+          "More than architectural",
+          "Priced by the job: insulation, drains and details drive it"
+        ]
+      },
+      {
+        "label": "Usual jobs",
+        "cells": [
+          "Most house re-roofs",
+          "Houses where the roof is part of the look; HOAs that call for a premium profile",
+          "Commercial and multi-unit roofs; porch, dormer and addition roofs on houses"
+        ]
+      }
+    ],
+    "note": "*Expected life is a typical industry range for a correctly installed, maintained roof, not a warranty and not a promise about any one roof. Shade, moss, ventilation and slope move it either way."
+  },
+  "parts": {
+    "title": "The rest of the roof",
+    "lead": "Shingles are the part you see. Most leaks start somewhere else: at an edge, a wall, a pipe or a valley. These are the parts that decide how long a roof really lasts, whichever material goes on top.",
+    "figureLabel": "Section through a shingle roof",
+    "scaleNote": "Not to scale",
+    "key": {
+      "air": "Air path, soffit to ridge",
+      "metal": "Metal and ice-and-water shield",
+      "underlayment": "Underlayment"
+    },
+    "items": [
+      {
+        "title": "Underlayment",
+        "body": "A synthetic sheet over the whole deck, under the shingles. It's the second line of defense when wind drives rain up under a course, and it keeps the deck dry while the roof goes on."
+      },
+      {
+        "title": "Ice-and-water shield",
+        "body": "A self-sticking rubberized membrane that seals around every nail driven through it. It goes along the eaves, up every valley and around penetrations, where water backs up or runs heaviest. Freezing rain and the odd ice dam do happen here, more often out toward the Gorge and up toward Sandy."
+      },
+      {
+        "title": "Drip edge",
+        "body": "Bent metal at the eaves and rakes. It carries water off the edge and into the gutter instead of letting it curl back under and soak the fascia and the edge of the deck. Cheap to put on, expensive to leave off."
+      },
+      {
+        "title": "Flashing",
+        "body": "Metal and rubber that seal the joints: step flashing where the roof meets a wall, counter-flashing at a chimney, valley metal, and the rubber boot on every plumbing vent. Most leaks start at flashing, not in the open field of shingles, and pipe boots often crack years before the shingles around them wear out."
+      },
+      {
+        "title": "Intake ventilation",
+        "body": "Vents in the soffit let outside air into the attic at its lowest point. Baffles hold the insulation back so it doesn't smother them."
+      },
+      {
+        "title": "Exhaust ventilation",
+        "body": "A ridge vent, or roof vents near the top, lets warm, damp attic air out. In a Northwest winter, moisture from the house condenses on the cold underside of the deck. With intake and exhaust balanced, moving air carries it off before it becomes mold, rusted nails and soft sheathing."
+      },
+      {
+        "title": "Ridge caps",
+        "body": "Thicker, pre-bent cap shingles made for hips and ridges, not field shingles cut into pieces. The ridge is where wind pulls hardest, and the cap is what covers the ridge vent."
+      },
+      {
+        "title": "Starter course",
+        "body": "A strip laid along the eaves and rakes before the first course, with its sealant right at the edge. It glues the first row of shingles down, where wind gets its first grip on a roof."
+      }
+    ]
+  },
+  "choose": {
+    "title": "How we help you choose",
+    "lead": "The estimate names one material and says why. These five things decide it.",
+    "estimateButton": "Request a Free Estimate",
+    "callButton": "Call {{phone}}",
+    "items": [
+      {
+        "title": "Pitch",
+        "body": "The first question, and it isn't a matter of taste. We measure the slope of each roof plane. Steep enough for shingles, you have a choice; flat or low slope, it's membrane. Plenty of houses have both: a shingle main roof and a flat porch or addition roof."
+      },
+      {
+        "title": "Budget",
+        "body": "Architectural is the standard price for a house re-roof. Designer costs more, but divide each price by its expected years and the gap narrows. When both fit the roof, we'll price both on the estimate so you can see it for yourself."
+      },
+      {
+        "title": "How long you'll stay",
+        "body": "Selling in a few years, a sound architectural roof is what buyers expect to see. Staying for twenty, designer shingle's longer life and looks can make more sense, because you'll be the one living under it."
+      },
+      {
+        "title": "HOA and neighborhood rules",
+        "body": "Many HOAs set the material, color or profile. Send us your CC&Rs or the approved list and we'll quote to it, with the product written out for your submittal. Historic districts can have rules of their own; that depends on the city, and we'll check."
+      },
+      {
+        "title": "The look",
+        "body": "Color and profile change a house more than people expect. Look at samples against your own siding in daylight, not on a screen. Tell us what you like on the street and we'll help you narrow it down."
+      }
+    ]
+  },
+  "closingCta": {
+    "label": "Free estimate",
+    "title": "Not sure what your roof is?",
+    "body": "Most people aren't. We'll come look, measure the pitch, tell you what's up there now and what we'd put on next, in writing."
+  }
+}

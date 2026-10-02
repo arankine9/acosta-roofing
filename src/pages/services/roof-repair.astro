@@ -6,10 +6,12 @@ import RelatedServices from "../../components/RelatedServices.astro";
 import LeakCall from "../../components/LeakCall.astro";
 import Treeline from "../../components/Treeline.astro";
 import LeakPath from "../../components/roof-repair/LeakPath.astro";
-import { asset } from "../../lib/url";
+import Text from "../../components/Text.astro";
+import Img from "../../components/Img.astro";
 import { site } from "../../data/site";
 import { pages } from "../../data/nav";
 import { serviceHref } from "../../data/services";
+import { file, list, item, credit } from "../../lib/cms";
 
 // Roof repair: the common repairs (photos, then a ruled grid), how a leak is
 // traced (drawn section plus the method), what a homeowner can safely do
@@ -47,160 +49,47 @@ const schema = {
   areaServed: "Portland metro, Oregon",
 };
 
-const repairs = [
-  {
-    title: "Missing or lifted shingles",
-    body: "Wind breaks the seal strip and the tab flaps until it tears off. New shingles are slipped in under the course above, nailed where they should be and sealed down.",
-  },
-  {
-    title: "Pipe boots",
-    body: "The rubber collar around a plumbing vent cracks in the sun long before the rest of the roof is old. One of the most common leaks on any house, and one of the simplest to fix.",
-  },
-  {
-    title: "Chimney, wall and skylight flashing",
-    body: "Where the roof meets something vertical, metal does the waterproofing. Rusted, loose or tarred-over flashing comes out and is replaced: stepped in with the shingles, then counter-flashed.",
-  },
-  {
-    title: "Valley leaks",
-    body: "Two slopes pour into one channel, and needles pile up in it. A worn valley is opened up, lined with ice-and-water shield and relaid.",
-  },
-  {
-    title: "Ridge caps",
-    body: "The caps along the ridge and hips take the most wind and sun. Cracked or missing ones are replaced, with every nail covered by the cap above it.",
-  },
-  {
-    title: "Nail pops",
-    body: "A nail working its way up lifts the shingle over it and leaves a hole. We reset or replace it, seal the old hole and bond the shingle back down.",
-  },
-  {
-    title: "Storm and wind damage",
-    body: "After a blow we check every slope, not only the side you can see from the street, and photograph what we find so you have a record.",
-  },
-  {
-    title: "Tree-limb damage",
-    body: "Once the limb is off (a tree service's job if it's big), we check the deck and rafters under the impact, not just the shingles, and rebuild from there.",
-  },
-];
+// Every word on this page is in src/content/pages/services-roof-repair.json;
+// `k` is the key prefix into it and `c` its parsed content, for the lists.
+const k = "pages/services-roof-repair";
+const c = file(k);
 
-const legend = [
-  { key: "A", title: "Where water gets in", body: "Here, a split in the pipe boot's rubber collar." },
-  { key: "B", title: "Where it travels", body: "Down the underside of the deck and along the rafter, downhill." },
-  { key: "C", title: "Where it shows up", body: "Wherever it finally drips: the insulation, then the ceiling." },
-  { key: "D", title: "The gap between", body: "Often several feet, and sometimes a different room." },
-];
-
-const method = [
-  {
-    title: "Start in the attic",
-    body: "Water leaves a trail on the wood: dark streaks, rusty nail tips, a drip line along a rafter. We follow it uphill toward where it started.",
-  },
-  {
-    title: "Then the roof above the trail",
-    body: "Whatever sits up-slope of it is the suspect: a pipe, a vent, a chimney, a valley, a skylight, a wall.",
-  },
-  {
-    title: "Water-test if it's still not clear",
-    body: "A hose run on the roof one section at a time, starting low and working up, with someone in the attic watching for the first drip.",
-  },
-  {
-    title: "Fix the cause, then say what got wet",
-    body: "The repair goes where the water got in. We'll tell you what else got wet underneath, so it can dry out or be replaced.",
-  },
-];
-
-const safeToDo = [
-  "Put a bucket or tub under the drip, with an old towel in it to stop the splashing.",
-  "Move furniture, electronics, rugs and anything valuable out from under the leak.",
-  "If water is running near a light fixture or an outlet, switch that circuit off at the panel.",
-  "Photograph the stain, the drip and anything damaged, with the date, for your own records and any insurance claim.",
-  "Note when it leaks: every rain, only in wind from one direction, or only after a long storm. It helps us find it.",
-];
-
-const leaveForUs = [
-  {
-    title: "Don't climb a wet roof",
-    body: "Wet shingles, moss and fir needles are as slick as ice, and the ladder is no better.",
-  },
-  {
-    title: "Don't go up in wind or after dark",
-    body: "Nothing on a house roof is worth that. Wait for us, and for daylight.",
-  },
-  {
-    title: "Don't smear roof cement over it",
-    body: "Tar from above tends to trap water rather than stop it, and hides the real source when we go looking.",
-  },
-];
-
-const notWorthIt = [
-  "Shingles so brittle they crack when we lift them to slip new ones in.",
-  "Leaks turning up in new places every season.",
-  "Soft decking over a wide area, not just one spot.",
-  "A repair that would cost a real share of a new roof, on a roof near the end of its life.",
-];
+// The legend's keys are the letters drawn in LeakPath, so they stay with the
+// drawing rather than the copy: A, B, C, D in legend order.
+const legendKey = (index: number) => String.fromCharCode(65 + index);
 ---
 
-<Page
-  title="Roof Repair"
-  description="Roof repair for houses across the Portland metro: leaks traced to the source, pipe boots, flashing, valleys, ridge caps, nail pops and storm damage, fixed with matching shingles by a licensed, bonded and insured contractor."
-  crumbs={crumbs}
-  schema={schema}
->
-  <PageHero
-    crumbs={crumbs}
-    eyebrow="Residential"
-    title="Roof repair"
-    lead="Most leaks start in a handful of places: a cracked pipe boot, a lifted shingle, flashing that has let go. We find which one, fix it with shingles that match, and tell you straight if the roof is past repairing."
-    image="/images/roof-repair/opened-roof-section.jpg"
-    imageAlt="Roofer standing on a section of shingle roof opened up over a brick house, torn shingles folded back around him and a ladder against the wall"
-    treelineOffset={-330}
-  />
+<Page k={k} crumbs={crumbs} schema={schema}>
+  <PageHero k={`${k}:hero`} crumbs={crumbs} treelineOffset={-330} />
 
   {/* Chapter 1: common repairs. Two photo plates, then a ruled four-up grid. */}
   <section class="section bg-canvas" aria-labelledby="repairs-heading">
     <div class="container-page">
       <div class="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
-        <h2 id="repairs-heading" class="t-display-lg text-ink">What we repair most</h2>
-        <p class="t-body-md max-w-xl text-body">
-          Nearly every leak on a house comes back to one of these eight. Most of them are small jobs when they're
-          caught early, and all of them get worse in a wet winter.
-        </p>
+        <Text k={`${k}:repairs.title`} as="h2" id="repairs-heading" class="t-display-lg text-ink" />
+        <Text k={`${k}:repairs.intro`} class="t-body-md max-w-xl text-body" />
       </div>
 
       <div class="mt-10 grid gap-8 md:grid-cols-2">
-        <figure class="photo-plate">
-          <img
-            src={asset("/images/roof-repair/failed-chimney-flashing.jpg")}
-            alt="Brick chimney on a shingle roof with its metal flashing bent, rusted at the nail heads and smeared with old patching compound"
-            loading="lazy"
-            decoding="async"
-            class="aspect-[3/2]"
-          />
-          <figcaption>
-            Chimney flashing that's been face-nailed, patched and patched again. It needs replacing, stepped in
-            properly and counter-flashed into the mortar. Photo: Sandul1234, CC BY-SA 4.0.
-          </figcaption>
-        </figure>
-        <figure class="photo-plate">
-          <img
-            src={asset("/images/roof-repair/limb-through-shingles.jpg")}
-            alt="A broken tree limb speared through the shingles of a roof, with the snapped trunk of the tree behind"
-            loading="lazy"
-            decoding="async"
-            class="aspect-[3/2]"
-          />
-          <figcaption>
-            A limb through the shingles. What matters is underneath: the deck and the rafter it hit. Photo:
-            Sandul1234, CC BY-SA 4.0.
-          </figcaption>
-        </figure>
+        {
+          c.repairs.photos.map((_: unknown, i: number) => (
+            <figure class="photo-plate">
+              <Img k={`${k}:repairs.photos.${i}.image`} loading="lazy" decoding="async" class="aspect-[3/2]" />
+              <figcaption>
+                <Text k={`${k}:repairs.photos.${i}.caption`} bare />
+                <Fragment set:html={credit(`${k}:repairs.photos.${i}.image`)} />
+              </figcaption>
+            </figure>
+          ))
+        }
       </div>
 
       <dl class="mt-12 grid border-t border-hairline sm:grid-cols-2 sm:gap-x-10 xl:grid-cols-4">
         {
-          repairs.map((item) => (
+          c.repairs.items.map((_: unknown, i: number) => (
             <div class="border-b border-hairline py-6">
-              <dt class="t-heading-md text-ink">{item.title}</dt>
-              <dd class="t-body-sm mt-3 text-body">{item.body}</dd>
+              <Text k={`${k}:repairs.items.${i}.title`} as="dt" class="t-heading-md text-ink" />
+              <Text k={`${k}:repairs.items.${i}.body`} as="dd" class="t-body-sm mt-3 text-body" />
             </div>
           ))
         }
@@ -212,18 +101,15 @@ const notWorthIt = [
       band's treeline stands 64px into it. */}
   <section class="section bg-cream-deep pb-[152px] max-[900px]:pb-32 max-[560px]:pb-28" aria-labelledby="trace-heading">
     <div class="container-page">
-      <p class="t-eyebrow text-forest">Finding the leak</p>
-      <h2 id="trace-heading" class="t-display-lg mt-4 max-w-3xl text-ink">The stain is rarely under the hole</h2>
-      <p class="t-lead mt-5 max-w-2xl text-body">
-        Water that gets past the shingles runs downhill on the underside of the deck and along the rafters until it
-        finds a place to drop. Patch the roof right above the stain and, more often than not, the leak comes back.
-      </p>
+      <Text k={`${k}:trace.eyebrow`} class="t-eyebrow text-forest" />
+      <Text k={`${k}:trace.title`} as="h2" id="trace-heading" class="t-display-lg mt-4 max-w-3xl text-ink" />
+      <Text k={`${k}:trace.lead`} class="t-lead mt-5 max-w-2xl text-body" />
 
       <div class="mt-12 grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
         <figure class="min-w-0 self-start">
           <div class="panel panel-keyline overflow-hidden">
             <div class="plate-label">
-              <span class="t-spaced-sm">Section through roof and ceiling</span>
+              <Text k={`${k}:trace.plateLabel`} as="span" class="t-spaced-sm" />
             </div>
             <div class="px-2 pt-5 pb-3 sm:px-6">
               <LeakPath class="block h-auto w-full" />
@@ -231,14 +117,14 @@ const notWorthIt = [
           </div>
           <dl class="mt-6 grid gap-x-8 border-t border-hairline sm:grid-cols-2">
             {
-              legend.map((item) => (
+              c.trace.legend.map((_: unknown, i: number) => (
                 <div class="grid grid-cols-[32px_minmax(0,1fr)] gap-x-4 border-b border-hairline py-4">
                   <span class="t-heading-sm flex size-8 items-center justify-center bg-forest text-cream" aria-hidden="true">
-                    {item.key}
+                    {legendKey(i)}
                   </span>
                   <div>
-                    <dt class="t-heading-sm text-ink">{item.title}</dt>
-                    <dd class="t-body-sm mt-1 text-body">{item.body}</dd>
+                    <Text k={`${k}:trace.legend.${i}.title`} as="dt" class="t-heading-sm text-ink" />
+                    <Text k={`${k}:trace.legend.${i}.body`} as="dd" class="t-body-sm mt-1 text-body" />
                   </div>
                 </div>
               ))
@@ -247,13 +133,13 @@ const notWorthIt = [
         </figure>
 
         <div>
-          <h3 class="t-heading-xl text-ink">How we trace it</h3>
-          <ol class="step-list mt-6">
+          <Text k={`${k}:trace.methodTitle`} as="h3" class="t-heading-xl text-ink" />
+          <ol class="step-list mt-6" {...list(`${k}:trace.method`)}>
             {
-              method.map((step) => (
-                <li>
-                  <h4 class="t-heading-sm text-ink">{step.title}</h4>
-                  <p class="t-body-sm text-body">{step.body}</p>
+              c.trace.method.map((_: unknown, i: number) => (
+                <li {...item(i)}>
+                  <Text k={`${k}:trace.method.${i}.title`} as="h4" class="t-heading-sm text-ink" />
+                  <Text k={`${k}:trace.method.${i}.body`} class="t-body-sm text-body" />
                 </li>
               ))
             }
@@ -269,36 +155,31 @@ const notWorthIt = [
 
     <div class="container-page pt-24 pb-36 md:pt-28 md:pb-40">
       <div class="max-w-3xl">
-        <h2 id="before-heading" class="t-display-lg">Before we get there</h2>
-        <p class="t-lead mt-5 text-on-forest-mute">
-          Everything worth doing about a leak today can be done from inside the house. The roof can wait for us.
-        </p>
+        <Text k={`${k}:before.title`} as="h2" id="before-heading" class="t-display-lg" />
+        <Text k={`${k}:before.lead`} class="t-lead mt-5 text-on-forest-mute" />
       </div>
 
       <div class="mt-12 grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
         <div>
-          <p class="t-spaced border-b border-hairline-dark pb-4">Safe to do, from inside</p>
-          <ul class="check-list t-body-md mt-6 text-on-forest-mute">
-            {safeToDo.map((item) => <li>{item}</li>)}
+          <Text k={`${k}:before.safeLabel`} class="t-spaced border-b border-hairline-dark pb-4" />
+          <ul class="check-list t-body-md mt-6 text-on-forest-mute" {...list(`${k}:before.safe`)}>
+            {c.before.safe.map((_: unknown, i: number) => <Text k={`${k}:before.safe.${i}`} as="li" {...item(i)} />)}
           </ul>
         </div>
 
         <div>
-          <p class="t-spaced border-b border-hairline-dark pb-4">Leave for us</p>
-          <ul>
+          <Text k={`${k}:before.leaveLabel`} class="t-spaced border-b border-hairline-dark pb-4" />
+          <ul {...list(`${k}:before.leave`)}>
             {
-              leaveForUs.map((item) => (
-                <li class="border-b border-hairline-dark py-5">
-                  <h3 class="t-heading-sm">{item.title}</h3>
-                  <p class="t-body-sm mt-2 text-on-forest-mute">{item.body}</p>
+              c.before.leave.map((_: unknown, i: number) => (
+                <li class="border-b border-hairline-dark py-5" {...item(i)}>
+                  <Text k={`${k}:before.leave.${i}.title`} as="h3" class="t-heading-sm" />
+                  <Text k={`${k}:before.leave.${i}.body`} class="t-body-sm mt-2 text-on-forest-mute" />
                 </li>
               ))
             }
           </ul>
-          <p class="t-body-sm mt-6 text-on-forest-mute">
-            Depending on the situation, we may be able to tarp or dry in the area to keep water out until the
-            permanent repair is made.
-          </p>
+          <Text k={`${k}:before.note`} class="t-body-sm mt-6 text-on-forest-mute" />
         </div>
       </div>
     </div>
@@ -310,44 +191,21 @@ const notWorthIt = [
   <section class="section bg-canvas" aria-labelledby="match-heading">
     <div class="container-page grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
       <div>
-        <h2 id="match-heading" class="t-display-lg text-ink">Matching the roof you have</h2>
-        <div class="prose-page mt-6">
-        <p>
-          A repair should be hard to find from the street. The first thing we match is the shingle's type and size:
-          different profiles don't mix, and older roofs may use a shingle size that newer ones don't, so the
-          courses won't line up unless the size is right. Then profile, then color.
-        </p>
-        <p>
-          Color is the hard part. Manufacturers retire colors and whole product lines, and ten years of Oregon
-          weather fades a roof from the shade it came out of the bundle. We bring samples up to compare against the
-          roof itself, not a brochure. On an older roof a patch can read a shade different for a season or two
-          until it weathers in; we'll tell you that before we start, not after.
-        </p>
-        <p>
-          <strong>Kept spare bundles from the original job?</strong> Check the garage and the attic. Leftovers
-          from the same roof are the best match there is.
-        </p>
-        </div>
+        <Text k={`${k}:match.title`} as="h2" id="match-heading" class="t-display-lg text-ink" />
+        <Text k={`${k}:match.body`} type="block" as="div" class="prose-page mt-6" />
       </div>
 
       <aside class="self-start">
         <div class="panel panel-keyline overflow-hidden">
           <div class="plate-label">
-            <span class="t-spaced-sm">When a repair isn't worth it</span>
+            <Text k={`${k}:match.notWorthIt.label`} as="span" class="t-spaced-sm" />
           </div>
           <div class="px-6 py-7 sm:px-8">
-            <p class="t-body-md text-body">
-              Sometimes the honest answer is that the roof is done. These are the signs, and when we see them we'll
-              say so:
-            </p>
-            <ul class="check-list t-body-sm mt-5 text-body">
-              {notWorthIt.map((item) => <li>{item}</li>)}
+            <Text k={`${k}:match.notWorthIt.intro`} class="t-body-md text-body" />
+            <ul class="check-list t-body-sm mt-5 text-body" {...list(`${k}:match.notWorthIt.items`)}>
+              {c.match.notWorthIt.items.map((_: unknown, i: number) => <Text k={`${k}:match.notWorthIt.items.${i}`} as="li" {...item(i)} />)}
             </ul>
-            <p class="t-body-sm mt-6 border-t border-hairline pt-5 text-body">
-              If you need time to plan, we can talk about a repair that holds until then. See
-              <a href={serviceHref("roof-replacement")} class="link-inline">roof replacement</a>, or the
-              <a href={`${pages.residential}#repair-or-replace`} class="link-inline">repair-or-replace guide</a>.
-            </p>
+            <Text k={`${k}:match.notWorthIt.more`} type="rich" class="t-body-sm mt-6 border-t border-hairline pt-5 text-body" />
           </div>
         </div>
       </aside>
@@ -356,10 +214,7 @@ const notWorthIt = [
 
   <LeakCall />
 
-  <RelatedServices current="roof-repair" title="Also on a house" />
+  <RelatedServices current="roof-repair" k={`${k}:related`} />
 
-  <ClosingCta
-    title="Get the leak looked at"
-    body="Tell us where you're seeing water and when it shows up. We'll find where it's getting in and write down what it takes to fix. The estimate is free."
-  />
+  <ClosingCta k={`${k}:closingCta`} />
 </Page>

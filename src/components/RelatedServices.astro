@@ -1,20 +1,26 @@
 ---
 // A row of the other services, as the same photo tiles the home page uses,
 // so a reader who landed on the wrong page is one click from the right one.
+// Each tile's photo, title and summary are the service's registry entry
+// (src/content/services.json), marked with its key so the portal edits the
+// registry from here.
 import SectionHeading from "./SectionHeading.astro";
 import Icon from "./Icon.astro";
-import { asset } from "../lib/url";
-import { services, serviceHref } from "../data/services";
+import Text from "./Text.astro";
+import Img from "./Img.astro";
+import { services, serviceHref, serviceKey } from "../data/services";
 
 interface Props {
   /* Slugs to show, in order. Defaults to every service except `current`. */
   slugs?: string[];
   current?: string;
-  title?: string;
+  /* Content key of this row's words: an object with `title`, e.g.
+     "pages/services-commercial:related". Passed to SectionHeading. */
+  k: string;
   surface?: "canvas" | "cream-deep";
 }
 
-const { slugs, current, title = "Other work we do", surface = "canvas" } = Astro.props;
+const { slugs, current, k, surface = "canvas" } = Astro.props;
 
 const list = (slugs
   ? slugs.map((slug) => services.find((service) => service.slug === slug))
@@ -24,17 +30,17 @@ const list = (slugs
 
 <section class:list={["section", surface === "canvas" ? "bg-canvas" : "bg-cream-deep"]}>
   <div class="container-page">
-    <SectionHeading title={title} class="mb-10" />
+    <SectionHeading k={k} class="mb-10" />
     <div class="grid grid-cols-1 gap-2 md:grid-cols-3">
       {
         list.map((service) => (
           <a href={serviceHref(service.slug)} class="service-tile aspect-[4/3]! md:aspect-[4/5]! xl:aspect-[5/4]!">
-            <img src={asset(service.image)} alt={service.alt} loading="lazy" decoding="async" class="service-tile__photo" />
+            <Img k={`${serviceKey(service.slug)}.image`} loading="lazy" decoding="async" class="service-tile__photo" />
             <span class="service-tile__scrim" aria-hidden="true" />
             <span class="service-tile__shade" aria-hidden="true" />
             <div class="service-tile__body">
               <h3 class="service-tile__title t-heading-xl">
-                <span>{service.title}</span>
+                <Text k={`${serviceKey(service.slug)}.title`} as="span" />
                 <span class="service-tile__icon" aria-hidden="true">
                   <svg class="service-tile__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square">
                     <path d="M12 4v16M4 12h16" />
@@ -45,7 +51,7 @@ const list = (slugs
               <span class="service-tile__rule" aria-hidden="true" />
               <div class="service-tile__reveal">
                 <div class="service-tile__clip">
-                  <p class="service-tile__text t-body-sm">{service.summary}</p>
+                  <Text k={`${serviceKey(service.slug)}.summary`} class="service-tile__text t-body-sm" />
                 </div>
               </div>
             </div>

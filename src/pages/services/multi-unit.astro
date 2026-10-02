@@ -5,10 +5,12 @@ import ClosingCta from "../../components/ClosingCta.astro";
 import RelatedServices from "../../components/RelatedServices.astro";
 import Treeline from "../../components/Treeline.astro";
 import Icon from "../../components/Icon.astro";
-import { asset } from "../../lib/url";
+import Text from "../../components/Text.astro";
+import Img from "../../components/Img.astro";
 import { pages } from "../../data/nav";
-import { serviceHref } from "../../data/services";
+import { serviceHref, serviceKey } from "../../data/services";
 import { site, counties } from "../../data/site";
+import { file, list, item } from "../../lib/cms";
 
 // Multi-unit roofing: apartments, condos and townhome rows. Written for
 // property managers and HOA boards: phasing, resident communication, site
@@ -47,47 +49,15 @@ const schema = {
   areaServed: counties.map((county) => `${county.name} County, OR`),
 };
 
-// Chapter 1: how phases are drawn up.
-const phasingRules = [
-  {
-    title: "Worst roofs first",
-    body: "The order comes from the condition of each roof, not the order of the addresses.",
-  },
-  {
-    title: "Grouped by location",
-    body: "Buildings side by side go together, so the crew, the dumpster and the parking changes stay in one corner of the property at a time.",
-  },
-  {
-    title: "Sized to the budget year",
-    body: "One building or six, whatever the reserves or the owner's budget will carry that year.",
-  },
-  {
-    title: "One spec for all of it",
-    body: "Phase three is built exactly like phase one. More on that below.",
-  },
-];
+// Every word on this page is in src/content/pages/services-multi-unit.json;
+// `k` is the key prefix into it and `c` its parsed content, for the lists.
+const k = "pages/services-multi-unit";
+const c = file(k);
 
-// The example plan in the drawing: phase, fill style, timing, buildings.
-const phases = [
-  {
-    phase: "Phase 1",
-    when: "This year",
-    body: "Buildings C and E: the two worst roofs, next to each other.",
-    swatch: "solid",
-  },
-  {
-    phase: "Phase 2",
-    when: "Next budget year",
-    body: "Buildings A and B: worn, but with a few years left after repairs.",
-    swatch: "hatch",
-  },
-  {
-    phase: "Phase 3",
-    when: "Year three or later",
-    body: "Buildings D and F: sound for now. Maintenance keeps them that way.",
-    swatch: "open",
-  },
-];
+// The example plan's legend: the content's three phases, in order, each with
+// the fill the drawing uses for it. Paired with the drawing by position, so
+// the phases are not an editable list.
+const swatches = ["solid", "hatch", "open"] as const;
 
 // Roof plans for the drawing: hip roofs drawn from above.
 const buildings = [
@@ -112,185 +82,26 @@ const hipLines = (b: { x: number; y: number; w: number; h: number }) => {
   const y2 = b.y + b.h - half;
   return `M${b.x} ${b.y}L${x} ${y1}L${b.x + b.w} ${b.y}M${x} ${y1}V${y2}M${b.x} ${b.y + b.h}L${x} ${y2}L${b.x + b.w} ${b.y + b.h}`;
 };
-
-// Chapter 2: who hears what, and when.
-const notices = [
-  {
-    when: "Planning",
-    board: "Scope and a written estimate for each building, the phasing plan, and a draft schedule.",
-    residents: "Whatever the board or manager decides to share. Many announce the project at a meeting or in a newsletter.",
-  },
-  {
-    when: "Before a building starts",
-    board: "Confirmed dates, where the dumpster and materials go, which parking and driveways are affected, and a notice ready to send to residents.",
-    residents: "A written notice: which days are loud, what happens to parking and driveways, and what to clear off balconies and patios.",
-  },
-  {
-    when: "The day before",
-    board: "A go or hold call based on the forecast.",
-    residents: "A reminder on the door or by email: move cars out of the marked areas, bring in patio furniture and planters.",
-  },
-  {
-    when: "Each work day",
-    board: "A short update if anything changes: weather, a rotten deck section, a schedule slip.",
-    residents: "Work starts and ends at the agreed times, and the site is cleaned and swept for nails before the crew leaves.",
-  },
-  {
-    when: "Building finished",
-    board: "A walkthrough, photos of the work, and notes for the property's records.",
-    residents: "Parking, patios and balconies back to normal.",
-  },
-];
-
-const noticeExtras = [
-  {
-    title: "Loud days, spelled out",
-    body: "Tear-off is the loud part. Residents who work from home, keep night shifts or have nervous pets want to know those days in advance.",
-  },
-  {
-    title: "Things on the walls",
-    body: "Hammering and tear-off shake the top floor. Pictures, mirrors and shelves on those walls are worth taking down for the day.",
-  },
-  {
-    title: "Balconies and patios",
-    body: "Anything under the eaves can catch falling debris. Furniture, grills and planters come in; we cover what can't move.",
-  },
-];
-
-// Chapter 3: site protection and cleanup, on the forest band.
-const siteCare = [
-  {
-    title: "Cars and parking",
-    body: "Cars stay out of the zone under the work, with notice ahead and signs on the day. Carports and covered spaces are protected when the roof above them comes off.",
-  },
-  {
-    title: "Landscaping",
-    body: "Tarps and plywood over shrubs, beds and A/C condensers along the drip line. Tear-off goes into the dumpster or down a chute, not onto the lawn.",
-  },
-  {
-    title: "Entries and walkways",
-    body: "Doors stay usable. When the work is directly over an entry, it's covered, or residents are routed to another door for the day.",
-  },
-  {
-    title: "Cleanup every day",
-    body: "A magnetic sweep of driveways, walks, lawns and parking at the end of each day, not only at the end of the job. Tear-off debris comes out of the gutters before we leave a building.",
-  },
-  {
-    title: "Dried in every night",
-    body: "We don't open more roof than can be closed up the same day. Nobody's ceiling depends on tomorrow's forecast.",
-  },
-  {
-    title: "Dumpsters and materials",
-    body: "Placed where the manager agrees, clear of fire lanes and entries, and moved as the work moves through the property.",
-  },
-];
-
-// Chapter 4: one spec across buildings.
-const specItems = [
-  "Underlayment, and ice-and-water shield in the valleys and at the eaves",
-  "Drip edge, step flashing and wall flashing details",
-  "Pipe boots and vents",
-  "Ventilation: intake at the eaves, exhaust at the ridge",
-  "Shingle line and color",
-];
-
-// Chapter 5: what the capital-planning assessment contains.
-const reportContents = [
-  "A roof plan for each building, with areas, slopes, valleys and penetrations",
-  "The roofing on each: material, number of layers, and approximate age where it can be told",
-  "Photos of every roof and every problem we found",
-  "Condition notes: worn or lifted shingles, flashing, valleys, pipe boots, moss, ventilation, gutters and downspouts",
-  "Remaining life for each roof as a range, with the reasoning behind it",
-  "A suggested order and timing for replacement, and the repairs that would stretch the roofs you aren't replacing yet",
-  "A written scope for each building, ready to price when the board is ready",
-];
-
-// Chapter 5: the shape of the summary page. Illustrative only.
-const exampleRows = [
-  {
-    building: "A",
-    roof: "Architectural shingle, one layer",
-    saw: "Granule loss on the south slopes; two lifted ridge caps",
-    next: "Reset ridge caps now; plan replacement",
-    timing: "Years 2–3",
-  },
-  {
-    building: "C",
-    roof: "Asphalt shingle, two layers",
-    saw: "Curling shingles, exposed nails, soft decking at one valley",
-    next: "Tear off and replace",
-    timing: "This year",
-  },
-  {
-    building: "D",
-    roof: "Architectural shingle, one layer",
-    saw: "Moss on the north slope; otherwise sound",
-    next: "Moss treatment; replace cracked pipe boots",
-    timing: "Replace in 5+ years",
-  },
-];
-
-// Chapter 6: ongoing work across a property.
-const ongoing = [
-  {
-    title: "Leak calls",
-    body: "The manager sends the unit and what the resident saw. We find the source, fix it, and send back photos and a note of what we did, filed by building and unit.",
-  },
-  {
-    title: "Scheduled maintenance",
-    body: "Gutters cleared in the fall after the needles and leaves drop, moss treated, valleys cleared, pipe boots and flashing checked. On a schedule the board approves, for every building at once.",
-  },
-  {
-    title: "After storms",
-    body: "After an east wind or an ice storm, a walk of every roof for lifted shingles, blown-off ridge caps and damaged gutters, with a list of what we found and what needs doing first.",
-  },
-  {
-    title: "Records that stay with the property",
-    body: "Photos and notes kept by building, so the roof history is still there when the manager or the board changes.",
-  },
-];
 ---
 
-<Page
-  title="Multi-Unit Roofing"
-  description="Roof replacement, repair, maintenance and gutters for apartments, condos and townhome rows across the Portland metro, planned building by building around the residents. Condition assessments for capital planning."
-  crumbs={crumbs}
-  schema={schema}
->
-  <PageHero
-    crumbs={crumbs}
-    eyebrow="Multi-unit roofing"
-    title="Apartments, condos and townhome rows"
-    lead="Replacement, repair and maintenance planned around the people living underneath. The board or manager gets a schedule, residents get notice before the loud days, and everyone has one number to call."
-    image="/images/multi-unit/townhome-roofs-gutters.jpg"
-    imageAlt="Row of three-story townhomes with dark shingle roofs, stepped gables, gutters and downspouts"
-    treelineOffset={-75}
-  />
+<Page k={k} crumbs={crumbs} schema={schema}>
+  <PageHero k={`${k}:hero`} crumbs={crumbs} treelineOffset={-75} />
 
   {/* 1. Phasing. */}
   <section id="phasing" class="section bg-canvas">
     <div class="container-page">
       <div class="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
         <div>
-          <p class="t-eyebrow text-forest">Planning the work</p>
-          <h2 class="t-display-lg text-balance mt-4 text-ink">Building by building, or in phases</h2>
-          <div class="prose-page mt-6">
-            <p>
-              Few properties replace every roof at once, and few should. Roofs on the same property wear at
-              different rates: south slopes bake in the summer, north slopes stay damp and grow moss, and the
-              buildings under big firs fill their valleys with needles every fall.
-            </p>
-            <p>
-              So we plan the work the way the roofs are actually wearing, and in pieces a budget can carry.
-            </p>
-          </div>
+          <Text k={`${k}:phasing.eyebrow`} class="t-eyebrow text-forest" />
+          <Text k={`${k}:phasing.title`} as="h2" class="t-display-lg text-balance mt-4 text-ink" />
+          <Text k={`${k}:phasing.body`} type="block" as="div" class="prose-page mt-6" />
 
-          <ul class="mt-8 border-t border-hairline">
+          <ul class="mt-8 border-t border-hairline" {...list(`${k}:phasing.rules`)}>
             {
-              phasingRules.map((rule) => (
-                <li class="border-b border-hairline py-4">
-                  <h3 class="t-heading-sm text-ink">{rule.title}</h3>
-                  <p class="t-body-sm mt-1 text-body">{rule.body}</p>
+              c.phasing.rules.map((_: unknown, i: number) => (
+                <li class="border-b border-hairline py-4" {...item(i)}>
+                  <Text k={`${k}:phasing.rules.${i}.title`} as="h3" class="t-heading-sm text-ink" />
+                  <Text k={`${k}:phasing.rules.${i}.body`} class="t-body-sm mt-1 text-body" />
                 </li>
               ))
             }
@@ -299,8 +110,8 @@ const ongoing = [
 
         <figure class="panel self-start">
           <div class="plate-label justify-between">
-            <span class="t-spaced">Example phasing plan</span>
-            <span class="t-spaced-sm text-on-forest-mute max-sm:hidden">Six buildings</span>
+            <Text k={`${k}:phasing.plan.label`} as="span" class="t-spaced" />
+            <Text k={`${k}:phasing.plan.count`} as="span" class="t-spaced-sm text-on-forest-mute max-sm:hidden" />
           </div>
           <div class="px-4 pt-6 sm:px-8 sm:pt-8">
             <svg
@@ -364,31 +175,28 @@ const ongoing = [
           </div>
           <ul class="mx-4 mt-6 mb-2 border-t border-hairline sm:mx-8">
             {
-              phases.map((item) => (
+              swatches.map((swatch, i) => (
                 <li class="grid grid-cols-[28px_minmax(0,1fr)] gap-4 border-b border-hairline py-4 last:border-b-0">
                   <span
                     aria-hidden="true"
                     class:list={[
                       "mt-0.5 block size-7 border",
-                      item.swatch === "solid" && "border-forest bg-forest",
-                      item.swatch === "hatch" && "phase-swatch-hatch border-forest",
-                      item.swatch === "open" && "border-ink bg-board",
+                      swatch === "solid" && "border-forest bg-forest",
+                      swatch === "hatch" && "phase-swatch-hatch border-forest",
+                      swatch === "open" && "border-ink bg-board",
                     ]}
                   />
                   <div>
                     <p class="t-heading-sm text-ink">
-                      {item.phase} <span class="t-spaced-sm ml-2 text-mute">{item.when}</span>
+                      <Text k={`${k}:phasing.plan.phases.${i}.phase`} bare /> <Text k={`${k}:phasing.plan.phases.${i}.when`} as="span" class="t-spaced-sm ml-2 text-mute" />
                     </p>
-                    <p class="t-body-sm mt-1 text-body">{item.body}</p>
+                    <Text k={`${k}:phasing.plan.phases.${i}.body`} class="t-body-sm mt-1 text-body" />
                   </div>
                 </li>
               ))
             }
           </ul>
-          <figcaption class="t-caption border-t border-hairline px-4 py-4 text-mute sm:px-8">
-            An illustration, not a real property. The order comes from the condition assessment, not from the site
-            map.
-          </figcaption>
+          <Text k={`${k}:phasing.plan.caption`} as="figcaption" class="t-caption border-t border-hairline px-4 py-4 text-mute sm:px-8" />
         </figure>
       </div>
     </div>
@@ -399,13 +207,10 @@ const ongoing = [
     <div class="container-page">
       <div class="grid gap-6 border-b border-hairline pb-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
         <div>
-          <p class="t-eyebrow text-forest">Living under the work</p>
-          <h2 class="t-display-lg text-balance mt-4 text-ink">Who hears what, and when</h2>
+          <Text k={`${k}:communication.eyebrow`} class="t-eyebrow text-forest" />
+          <Text k={`${k}:communication.title`} as="h2" class="t-display-lg text-balance mt-4 text-ink" />
         </div>
-        <p class="t-body-md max-w-2xl text-body">
-          A reroof on an occupied building goes smoothly when nobody is surprised. The board or manager gets the
-          schedule and the decisions; residents get plain notice of what affects them, before it does.
-        </p>
+        <Text k={`${k}:communication.intro`} class="t-body-md max-w-2xl text-body" />
       </div>
 
       <div class="table-scroll mt-10">
@@ -413,18 +218,18 @@ const ongoing = [
           <caption class="sr-only">Notice given to the board or manager and to residents at each stage of a project</caption>
           <thead>
             <tr>
-              <th scope="col" class="w-[20%]">When</th>
-              <th scope="col" class="w-[40%]">The board or manager</th>
-              <th scope="col">Residents</th>
+              <Text k={`${k}:communication.columns.when`} as="th" scope="col" class="w-[20%]" />
+              <Text k={`${k}:communication.columns.board`} as="th" scope="col" class="w-[40%]" />
+              <Text k={`${k}:communication.columns.residents`} as="th" scope="col" />
             </tr>
           </thead>
-          <tbody>
+          <tbody {...list(`${k}:communication.notices`)}>
             {
-              notices.map((row) => (
-                <tr>
-                  <th scope="row">{row.when}</th>
-                  <td>{row.board}</td>
-                  <td>{row.residents}</td>
+              c.communication.notices.map((_: unknown, i: number) => (
+                <tr {...item(i)}>
+                  <Text k={`${k}:communication.notices.${i}.when`} as="th" scope="row" />
+                  <Text k={`${k}:communication.notices.${i}.board`} as="td" />
+                  <Text k={`${k}:communication.notices.${i}.residents`} as="td" />
                 </tr>
               ))
             }
@@ -434,27 +239,18 @@ const ongoing = [
 
       <div class="mt-14 grid gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
         <figure class="photo-plate">
-          <img
-            src={asset("/images/multi-unit/townhome-row-driveways.jpg")}
-            alt="Row of townhomes with garages, short driveways, balconies and front plantings along a curved street"
-            loading="lazy"
-            decoding="async"
-            class="aspect-[3/2]"
-          />
-          <figcaption>
-            Garages, driveways, balconies and plantings all sit under the eaves. Residents need to know which days
-            to park elsewhere and clear the decks.
-          </figcaption>
+          <Img k={`${k}:communication.image`} loading="lazy" decoding="async" class="aspect-[3/2]" />
+          <Text k={`${k}:communication.caption`} as="figcaption" />
         </figure>
 
         <div>
-          <h3 class="t-heading-xl text-ink">Worth putting in the notice</h3>
-          <dl class="mt-6 border-t border-hairline">
+          <Text k={`${k}:communication.extras.title`} as="h3" class="t-heading-xl text-ink" />
+          <dl class="mt-6 border-t border-hairline" {...list(`${k}:communication.extras.items`)}>
             {
-              noticeExtras.map((item) => (
-                <div class="border-b border-hairline py-5">
-                  <dt class="t-heading-sm text-ink">{item.title}</dt>
-                  <dd class="t-body-sm mt-1.5 text-body">{item.body}</dd>
+              c.communication.extras.items.map((_: unknown, i: number) => (
+                <div class="border-b border-hairline py-5" {...item(i)}>
+                  <Text k={`${k}:communication.extras.items.${i}.title`} as="dt" class="t-heading-sm text-ink" />
+                  <Text k={`${k}:communication.extras.items.${i}.body`} as="dd" class="t-body-sm mt-1.5 text-body" />
                 </div>
               ))
             }
@@ -471,19 +267,20 @@ const ongoing = [
     <div class="container-page pt-24 pb-36 md:pt-28 md:pb-40">
       <div class="grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
         <div>
-          <p class="t-eyebrow text-on-forest-mute">On site</p>
-          <h2 class="t-display-lg text-balance mt-4">Cars, landscaping and cleanup</h2>
-          <p class="t-lead mt-5 text-on-forest-mute">
-            A reroof sends a lot of old roofing off the edge. Here's how it stays off cars, shrubs and walkways.
-          </p>
+          <Text k={`${k}:onSite.eyebrow`} class="t-eyebrow text-on-forest-mute" />
+          <Text k={`${k}:onSite.title`} as="h2" class="t-display-lg text-balance mt-4" />
+          <Text k={`${k}:onSite.intro`} class="t-lead mt-5 text-on-forest-mute" />
         </div>
 
-        <ul class="check-list grid gap-x-12 border-t border-hairline-dark pt-8 md:grid-cols-2 [&>li+li]:mt-0 [&>li]:pb-7">
+        <ul
+          class="check-list grid gap-x-12 border-t border-hairline-dark pt-8 md:grid-cols-2 [&>li+li]:mt-0 [&>li]:pb-7"
+          {...list(`${k}:onSite.items`)}
+        >
           {
-            siteCare.map((item) => (
-              <li>
-                <h3 class="t-heading-sm">{item.title}</h3>
-                <p class="t-body-sm mt-1.5 text-on-forest-mute">{item.body}</p>
+            c.onSite.items.map((_: unknown, i: number) => (
+              <li {...item(i)}>
+                <Text k={`${k}:onSite.items.${i}.title`} as="h3" class="t-heading-sm" />
+                <Text k={`${k}:onSite.items.${i}.body`} class="t-body-sm mt-1.5 text-on-forest-mute" />
               </li>
             ))
           }
@@ -499,59 +296,26 @@ const ongoing = [
     <div class="container-page">
       <div class="grid gap-14 md:grid-cols-2 md:gap-0">
         <div class="md:border-r md:border-hairline md:pr-10 lg:pr-16">
-          <p class="t-eyebrow text-forest">Consistency</p>
-          <h2 class="t-display-lg text-balance mt-4 text-ink">The same roof on every building</h2>
-          <div class="prose-page mt-6">
-            <p>
-              Roof a property over several years and it's easy to end up with six buildings and six different
-              roofs: one crew's flashing here, a different vent there, a shingle color that was discontinued
-              halfway through.
-            </p>
-            <p>
-              We write one spec for the property and hold it through every phase. The buildings age together, they
-              look like they belong together, and the next board inherits one roof system instead of six.
-            </p>
-          </div>
+          <Text k={`${k}:spec.eyebrow`} class="t-eyebrow text-forest" />
+          <Text k={`${k}:spec.title`} as="h2" class="t-display-lg text-balance mt-4 text-ink" />
+          <Text k={`${k}:spec.body`} type="block" as="div" class="prose-page mt-6" />
           <div class="mt-8">
-            <p class="t-spaced-sm text-mute">Held the same on every building</p>
-            <ul class="check-list t-body-sm mt-5 text-body">
-              {specItems.map((item) => <li>{item}</li>)}
+            <Text k={`${k}:spec.listLabel`} class="t-spaced-sm text-mute" />
+            <ul class="check-list t-body-sm mt-5 text-body" {...list(`${k}:spec.items`)}>
+              {c.spec.items.map((_: unknown, i: number) => <Text k={`${k}:spec.items.${i}`} as="li" {...item(i)} />)}
             </ul>
           </div>
         </div>
 
         <div id="gutters" class="md:pl-10 lg:pl-16">
-          <p class="t-eyebrow text-forest">Gutters &amp; downspouts</p>
-          <h2 class="t-display-lg text-balance mt-4 text-ink">More roof, fewer downspouts</h2>
-          <div class="prose-page mt-6">
-            <p>
-              Multi-unit roofs put a lot of water in a few places. A long townhome row can drain a big stretch of
-              roof into a handful of downspouts, and upper roofs often empty onto lower ones.
-            </p>
-            <ul>
-              <li>
-                <strong>Sized for the roof, not the house.</strong> Long runs and big roof areas can need larger
-                gutters and more downspouts than a single house would.
-              </li>
-              <li>
-                <strong>Upper roofs piped down.</strong> A downspout that dumps onto a lower roof wears a stripe in
-                the shingles and overloads the gutter below. We carry it down to the lower gutter or to the ground.
-              </li>
-              <li>
-                <strong>Away from walks and entries.</strong> A downspout that empties across a walkway leaves ice
-                on it the few cold mornings we get each winter.
-              </li>
-              <li>
-                <strong>Under firs and maples,</strong> guards or a cleaning schedule. A plugged gutter three
-                stories up overflows onto balconies and front doors.
-              </li>
-            </ul>
-          </div>
+          <Text k={`${k}:gutters.eyebrow`} class="t-eyebrow text-forest" />
+          <Text k={`${k}:gutters.title`} as="h2" class="t-display-lg text-balance mt-4 text-ink" />
+          <Text k={`${k}:gutters.body`} type="block" as="div" class="prose-page mt-6" />
           <a
             href={serviceHref("gutters")}
             class="t-spaced-sm mt-8 inline-flex min-h-12 items-center gap-2 text-forest hover:text-forest-deep"
           >
-            Gutter systems
+            <Text k={`${serviceKey("gutters")}.title`} bare />
             <Icon name="arrow" size={16} />
           </a>
         </div>
@@ -564,45 +328,25 @@ const ongoing = [
     <div class="container-page">
       <div class="grid gap-12 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-16">
         <div>
-          <p class="t-eyebrow text-forest">Capital planning</p>
-          <h2 class="t-display-lg text-balance mt-4 text-ink">A roof-by-roof condition assessment</h2>
-          <div class="prose-page mt-6">
-            <p>
-              Boards and owners are asked to budget for roofs years ahead, often from a reserve study that estimates
-              roof life from install dates. Walking the actual roofs makes those numbers better. Some roofs will
-              outlast the schedule, and some won't make it.
-            </p>
-            <p>
-              The assessment gives the board something to plan from: which roofs to replace first, which ones
-              repairs can carry a few more years, and a scope for each building so the work can be priced when the
-              money is there.
-            </p>
-          </div>
+          <Text k={`${k}:capital.eyebrow`} class="t-eyebrow text-forest" />
+          <Text k={`${k}:capital.title`} as="h2" class="t-display-lg text-balance mt-4 text-ink" />
+          <Text k={`${k}:capital.body`} type="block" as="div" class="prose-page mt-6" />
           <figure class="photo-plate mt-10">
-            <img
-              src={asset("/images/multi-unit/garden-apartments-trees.jpg")}
-              alt="Aerial view of garden-style apartment buildings with gray shingle roofs, parking lots and tall trees"
-              loading="lazy"
-              decoding="async"
-              class="aspect-[3/2]"
-            />
-            <figcaption>
-              On a property like this, every building sits under different trees and faces a different way. Each
-              roof ages on its own schedule.
-            </figcaption>
+            <Img k={`${k}:capital.image`} loading="lazy" decoding="async" class="aspect-[3/2]" />
+            <Text k={`${k}:capital.caption`} as="figcaption" />
           </figure>
         </div>
 
         <div class="panel panel-keyline self-start overflow-hidden lg:sticky lg:top-28">
           <div class="plate-label">
-            <span class="t-spaced">What the report contains</span>
+            <Text k={`${k}:capital.report.label`} as="span" class="t-spaced" />
           </div>
-          <ol class="px-6 py-4 sm:px-8">
+          <ol class="px-6 py-4 sm:px-8" {...list(`${k}:capital.report.items`)}>
             {
-              reportContents.map((item, index) => (
-                <li class="grid grid-cols-[36px_minmax(0,1fr)] gap-3 border-b border-hairline py-4 last:border-b-0">
+              c.capital.report.items.map((_: unknown, index: number) => (
+                <li class="grid grid-cols-[36px_minmax(0,1fr)] gap-3 border-b border-hairline py-4 last:border-b-0" {...item(index)}>
                   <span class="t-heading-md text-forest-mid">{String(index + 1).padStart(2, "0")}</span>
-                  <span class="t-body-sm pt-0.5 text-body">{item}</span>
+                  <Text k={`${k}:capital.report.items.${index}`} as="span" class="t-body-sm pt-0.5 text-body" />
                 </li>
               ))
             }
@@ -612,33 +356,30 @@ const ongoing = [
 
       <div class="mt-16 lg:mt-20">
         <div class="grid gap-4 border-b border-hairline pb-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
-          <h3 class="t-heading-xl text-balance text-ink">What a summary page looks like</h3>
-          <p class="t-body-md max-w-2xl text-body">
-            An example of the one-page summary that sits on top of the full report. The buildings and findings are
-            made up to show the format.
-          </p>
+          <Text k={`${k}:capital.example.title`} as="h3" class="t-heading-xl text-balance text-ink" />
+          <Text k={`${k}:capital.example.intro`} class="t-body-md max-w-2xl text-body" />
         </div>
         <div class="table-scroll mt-8">
           <table class="data-table min-w-[760px]">
             <caption class="sr-only">Example summary page from a roof condition assessment</caption>
             <thead>
               <tr>
-                <th scope="col" class="w-[10%]">Building</th>
-                <th scope="col" class="w-[20%]">Roof</th>
-                <th scope="col" class="w-[28%]">What we saw</th>
-                <th scope="col" class="w-[24%]">Recommendation</th>
-                <th scope="col">Timing</th>
+                <Text k={`${k}:capital.example.columns.building`} as="th" scope="col" class="w-[10%]" />
+                <Text k={`${k}:capital.example.columns.roof`} as="th" scope="col" class="w-[20%]" />
+                <Text k={`${k}:capital.example.columns.saw`} as="th" scope="col" class="w-[28%]" />
+                <Text k={`${k}:capital.example.columns.next`} as="th" scope="col" class="w-[24%]" />
+                <Text k={`${k}:capital.example.columns.timing`} as="th" scope="col" />
               </tr>
             </thead>
-            <tbody>
+            <tbody {...list(`${k}:capital.example.rows`)}>
               {
-                exampleRows.map((row) => (
-                  <tr>
-                    <th scope="row">{row.building}</th>
-                    <td>{row.roof}</td>
-                    <td>{row.saw}</td>
-                    <td>{row.next}</td>
-                    <td>{row.timing}</td>
+                c.capital.example.rows.map((_: unknown, i: number) => (
+                  <tr {...item(i)}>
+                    <Text k={`${k}:capital.example.rows.${i}.building`} as="th" scope="row" />
+                    <Text k={`${k}:capital.example.rows.${i}.roof`} as="td" />
+                    <Text k={`${k}:capital.example.rows.${i}.saw`} as="td" />
+                    <Text k={`${k}:capital.example.rows.${i}.next`} as="td" />
+                    <Text k={`${k}:capital.example.rows.${i}.timing`} as="td" />
                   </tr>
                 ))
               }
@@ -654,12 +395,9 @@ const ongoing = [
     <div class="container-page">
       <div class="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <div>
-          <p class="t-eyebrow text-forest">Repairs &amp; maintenance</p>
-          <h2 class="t-display-lg text-balance mt-4 text-ink">One number for every building</h2>
-          <p class="t-lead mt-5 text-body">
-            Managers and boards get one point of contact who knows the property and its roofs. No explaining the
-            buildings from scratch each time something drips.
-          </p>
+          <Text k={`${k}:portfolio.eyebrow`} class="t-eyebrow text-forest" />
+          <Text k={`${k}:portfolio.title`} as="h2" class="t-display-lg text-balance mt-4 text-ink" />
+          <Text k={`${k}:portfolio.intro`} class="t-lead mt-5 text-body" />
           <a
             href={site.phoneHref}
             class="t-heading-xl mt-8 inline-flex min-h-12 items-center gap-3 whitespace-nowrap text-forest hover:text-forest-deep"
@@ -667,17 +405,15 @@ const ongoing = [
             <Icon name="phone" size={28} class="shrink-0" />
             {site.phone}
           </a>
-          <p class="t-body-sm mt-3 max-w-sm text-mute">
-            Same-day emergency response may be available depending on scope.
-          </p>
+          <Text k={`${k}:portfolio.note`} class="t-body-sm mt-3 max-w-sm text-mute" />
         </div>
 
-        <div class="border-t border-hairline">
+        <div class="border-t border-hairline" {...list(`${k}:portfolio.items`)}>
           {
-            ongoing.map((item) => (
-              <div class="grid gap-2 border-b border-hairline py-6 sm:grid-cols-[220px_minmax(0,1fr)] sm:gap-8">
-                <h3 class="t-heading-md text-ink">{item.title}</h3>
-                <p class="t-body-md text-body">{item.body}</p>
+            c.portfolio.items.map((_: unknown, i: number) => (
+              <div class="grid gap-2 border-b border-hairline py-6 sm:grid-cols-[220px_minmax(0,1fr)] sm:gap-8" {...item(i)}>
+                <Text k={`${k}:portfolio.items.${i}.title`} as="h3" class="t-heading-md text-ink" />
+                <Text k={`${k}:portfolio.items.${i}.body`} class="t-body-md text-body" />
               </div>
             ))
           }
@@ -686,14 +422,9 @@ const ongoing = [
     </div>
   </section>
 
-  <RelatedServices slugs={["commercial", "roof-maintenance", "gutters"]} title="Related work" surface="cream-deep" />
+  <RelatedServices slugs={["commercial", "roof-maintenance", "gutters"]} k={`${k}:related`} surface="cream-deep" />
 
-  <ClosingCta
-    surface="canvas"
-    label="Property estimate"
-    title="Walk the roofs with us"
-    body="Tell us how many buildings, roughly how old the roofs are, and what's leaking. We'll walk them and put it in writing, building by building."
-  />
+  <ClosingCta k={`${k}:closingCta`} surface="canvas" />
 </Page>
 
 <style>

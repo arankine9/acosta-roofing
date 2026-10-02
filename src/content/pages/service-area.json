@@ -1,0 +1,122 @@
+{
+  "seo": {
+    "title": "Service Area",
+    "description": "{{name}} works anywhere in Oregon within about {{driveMinutes}} minutes' drive of our {{city}} shop: the Portland metro, the north Willamette Valley, and out toward the Coast Range, the Gorge and the Cascade foothills."
+  },
+  "hero": {
+    "eyebrow": "Service area",
+    "title": "Roofing across northwest Oregon",
+    "lead": "Our line is a drive time, not a radius: anywhere in Oregon about {{driveMinutes}} minutes from the {{city}} shop. That takes in the Portland metro, the north Willamette Valley and the foothills on either side, out to the Gorge.",
+    "image": {
+      "src": "/images/service-area/portland-street.jpg",
+      "alt": "A row of older wood-sided houses with steep, dark shingle roofs on a Portland street"
+    },
+    "caption": "Older Portland houses on a winter afternoon: steep gables, shingle roofs, trees close by."
+  },
+  "line": {
+    "title": "How the line is drawn",
+    "body": "<p class=\"t-lead text-body\">The shaded area on the map isn't a circle with a compass point in {{city}}. It's everywhere you can drive to from the shop in about {{driveMinutes}} minutes, measured over real roads without rush-hour traffic.</p><p>That's why the shape looks the way it does. It runs a long way down I-5 toward Salem and Albany, and up US-26 to Sandy and Welches, because those roads are fast. It stops well short of the coast, where the roads over the Coast Range are slow, even though the distance on a map is similar.</p><h3>Why drive time</h3><p>A roof is rarely one visit. There's the estimate, the job, sometimes a return trip for a flashing detail or a gutter adjustment, and a look after the first big storm. Keeping the work within a reasonable drive means more of each day goes into your roof and less into the truck, and it means we can come back without it being an expedition.</p><h3>Why it stops at the Columbia</h3><p>We're licensed with Oregon's Construction Contractors Board, CCB #{{ccb}}. A CCB license covers work in Oregon. Washington licenses contractors separately, so the line follows the state line and the river, not the drive time.</p><p>You can look up any Oregon contractor's license, bond and insurance on the CCB's website. It's worth doing for anyone you hire.</p>",
+    "glance": {
+      "label": "The line at a glance",
+      "rows": [
+        { "label": "Shop", "value": "{{city}}, {{state}}" },
+        { "label": "Reach", "value": "About {{driveMinutes}} minutes' drive" },
+        { "label": "Area", "value": "About 4,000 sq mi" },
+        { "label": "Counties", "value": "{{countyCount}}, most in part" },
+        { "label": "State", "value": "Oregon only" },
+        { "label": "License", "value": "Oregon CCB #{{ccb}}" }
+      ]
+    }
+  },
+  "directory": {
+    "title": "County by county",
+    "intro": "North to south, with the towns inside the line. Most counties are only partly in reach; the towns listed are the ones that are.",
+    "counties": {
+      "Columbia": "River towns on the Columbia along US-30, from Scappoose and St. Helens down to Rainier, and Vernonia up in the timber of the Nehalem valley.",
+      "Washington": "The shop's county. Beaverton, Hillsboro, Tigard and the Tualatin Valley, out to Forest Grove, Banks and Gaston at the foot of the Coast Range.",
+      "Multnomah": "Portland and the east county: Gresham and Troutdale, and Corbett up on the rim at the west end of the Gorge.",
+      "Hood River": "The Oregon side of the Gorge: Cascade Locks, and Hood River at the far end of the drive.",
+      "Yamhill": "Newberg and Dundee on 99W, McMinnville and Carlton in wine country, and Sheridan and Willamina toward the Coast Range.",
+      "Clackamas": "Lake Oswego and West Linn down to Oregon City, Wilsonville, Canby and Molalla, then east through Sandy and Estacada to Welches on the way to the mountain.",
+      "Polk": "Across the Willamette from Salem: Dallas, Monmouth and Independence.",
+      "Marion": "Salem, Keizer and Woodburn on the I-5 corridor, and Silverton, Mt. Angel, Stayton and Aumsville toward the Cascade foothills.",
+      "Linn": "The south edge of the line, down I-5: Albany and Jefferson."
+    },
+    "townsTitle": "Towns, A to Z"
+  },
+  "weather": {
+    "title": "What the weather does to roofs here",
+    "intro": "One service area, four kinds of weather. It's all the Northwest, but a roof in Welches lives a different life from one in Tigard. In general terms, this is what each part of the area throws at a roof.",
+    "watchLabel": "What we look for",
+    "zones": [
+      {
+        "title": "The valley floor",
+        "where": "Portland, Beaverton, Hillsboro, Tigard, Newberg, McMinnville, Woodburn, Salem, Albany",
+        "body": "Long wet seasons rather than big storms: most of the year's rain falls between October and May, in gray weeks that never quite dry out. Roofs under firs and oaks, and north-facing slopes, stay damp all winter, and that's where moss takes hold. Summers are dry and can be hot, which ages shingles from the other side.",
+        "watch": ["Moss on shaded and north-facing slopes", "Needles and leaves in valleys and gutters", "Sun-baked south slopes aging first"]
+      },
+      {
+        "title": "Coast Range foothills",
+        "where": "Forest Grove, Banks, Gaston, Vernonia, Sheridan, Willamina, Dallas",
+        "body": "More rain than the valley floor and heavier timber close to the house. Roofs sit in shade longer, collect more needles and stay wet longer after each storm, so moss grows faster. Southwest winter storms reach these towns first.",
+        "watch": ["Faster moss growth", "Debris loads in valleys", "Wind-driven rain at rakes and edges"]
+      },
+      {
+        "title": "The Gorge and the east winds",
+        "where": "Troutdale, Corbett, Cascade Locks, Hood River",
+        "body": "Wind is the story. In winter, cold east wind pours out of the Gorge and hits Troutdale and Corbett hardest. When that cold air sits under a Pacific storm, rain freezes as it lands, and ice storms can reach well into Portland. Nailing, sealing and ridge caps matter more here than anywhere else in the area.",
+        "watch": ["Lifted and torn tabs", "Blown-off ridge caps", "Ice on roofs and gutters"]
+      },
+      {
+        "title": "Cascade foothills",
+        "where": "Sandy, Estacada, Welches, Molalla, Silverton",
+        "body": "Higher ground, more rain and more snow, especially as you climb toward the mountain. Snow sits on roofs longer, ice dams are possible at the eaves, and dense fir means needles in every valley and gutter. Ice-and-water shield at the eaves earns its keep up here.",
+        "watch": ["Snow and ice at the eaves", "Heavy needle fall", "Long wet stretches in shade"]
+      }
+    ],
+    "photos": [
+      {
+        "image": {
+          "src": "/images/service-area/columbia-gorge.jpg",
+          "alt": "The Columbia River Gorge under low cloud, with Vista House on Crown Point above the river"
+        },
+        "caption": "The west end of the Gorge, Crown Point on the right. In winter, the east wind comes down this corridor."
+      },
+      {
+        "image": {
+          "src": "/images/service-area/molalla-pasture.jpg",
+          "alt": "Cattle grazing in a green pasture near Molalla with bare trees and forested hills behind"
+        },
+        "caption": "Pasture near Molalla, where the valley floor starts to climb toward the Cascades."
+      },
+      {
+        "image": {
+          "src": "/images/service-area/mount-hood-from-sandy.jpg",
+          "alt": "Mount Hood above autumn forest outside Sandy, Oregon"
+        },
+        "caption": "Mount Hood from Sandy. The closer the mountain, the more snow and ice a roof sees."
+      }
+    ]
+  },
+  "pastTheLine": {
+    "title": "Just past the line? Call anyway",
+    "body": "<p class=\"t-lead text-body\">The line on the map is a guide, not a wall. If you're a few minutes outside it, in Oregon, call us. Depending on the job, we may still be able to schedule it.</p><p>What decides it is mostly the size of the work and the time of year. A full replacement or a commercial roof is worth a longer drive; a small repair far outside the line may not be, and if it isn't, we'll say so and point you toward finding someone closer.</p>",
+    "card": {
+      "label": "When you call",
+      "intro": "These help us give you a straight answer on the first call:",
+      "items": [
+        "The town, or the nearest cross streets",
+        "What kind of work: repair, replacement, gutters, maintenance",
+        "A rough size, like a single-story house or a two-story with a garage",
+        "Photos, if you can take them safely from the ground"
+      ],
+      "call": "Call {{phone}}",
+      "request": "Send a request"
+    }
+  },
+  "closingCta": {
+    "label": "Free estimate",
+    "title": "Inside the line?",
+    "body": "If you're within about {{driveMinutes}} minutes of {{city}}, the estimate is free and it's written down. Tell us what you're seeing and we'll come look."
+  }
+}

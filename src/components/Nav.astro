@@ -10,9 +10,11 @@ import { asset, home, isCurrent } from "../lib/url";
 // hover still gets there in one tap.
 import Logo from "./Logo.astro";
 import Icon from "./Icon.astro";
+import Text from "./Text.astro";
 import { site } from "../data/site";
 import { serviceHref, serviceThumb } from "../data/services";
 import { primaryLinks, serviceMenu, planningLinks, estimateHref, pages } from "../data/nav";
+import { field, get, text } from "../lib/cms";
 
 const pathname = Astro.url.pathname;
 const active = (href: string) => isCurrent(pathname, href);
@@ -20,6 +22,12 @@ const active = (href: string) => isCurrent(pathname, href);
 // Every top-level link shares one box, so the Services label (which carries
 // a caret) sits on exactly the same line as the plain links beside it.
 const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 hover:border-forest hover:text-forest";
+
+// Labels that are only part of an element's text use <Text bare>. A field
+// that is a whole element is written as that element with field() and
+// set:html instead of <Text as=…>: this component's scoped <style> gives
+// every element it writes a data-astro-cid attribute, which <Text> could
+// only pass on as ="true".
 ---
 
 <header class="sticky top-0 z-40 border-b border-hairline bg-canvas shadow-[0_1px_0_0_rgba(43,43,43,0.18)]">
@@ -41,7 +49,7 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
               class:list={[topLink, active(link.href) ? "border-forest text-forest" : "border-transparent text-ink"]}
               aria-current={isCurrent(pathname, link.href, true) ? "page" : undefined}
             >
-              {link.label}
+              <Text k={link.k} bare />
               {link.menu && (
                 <svg
                   width="10"
@@ -69,9 +77,9 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
                     {serviceMenu.map((column, index) => (
                       <div class:list={["flex flex-col px-7 pt-6 pb-7", index > 0 && "border-l border-hairline"]}>
                         <div class="flex items-baseline justify-between gap-4 border-b border-hairline pb-3">
-                          <p class="t-spaced-sm text-mute">{column.heading}</p>
+                          <p class="t-spaced-sm text-mute" {...field(`${column.k}.heading`)} set:html={text(get(`${column.k}.heading`))} />
                           <a href={column.href} class="t-spaced-sm inline-flex items-center gap-1.5 text-forest hover:text-forest-deep">
-                            {column.hrefLabel}
+                            <Text k={`${column.k}.link`} bare />
                             <Icon name="arrow" size={12} />
                           </a>
                         </div>
@@ -128,7 +136,7 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
                             they decide. */}
                         {index === serviceMenu.length - 1 && (
                           <div class="mt-auto pt-6">
-                            <p class="t-spaced-sm border-b border-hairline pb-3 text-mute">Planning a roof</p>
+                            <p class="t-spaced-sm border-b border-hairline pb-3 text-mute" {...field("shared:nav.menu.planning.heading")} set:html={text(get("shared:nav.menu.planning.heading"))} />
                             <ul class="mt-1">
                               {planningLinks.map((item) => (
                                 <li>
@@ -139,7 +147,7 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
                                       active(item.href) ? "font-semibold text-forest" : "text-body",
                                     ]}
                                   >
-                                    {item.label}
+                                    <Text k={item.k} bare />
                                     <Icon name="arrow" size={14} class="text-forest" />
                                   </a>
                                 </li>
@@ -156,18 +164,16 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
                         Under 1280px the two service columns need the room,
                         and the bar's own Free Estimate button covers it. */}
                     <div class="on-forest panel-keyline panel-keyline-cream hidden flex-col bg-forest px-7 pt-7 pb-8 text-on-forest xl:flex">
-                      <p class="t-eyebrow text-on-forest-mute">Free estimate</p>
-                      <p class="t-heading-xl mt-4">Not sure what the roof needs?</p>
-                      <p class="t-body-sm mt-3 text-on-forest-mute">
-                        We'll walk it, show you what we find and write it down. No charge, no pressure.
-                      </p>
+                      <p class="t-eyebrow text-on-forest-mute" {...field("shared:nav.menu.sign.eyebrow")} set:html={text(get("shared:nav.menu.sign.eyebrow"))} />
+                      <p class="t-heading-xl mt-4" {...field("shared:nav.menu.sign.title")} set:html={text(get("shared:nav.menu.sign.title"))} />
+                      <p class="t-body-sm mt-3 text-on-forest-mute" {...field("shared:nav.menu.sign.body")} set:html={text(get("shared:nav.menu.sign.body"))} />
                       <div class="mt-auto flex flex-col gap-2 pt-6">
                         <a href={site.phoneHref} class="btn btn-cream w-full">
                           <Icon name="phone" size={16} />
                           {site.phone}
                         </a>
                         <a href={estimateHref} class="btn btn-outline-cream w-full">
-                          Request an estimate
+                          <Text k="shared:nav.menu.sign.button" bare />
                         </a>
                       </div>
                     </div>
@@ -184,7 +190,7 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
       <a href={site.phoneHref} class="t-heading-sm hidden text-forest hover:text-forest-deep xl:inline">
         {site.phone}
       </a>
-      <a href={estimateHref} class="btn btn-primary">Free Estimate</a>
+      <a href={estimateHref} class="btn btn-primary"><Text k="shared:nav.estimate" bare /></a>
     </div>
 
     <details class="group lg:hidden">
@@ -212,7 +218,7 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
                   href={link.href}
                   class:list={["t-heading-md block py-5", active(link.href) ? "text-forest" : "text-ink"]}
                 >
-                  {link.label}
+                  <Text k={link.k} bare />
                 </a>
                 {link.menu && (
                   <ul class="-mt-2 grid gap-x-6 pb-4 min-[480px]:grid-cols-2">
@@ -243,12 +249,12 @@ const topLink = "t-spaced-sm flex items-center gap-1.5 border-b-2 pt-[2px] pb-1 
               href={pages.contact}
               class:list={["t-heading-md block py-5", active(pages.contact) ? "text-forest" : "text-ink"]}
             >
-              Contact
+              <Text k="shared:nav.links.contact" bare />
             </a>
           </li>
         </ul>
-        <a href={site.phoneHref} class="btn btn-primary mt-8 w-full">Call {site.phone}</a>
-        <a href={estimateHref} class="btn btn-outline mt-3 w-full">Request an Estimate</a>
+        <a href={site.phoneHref} class="btn btn-primary mt-8 w-full"><Text k="shared:nav.drawer.call" bare /></a>
+        <a href={estimateHref} class="btn btn-outline mt-3 w-full"><Text k="shared:nav.drawer.estimate" bare /></a>
       </div>
     </details>
   </nav>

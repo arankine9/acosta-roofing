@@ -1,6 +1,7 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
 import { counties } from "../data/site";
+import { field, get, text } from "../lib/cms";
 import { serviceMap } from "../data/service-map";
 
 /*
@@ -24,7 +25,22 @@ import { serviceMap } from "../data/service-map";
   The map is still an illustration, not the record. The county list beside
   it is the record, and it stays real text: it is what a screen reader gets,
   what search indexes, and what somebody scanning for their own town reads.
+
+  The words around it are content (`k`, shared.json's `serviceArea` unless a
+  page passes its own). The description states the drive time in words;
+  if the map is regenerated for a different `drive.minutes`, change it there
+  too. The county names, notes and towns are data, from src/data/site.ts.
 */
+interface Props {
+  k?: string;
+}
+
+const { k = "shared:serviceArea" } = Astro.props;
+// The labels below are written as their own elements with field() and
+// set:html rather than <Text>: this component's scoped <style> gives every
+// element it writes a data-astro-cid attribute, which <Text> could only pass
+// on as ="true".
+const words = (key: string) => text(get(`${k}.${key}`));
 const { base, detail, inset, furniture, drive } = serviceMap;
 // Where the north arrow, scale bar, locator inset and the town names sit is
 // decided by the generator, not here: the names are placed to route around
@@ -38,11 +54,7 @@ const townNames = detail.towns.map((town) => town.name);
 
 <section id="service-area" class="section bg-canvas">
   <div class="container-page">
-    <SectionHeading
-      title="Where we work"
-      description={`Anywhere in Oregon within about ${drive.minutes} minutes' drive of our ${base.name} shop: the Portland metro, the north Willamette Valley and out toward the Coast Range, the Cascades and the Gorge. Just past the line? Call anyway; depending on the job we may still schedule it.`}
-      class="mb-14"
-    />
+    <SectionHeading k={k} class="mb-14" />
 
     {/* Two plates side by side from 1280px, the same height: the map sets it,
         and the county plate stretches to match, sharing any spare height
@@ -54,8 +66,8 @@ const townNames = detail.towns.map((town) => town.name);
           never outgrows its place. */}
       <figure class="panel m-0 mx-auto flex w-full max-w-[820px] flex-col overflow-hidden xl:max-w-none">
         <figcaption class="plate-label flex-wrap justify-between gap-y-1 border-b border-hairline">
-          <span class="t-spaced-sm">Service area</span>
-          <span class="t-spaced-sm text-on-forest-mute">Northwest Oregon</span>
+          <span class="t-spaced-sm" {...field(`${k}.map.label`)} set:html={words("map.label")} />
+          <span class="t-spaced-sm text-on-forest-mute" {...field(`${k}.map.region`)} set:html={words("map.region")} />
         </figcaption>
 
         <div class="map-frame">
@@ -230,11 +242,11 @@ const townNames = detail.towns.map((town) => town.name);
         <ul class="flex flex-wrap gap-x-8 gap-y-3 border-t border-hairline px-5 py-4">
           <li class="flex items-center gap-2.5">
             <span class="key-swatch key-area" aria-hidden="true"></span>
-            <span class="t-caption text-body">In service area</span>
+            <span class="t-caption text-body" {...field(`${k}.map.legendArea`)} set:html={words("map.legendArea")} />
           </li>
           <li class="flex items-center gap-2.5">
             <span class="key-swatch key-base" aria-hidden="true"></span>
-            <span class="t-caption text-body">Our shop</span>
+            <span class="t-caption text-body" {...field(`${k}.map.legendShop`)} set:html={words("map.legendShop")} />
           </li>
         </ul>
       </figure>
@@ -247,7 +259,7 @@ const townNames = detail.towns.map((town) => town.name);
           enough that the list is never the taller of the two. */}
       <div class="panel mx-auto flex w-full max-w-[820px] flex-col overflow-hidden xl:max-w-none">
         <div class="plate-label justify-between border-b border-hairline">
-          <span class="t-spaced-sm">Counties in reach</span>
+          <span class="t-spaced-sm" {...field(`${k}.countiesLabel`)} set:html={words("countiesLabel")} />
           <span class="t-spaced-sm text-on-forest-mute">{counties.length}</span>
         </div>
 

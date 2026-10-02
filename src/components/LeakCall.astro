@@ -1,18 +1,28 @@
 ---
 import Icon from "./Icon.astro";
+import Text from "./Text.astro";
 import { site } from "../data/site";
 
 // Call-to-action for a roof that is leaking now. Worded as an invitation to
 // call rather than as an emergency-repair service: for insurance reasons the
-// site doesn't advertise emergency repair, and the response line promises
-// only what may be possible, depending on the job. Keep that wording as is.
+// site doesn't advertise emergency repair, and the response line (`note`)
+// promises only what may be possible, depending on the job. Keep that
+// wording as is.
+
+interface Props {
+  /* Content key of the title, lead and note. Every page shares the one in
+     shared.json unless it passes its own. */
+  k?: string;
+}
+
+const { k = "shared:leakCall" } = Astro.props;
 ---
 
 <section id="leak" class="section bg-cream-deep">
   <div class="container-page">
     <div class="panel panel-keyline mx-auto max-w-3xl px-6 py-12 text-center max-[360px]:px-4 sm:px-12 sm:py-14">
-      <h2 class="t-display-lg text-ink">Roof leaking right now?</h2>
-      <p class="t-lead mt-5 text-body">Call us directly at</p>
+      <Text k={`${k}.title`} as="h2" class="t-display-lg text-ink" />
+      <Text k={`${k}.lead`} class="t-lead mt-5 text-body" />
       {/* One line at every width: a phone number broken after the area code
           is harder to read back and to tap. */}
       <a
@@ -22,9 +32,7 @@ import { site } from "../data/site";
         <Icon name="phone" size={44} class="size-8 shrink-0 sm:size-11" />
         {site.phone}
       </a>
-      <p class="t-body-sm mt-6 text-mute">
-        Same-day emergency response may be available depending on scope.
-      </p>
+      <Text k={`${k}.note`} class="t-body-sm mt-6 text-mute" />
     </div>
   </div>
 </section>

@@ -1,4 +1,5 @@
 import { page } from "../lib/url";
+import { get, plain } from "../lib/cms";
 import { residentialHref, servicesByGroup, getService } from "./services";
 
 // The site's page map, read by the nav and the footer so both stay in step.
@@ -17,29 +18,38 @@ export const pages = {
 // Where every "Free Estimate" button goes.
 export const estimateHref = pages.contact;
 
+// The labels are in src/content/shared.json under `nav`. Each entry carries
+// its content key as `k`, so the nav can mark the label editable, and the
+// label itself (tokens filled in) for anything that just wants the words.
+const label = (k: string) => ({ k, label: plain(get<string>(k)) });
+
 // Top-level links. Services carries the drop-down menu below.
 export const primaryLinks = [
-  { href: pages.services, label: "Services", menu: true },
-  { href: pages.materials, label: "Materials" },
-  { href: pages.serviceArea, label: "Service Area" },
-  { href: pages.about, label: "About" },
-  { href: pages.faq, label: "FAQ" },
+  { href: pages.services, ...label("shared:nav.links.services"), menu: true },
+  { href: pages.materials, ...label("shared:nav.links.materials") },
+  { href: pages.serviceArea, ...label("shared:nav.links.serviceArea") },
+  { href: pages.about, ...label("shared:nav.links.about") },
+  { href: pages.faq, ...label("shared:nav.links.faq") },
 ];
 
 // The Services menu: residential work in one column, commercial and
 // multi-unit in the next, each service with its card photo and tagline from
-// the registry.
+// the registry. `k` is the column's key prefix (its `heading` and `link`).
+const column = (k: string) => ({
+  k,
+  heading: plain(get<string>(`${k}.heading`)),
+  hrefLabel: plain(get<string>(`${k}.link`)),
+});
+
 export const serviceMenu = [
   {
-    heading: "Residential",
+    ...column("shared:nav.menu.residential"),
     href: pages.residential,
-    hrefLabel: "Overview",
     items: servicesByGroup("residential"),
   },
   {
-    heading: "Commercial & multi-unit",
+    ...column("shared:nav.menu.commercial"),
     href: pages.services,
-    hrefLabel: "All services",
     items: [getService("commercial"), getService("multi-unit")],
   },
 ];
@@ -47,7 +57,7 @@ export const serviceMenu = [
 // Short links under the commercial column: the pages people read while
 // deciding, rather than services.
 export const planningLinks = [
-  { href: pages.materials, label: "Roofing materials" },
-  { href: pages.serviceArea, label: "Service area" },
-  { href: pages.faq, label: "Questions & answers" },
+  { href: pages.materials, ...label("shared:nav.menu.planning.links.materials") },
+  { href: pages.serviceArea, ...label("shared:nav.menu.planning.links.serviceArea") },
+  { href: pages.faq, ...label("shared:nav.menu.planning.links.faq") },
 ];

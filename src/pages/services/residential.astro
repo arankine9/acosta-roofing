@@ -4,10 +4,12 @@ import PageHero from "../../components/PageHero.astro";
 import ClosingCta from "../../components/ClosingCta.astro";
 import Treeline from "../../components/Treeline.astro";
 import Icon from "../../components/Icon.astro";
-import { asset } from "../../lib/url";
+import Text from "../../components/Text.astro";
+import Img from "../../components/Img.astro";
 import { site } from "../../data/site";
 import { pages } from "../../data/nav";
-import { serviceHref, servicesByGroup } from "../../data/services";
+import { serviceHref, serviceKey, servicesByGroup } from "../../data/services";
+import { file, list, item, credit } from "../../lib/cms";
 
 // Residential hub: where the home page's "Residential" tile lands. It
 // orients a homeowner rather than repeating /services/: the four kinds of
@@ -37,159 +39,37 @@ const crumbs = [
   { label: "Residential", href: pages.residential },
 ];
 
-// When each service is usually the right call, keyed by slug. The titles and
-// summaries come from the registry so they stay in step with the nav.
-const usuallyWhen: Record<string, string> = {
-  "roof-replacement": "The roof is near the end of its life, or leaking in more than one place.",
-  "roof-repair": "One leak, a storm, a missing shingle, a cracked pipe boot.",
-  "roof-maintenance": "The roof is sound and you want it to stay that way: moss, needles, a yearly look.",
-  gutters: "Gutters overflow, pull away from the fascia or dump water beside the foundation.",
-};
+// Every word on this page is in src/content/pages/services-residential.json;
+// `k` is the key prefix into it and `c` its parsed content, for the lists.
+// The four services' titles and summaries come from the registry so they
+// stay in step with the nav; "usually when" is keyed by slug.
+const k = "pages/services-residential";
+const c = file(k);
 const residential = servicesByGroup("residential");
 
-type Verdict = "Repair" | "Replace" | "Depends" | "Maintenance";
-const guide: { sign: string; means: string; verdict: Verdict; note?: string }[] = [
-  {
-    sign: "One leak, in one place",
-    means: "Usually a pipe boot, a flashing detail or a single damaged shingle.",
-    verdict: "Repair",
-  },
-  {
-    sign: "Shingles missing or lifted after a windstorm",
-    means: "Wind broke the seal on a few courses. The rest of the roof may be fine.",
-    verdict: "Repair",
-  },
-  {
-    sign: "A ceiling stain",
-    means: "Water getting in somewhere up-slope of it, not necessarily right above.",
-    verdict: "Repair",
-    note: "once the source is found",
-  },
-  {
-    sign: "Moss on the roof",
-    means: "It holds water against the shingles and lifts their edges as it grows.",
-    verdict: "Maintenance",
-    note: "if caught early",
-  },
-  {
-    sign: "Soft or springy decking underfoot",
-    means: "Wet or rotted sheathing under the shingles.",
-    verdict: "Depends",
-    note: "one area can be cut out; widespread means replace",
-  },
-  {
-    sign: "Heavy granule loss, dark bare patches",
-    means: "The shingles' weather surface is wearing off. A little grit from a brand-new roof is normal; a lot from an old one isn't.",
-    verdict: "Replace",
-  },
-  {
-    sign: "Curling, cupping or brittle shingles",
-    means: "Shingles past their life. South and west faces usually go first.",
-    verdict: "Replace",
-  },
-  {
-    sign: "Leaks in several places, or the same leak back",
-    means: "Wear across the whole roof rather than one failure.",
-    verdict: "Replace",
-  },
-  {
-    sign: "Past its typical life with no trouble yet",
-    means: "Architectural shingle lasts about 25–30 years, older, thinner shingles less. After that it's borrowed time.",
-    verdict: "Depends",
-    note: "have it looked at yearly and plan ahead",
-  },
-];
-
-const climate = [
-  {
-    title: "A long wet season",
-    body: "From October well into spring, a roof here can go weeks without drying out. A small gap that would never matter in a dry climate gets months to soak in.",
-  },
-  {
-    title: "Moss and lichen",
-    body: "Moss roots into the granules, holds water like a sponge and pries shingle edges up as it grows. Shade and a north slope are all it needs.",
-  },
-  {
-    title: "Fir needles and debris",
-    body: "Needles and cones pile up in valleys, behind chimneys and in gutters, and hold water exactly where a roof is most likely to leak.",
-  },
-  {
-    title: "Wind-driven rain",
-    body: "Winter storms push rain sideways and even uphill, under shingle laps and behind flashing. That's what sealed starter strips and ice-and-water shield are for.",
-  },
-  {
-    title: "Ice storms and east wind",
-    body: "Some winters, cold air pours out of the Gorge. Ice brings limbs down onto roofs and gutters, and east wind lifts shingles that have lost their seal.",
-  },
-  {
-    title: "North slopes that stay damp",
-    body: "They grow moss first and dry out last, while south and west faces bake in August. One roof often wears out on two schedules.",
-  },
-];
-
-const estimateSteps = [
-  {
-    title: "Tell us what you're seeing",
-    body: "Call or send the form: the problem, roughly how old the roof is, and photos if you have them.",
-  },
-  {
-    title: "We come out and look",
-    body: "From the ground, on the roof if it's safe to walk, and in the attic if there's a hatch. The attic often tells us more than the shingles.",
-  },
-  {
-    title: "We show you what we found",
-    body: "Photos of what you can't see from the yard: the pipe boots, the valleys, the flashing at the chimney, the underside of the deck.",
-  },
-  {
-    title: "You get it in writing",
-    body: "An itemized estimate that says what we'd do and with what. If a repair and a replacement are both reasonable, we'll lay out both.",
-  },
-];
-
-const helpful = [
-  "The roof's age, if you know it, and what's on it now.",
-  "Where and when it has leaked, and any repairs since.",
-  "A clear path to the attic hatch.",
-  "HOA rules on roof color or material, if you have an HOA.",
-  "Whether an insurance claim is already open.",
-];
-
+type Verdict = "repair" | "maintenance" | "depends" | "replace";
 const verdictStyle: Record<Verdict, string> = {
-  Repair: "border-hairline-strong text-forest",
-  Maintenance: "border-hairline-strong text-forest",
-  Depends: "border-hairline-strong text-ink",
-  Replace: "border-forest bg-forest text-cream",
+  repair: "border-hairline-strong text-forest",
+  maintenance: "border-hairline-strong text-forest",
+  depends: "border-hairline-strong text-ink",
+  replace: "border-forest bg-forest text-cream",
 };
+const rows: { verdict: Verdict; note?: string }[] = c.decide.rows;
 ---
 
-<Page
-  title="Residential Roofing"
-  description="Roof replacement, roof repair, roof maintenance and gutter systems for houses across the Portland metro, with an honest guide to repairing versus replacing and how the free estimate works."
-  crumbs={crumbs}
->
-  <PageHero
-    crumbs={crumbs}
-    eyebrow="Residential"
-    title="Roofing for your house"
-    lead="Replacement, repair, maintenance and gutters for houses, garages and outbuildings across the Portland metro. If you own the house and aren't sure yet what the roof needs, start here."
-    image="/images/residential/portland-bungalow-winter.jpg"
-    imageAlt="Portland craftsman bungalow with a gray shingle roof and eyebrow dormers, a tall conifer behind it under an overcast winter sky"
-    imageCaption="A Portland bungalow in winter: shingle roof, low sky, a big conifer next door. Photo: Ian Poellet, CC BY-SA 4.0."
-    treelineOffset={-260}
-  />
+
+<Page k={k} crumbs={crumbs}>
+  <PageHero k={`${k}:hero`} crumbs={crumbs} treelineOffset={-260} />
 
   {/* Chapter 1: the four kinds of work, as ruled rows beside a sticky heading. */}
   <section class="section bg-canvas" aria-labelledby="work-heading">
     <div class="container-page grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
       <div>
         <div class="lg:sticky lg:top-28">
-          <h2 id="work-heading" class="t-display-lg text-ink">Four kinds of work on a house</h2>
-          <p class="t-body-md mt-5 max-w-md text-body">
-            Almost everything a house roof needs falls under one of these. If you can't tell which, that's normal,
-            and it's what the estimate visit is for.
-          </p>
+          <Text k={`${k}:work.title`} as="h2" id="work-heading" class="t-display-lg text-ink" />
+          <Text k={`${k}:work.intro`} class="t-body-md mt-5 max-w-md text-body" />
           <a href={pages.services} class="t-spaced-sm mt-6 inline-flex min-h-12 items-center gap-2 text-forest hover:text-forest-deep">
-            All services, including commercial
+            <Text k={`${k}:work.allServices`} bare />
             <Icon name="arrow" size={16} />
           </a>
         </div>
@@ -207,15 +87,15 @@ const verdictStyle: Record<Verdict, string> = {
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 class="t-heading-xl text-ink group-hover:text-forest">{service.title}</h3>
-                  <p class="t-body-md mt-3 max-w-xl text-body">{service.summary}</p>
+                  <Text k={`${serviceKey(service.slug)}.title`} as="h3" class="t-heading-xl text-ink group-hover:text-forest" />
+                  <Text k={`${serviceKey(service.slug)}.summary`} class="t-body-md mt-3 max-w-xl text-body" />
                   <p class="t-body-sm mt-4 max-w-xl text-mute">
-                    <span class="t-spaced-sm mr-2 text-forest">Usually when</span>
-                    {usuallyWhen[service.slug]}
+                    <Text k={`${k}:work.usuallyWhenLabel`} as="span" class="t-spaced-sm mr-2 text-forest" />
+                    <Text k={`${k}:work.usuallyWhen.${service.slug}`} bare />
                   </p>
                 </div>
                 <span class="col-start-2 mt-5 inline-flex items-center gap-2 text-forest sm:col-start-auto sm:mt-1">
-                  <span class="t-spaced-sm sm:sr-only">Read more</span>
+                  <Text k={`${k}:work.readMore`} as="span" class="t-spaced-sm sm:sr-only" />
                   <span class="flex size-12 items-center justify-center border-2 border-forest transition-colors group-hover:bg-forest group-hover:text-cream">
                     <Icon name="arrow" size={20} />
                   </span>
@@ -237,27 +117,28 @@ const verdictStyle: Record<Verdict, string> = {
   >
     <div class="container-page">
       <div class="grid gap-6 border-b border-hairline pb-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-end lg:gap-16">
-        <h2 id="decide-heading" class="t-display-lg text-ink">Repair or replace?</h2>
-        <p class="t-body-md max-w-2xl text-body">
-          Roofs rarely fail all at once. They wear out slope by slope, and the real question is whether a repair buys
-          years or just buys time until the next leak. These are the signs we weigh, and which way each one usually
-          points.
-        </p>
+        <Text k={`${k}:decide.title`} as="h2" id="decide-heading" class="t-display-lg text-ink" />
+        <Text k={`${k}:decide.intro`} class="t-body-md max-w-2xl text-body" />
       </div>
 
       <div class="mt-10 grid gap-10 xl:grid-cols-[minmax(0,8fr)_minmax(0,4fr)] xl:gap-12">
         <div class="min-w-0">
-          {/* Phones get the same rows as ruled entries; three columns don't fit. */}
-          <ul class="sm:hidden">
+          {/* Phones get the same rows as ruled entries; three columns don't fit.
+              Both views are the one list in the content, marked on each. */}
+          <ul class="sm:hidden" {...list(`${k}:decide.rows`)}>
             {
-              guide.map((row) => (
-                <li class="border-b border-hairline py-5">
+              rows.map((row, i) => (
+                <li class="border-b border-hairline py-5" {...item(i)}>
                   <div class="flex items-start justify-between gap-4">
-                    <h3 class="t-heading-sm text-ink">{row.sign}</h3>
-                    <span class={`badge-tag shrink-0 ${verdictStyle[row.verdict]}`}>{row.verdict}</span>
+                    <Text k={`${k}:decide.rows.${i}.sign`} as="h3" class="t-heading-sm text-ink" />
+                    <Text k={`${k}:decide.verdicts.${row.verdict}`} as="span" class={`badge-tag shrink-0 ${verdictStyle[row.verdict]}`} />
                   </div>
-                  <p class="t-body-sm mt-2 text-body">{row.means}</p>
-                  {row.note && <p class="t-caption mt-2 text-mute">{row.verdict}: {row.note}.</p>}
+                  <Text k={`${k}:decide.rows.${i}.means`} class="t-body-sm mt-2 text-body" />
+                  {row.note && (
+                    <p class="t-caption mt-2 text-mute">
+                      <Text k={`${k}:decide.verdicts.${row.verdict}`} bare />: <Text k={`${k}:decide.rows.${i}.note`} bare />.
+                    </p>
+                  )}
                 </li>
               ))
             }
@@ -267,20 +148,20 @@ const verdictStyle: Record<Verdict, string> = {
               <caption class="sr-only">Common roof problems, what they usually mean, and whether they point to repair or replacement</caption>
               <thead>
                 <tr>
-                  <th scope="col" class="w-[30%]">What you're seeing</th>
-                  <th scope="col">What it usually means</th>
-                  <th scope="col" class="w-[24%]">Points to</th>
+                  <Text k={`${k}:decide.columns.sign`} as="th" scope="col" class="w-[30%]" />
+                  <Text k={`${k}:decide.columns.means`} as="th" scope="col" />
+                  <Text k={`${k}:decide.columns.verdict`} as="th" scope="col" class="w-[24%]" />
                 </tr>
               </thead>
-              <tbody>
+              <tbody {...list(`${k}:decide.rows`)}>
                 {
-                  guide.map((row) => (
-                    <tr>
-                      <th scope="row">{row.sign}</th>
-                      <td>{row.means}</td>
+                  rows.map((row, i) => (
+                    <tr {...item(i)}>
+                      <Text k={`${k}:decide.rows.${i}.sign`} as="th" scope="row" />
+                      <Text k={`${k}:decide.rows.${i}.means`} as="td" />
                       <td>
-                        <span class={`badge-tag ${verdictStyle[row.verdict]}`}>{row.verdict}</span>
-                        {row.note && <span class="t-caption mt-2 block text-mute">{row.note}</span>}
+                        <Text k={`${k}:decide.verdicts.${row.verdict}`} as="span" class={`badge-tag ${verdictStyle[row.verdict]}`} />
+                        {row.note && <Text k={`${k}:decide.rows.${i}.note`} as="span" class="t-caption mt-2 block text-mute" />}
                       </td>
                     </tr>
                   ))
@@ -292,35 +173,25 @@ const verdictStyle: Record<Verdict, string> = {
 
         <div class="grid gap-8 sm:grid-cols-2 xl:grid-cols-1 xl:content-start">
           <figure class="photo-plate">
-            <img
-              src={asset("/images/residential/worn-out-shingles.jpg")}
-              alt="Close-up of old asphalt shingles at the eave, their granules worn away, edges curled and tabs broken off"
-              loading="lazy"
-              decoding="async"
-              class="aspect-[4/3]"
-            />
+            <Img k={`${k}:decide.image`} loading="lazy" decoding="async" class="aspect-[4/3]" />
             <figcaption>
-              Granules gone, tabs curled and breaking off along the eave. No repair brings this back. Photo: Dale
-              Mahalko, CC BY-SA 3.0.
+              <Text k={`${k}:decide.caption`} bare />
+              <Fragment set:html={credit(`${k}:decide.image`)} />
             </figcaption>
           </figure>
 
           <div class="panel panel-keyline self-start overflow-hidden">
             <div class="plate-label">
-              <span class="t-spaced-sm">Our rule of thumb</span>
+              <Text k={`${k}:decide.rule.label`} as="span" class="t-spaced-sm" />
             </div>
             <div class="px-6 py-6">
-              <p class="t-body-sm text-body">
-                If the problem is in one place and the rest of the roof has years left, repair it. If the same wear
-                shows up all over, repairs end up chasing it. When it's close, we'll tell you it's close and price
-                both.
-              </p>
+              <Text k={`${k}:decide.rule.body`} class="t-body-sm text-body" />
               <div class="mt-5 flex flex-col gap-2 border-t border-hairline pt-5">
                 <a href={serviceHref("roof-repair")} class="t-spaced-sm inline-flex min-h-10 items-center gap-2 text-forest hover:text-forest-deep">
-                  Roof repair <Icon name="arrow" size={16} />
+                  <Text k={`${serviceKey("roof-repair")}.title`} bare /> <Icon name="arrow" size={16} />
                 </a>
                 <a href={serviceHref("roof-replacement")} class="t-spaced-sm inline-flex min-h-10 items-center gap-2 text-forest hover:text-forest-deep">
-                  Roof replacement <Icon name="arrow" size={16} />
+                  <Text k={`${serviceKey("roof-replacement")}.title`} bare /> <Icon name="arrow" size={16} />
                 </a>
               </div>
             </div>
@@ -336,47 +207,36 @@ const verdictStyle: Record<Verdict, string> = {
 
     <div class="container-page pt-24 pb-36 md:pt-28 md:pb-40">
       <div class="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
-        <h2 id="climate-heading" class="t-display-lg max-w-xl">What an Oregon roof is up against</h2>
-        <p class="t-lead max-w-xl text-on-forest-mute">
-          West of the Cascades, roofs don't usually fail from heat or hail. They fail slowly, from water that never
-          quite leaves.
-        </p>
+        <Text k={`${k}:climate.title`} as="h2" id="climate-heading" class="t-display-lg max-w-xl" />
+        <Text k={`${k}:climate.intro`} class="t-lead max-w-xl text-on-forest-mute" />
       </div>
 
       <div class="mt-12 grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <figure class="photo-plate self-start">
-          <img
-            src={asset("/images/residential/bungalow-under-trees.jpg")}
-            alt="Green bungalow with a light gray shingle roof, shaded by big street trees and a neighbor's conifers"
-            loading="lazy"
-            decoding="async"
-            class="aspect-[4/3]"
-          />
+          <Img k={`${k}:climate.image`} loading="lazy" decoding="async" class="aspect-[4/3]" />
           <figcaption>
-            Shade is pleasant in August and hard on a roof in February. Trees overhead mean needles in the valleys
-            and a slope that never quite dries. Photo: Ian Poellet, CC BY-SA 4.0.
+            <Text k={`${k}:climate.caption`} bare />
+            <Fragment set:html={credit(`${k}:climate.image`)} />
           </figcaption>
         </figure>
 
         <div>
-          <dl class="grid border-t border-hairline-dark sm:grid-cols-2 sm:gap-x-10">
+          <dl class="grid border-t border-hairline-dark sm:grid-cols-2 sm:gap-x-10" {...list(`${k}:climate.items`)}>
             {
-              climate.map((item) => (
-                <div class="border-b border-hairline-dark py-6">
-                  <dt class="t-heading-sm">{item.title}</dt>
-                  <dd class="t-body-sm mt-2 text-on-forest-mute">{item.body}</dd>
+              c.climate.items.map((_: unknown, i: number) => (
+                <div class="border-b border-hairline-dark py-6" {...item(i)}>
+                  <Text k={`${k}:climate.items.${i}.title`} as="dt" class="t-heading-sm" />
+                  <Text k={`${k}:climate.items.${i}.body`} as="dd" class="t-body-sm mt-2 text-on-forest-mute" />
                 </div>
               ))
             }
           </dl>
           <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
             <a href={pages.materials} class="btn btn-cream shrink-0 whitespace-nowrap">
-              Roofing materials
+              <Text k={`${k}:climate.materialsLink`} bare />
               <Icon name="arrow" size={18} />
             </a>
-            <p class="t-body-sm max-w-sm text-on-forest-mute">
-              Which shingle holds up to all that, and which roofs need membrane instead.
-            </p>
+            <Text k={`${k}:climate.materialsNote`} class="t-body-sm max-w-sm text-on-forest-mute" />
           </div>
         </div>
       </div>
@@ -385,31 +245,30 @@ const verdictStyle: Record<Verdict, string> = {
     <Treeline tone="cream" height={64} offset={-90} class="absolute inset-x-0 bottom-0" />
   </section>
 
-  {/* Chapter 4: how the estimate works, four ruled columns, then what helps. */}
+  {/* Chapter 4: how the estimate works, four ruled columns, then what helps.
+      The four steps are a fixed grid (their rules depend on position), so
+      they are not an editable list. */}
   <section class="section bg-canvas" aria-labelledby="estimate-heading">
     <div class="container-page">
-      <h2 id="estimate-heading" class="t-display-lg max-w-2xl text-ink">How the free estimate works</h2>
-      <p class="t-lead mt-5 max-w-2xl text-body">
-        One visit to the house. You'll hear what we found and what we'd do before we leave, and the written estimate
-        follows.
-      </p>
+      <Text k={`${k}:estimate.title`} as="h2" id="estimate-heading" class="t-display-lg max-w-2xl text-ink" />
+      <Text k={`${k}:estimate.intro`} class="t-lead mt-5 max-w-2xl text-body" />
 
       <ol class="mt-12 grid border-t border-hairline sm:grid-cols-2 lg:grid-cols-4 lg:border-b">
         {
-          estimateSteps.map((step, index) => (
+          c.estimate.steps.map((_: unknown, index: number) => (
             <li
               class:list={[
                 "border-b border-hairline py-8 sm:px-6",
                 index % 2 === 0 ? "sm:pl-0" : "sm:border-l",
                 "lg:border-b-0 lg:border-l lg:first:border-l-0 lg:pl-6 lg:first:pl-0",
-                index === estimateSteps.length - 1 && "lg:pr-0",
+                index === c.estimate.steps.length - 1 && "lg:pr-0",
               ]}
             >
               <span class="t-display-lg block leading-none text-forest-mid" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h3 class="t-heading-md mt-5 text-ink">{step.title}</h3>
-              <p class="t-body-sm mt-3 text-body">{step.body}</p>
+              <Text k={`${k}:estimate.steps.${index}.title`} as="h3" class="t-heading-md mt-5 text-ink" />
+              <Text k={`${k}:estimate.steps.${index}.body`} class="t-body-sm mt-3 text-body" />
             </li>
           ))
         }
@@ -417,38 +276,34 @@ const verdictStyle: Record<Verdict, string> = {
 
       <div class="mt-14 grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
         <div>
-          <h3 class="t-heading-xl text-ink">What helps us help you</h3>
-          <p class="t-body-md mt-3 max-w-xl text-body">None of this is required. Each one saves a question.</p>
-          <ul class="check-list t-body-md mt-6 text-body">
-            {helpful.map((item) => <li>{item}</li>)}
+          <Text k={`${k}:estimate.helpful.title`} as="h3" class="t-heading-xl text-ink" />
+          <Text k={`${k}:estimate.helpful.intro`} class="t-body-md mt-3 max-w-xl text-body" />
+          <ul class="check-list t-body-md mt-6 text-body" {...list(`${k}:estimate.helpful.items`)}>
+            {c.estimate.helpful.items.map((_: unknown, i: number) => <Text k={`${k}:estimate.helpful.items.${i}`} as="li" {...item(i)} />)}
           </ul>
         </div>
 
         <aside class="panel panel-keyline self-start overflow-hidden">
           <div class="plate-label">
-            <span class="t-spaced-sm">Good to know</span>
+            <Text k={`${k}:estimate.facts.label`} as="span" class="t-spaced-sm" />
           </div>
           <dl class="px-6 py-2">
+            {
+              ["cost", "format", "credentials"].map((fact) => (
+                <div class="flex items-baseline justify-between gap-4 border-b border-hairline py-4">
+                  <Text k={`${k}:estimate.facts.${fact}.label`} as="dt" class="t-spaced-sm text-mute" />
+                  <Text k={`${k}:estimate.facts.${fact}.value`} as="dd" class="t-heading-sm text-right text-ink" />
+                </div>
+              ))
+            }
             <div class="flex items-baseline justify-between gap-4 border-b border-hairline py-4">
-              <dt class="t-spaced-sm text-mute">Cost</dt>
-              <dd class="t-heading-sm text-right text-ink">Free, no obligation</dd>
-            </div>
-            <div class="flex items-baseline justify-between gap-4 border-b border-hairline py-4">
-              <dt class="t-spaced-sm text-mute">Format</dt>
-              <dd class="t-heading-sm text-right text-ink">Written, itemized</dd>
-            </div>
-            <div class="flex items-baseline justify-between gap-4 border-b border-hairline py-4">
-              <dt class="t-spaced-sm text-mute">Credentials</dt>
-              <dd class="t-heading-sm text-right text-ink">Licensed, bonded, insured</dd>
-            </div>
-            <div class="flex items-baseline justify-between gap-4 border-b border-hairline py-4">
-              <dt class="t-spaced-sm text-mute">Oregon CCB</dt>
-              <dd class="t-heading-sm text-right text-forest">#{site.ccb}</dd>
+              <Text k={`${k}:estimate.facts.ccb.label`} as="dt" class="t-spaced-sm text-mute" />
+              <Text k={`${k}:estimate.facts.ccb.value`} as="dd" class="t-heading-sm text-right text-forest" />
             </div>
             <div class="flex items-baseline justify-between gap-4 py-4">
-              <dt class="t-spaced-sm text-mute">Area</dt>
+              <Text k={`${k}:estimate.facts.areaLabel`} as="dt" class="t-spaced-sm text-mute" />
               <dd class="t-heading-sm text-right">
-                <a href={pages.serviceArea} class="text-forest underline underline-offset-4 hover:text-forest-deep">Portland metro</a>
+                <a href={pages.serviceArea} class="text-forest underline underline-offset-4 hover:text-forest-deep">{site.serviceArea.replace(/^the /, "")}</a>
               </dd>
             </div>
           </dl>
@@ -457,8 +312,5 @@ const verdictStyle: Record<Verdict, string> = {
     </div>
   </section>
 
-  <ClosingCta
-    title="Start with a look at the roof"
-    body="Tell us what you're seeing, or just how old the roof is. We'll come out, show you what we find and write it down. The estimate is free."
-  />
+  <ClosingCta k={`${k}:closingCta`} />
 </Page>

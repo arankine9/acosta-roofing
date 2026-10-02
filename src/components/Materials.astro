@@ -1,16 +1,19 @@
 ---
 import Treeline from "./Treeline.astro";
-import { asset } from "../lib/url";
+import Text from "./Text.astro";
+import Img from "./Img.astro";
+import { file } from "../lib/cms";
 
 // Forest band between Services and the leak call-out: the three roofing systems
 // Acosta installs, each with a picture of the material. Headline and lead
 // share a row on desktop; the materials run three-up between hairline rules
 // from 768px and stack below that.
 //
-// The pictures are plain files in public/images/materials/. To swap one,
-// replace the file under the same name; nothing here needs to change. Any
-// square-ish image works (it is fitted inside a 160px box, not cropped),
-// ideally a PNG or SVG with a transparent background so it sits on the band.
+// The words and pictures are in src/content/pages/home.json under
+// `materials`. Three materials always: the rules between them are worked out
+// for three, so it is not a list the owner can add to. Any square-ish
+// picture works (it is fitted inside a 160px box, not cropped), ideally a
+// PNG or SVG with a transparent background so it sits on the band.
 //
 // TODO: the current three are Roofscapes NW's icons, dropped in to judge the
 // direction. They are another company's artwork; replace all three before
@@ -23,39 +26,20 @@ import { asset } from "../lib/url";
 //
 // No 3-tab: it's rarely installed in Oregon now, and Acosta only puts on
 // architectural and designer shingle.
-const materials = [
-  {
-    image: "/images/materials/architectural-shingle.png",
-    fit: "Steep slope",
-    title: "Architectural shingle",
-    life: "25–30",
-    body: "Thicker, laminated shingle with a dimensional profile that reads like shake. Heavy and wind-rated, in a wide range of colors. The standard choice on most house re-roofs.",
-  },
-  {
-    image: "/images/materials/asphalt-shingle.png",
-    fit: "Steep slope",
-    title: "Designer shingle",
-    life: "30+",
-    body: "Premium, extra-thick shingle cut to look like slate or hand-split shake. Deeper shadow lines and the heaviest weight of any asphalt shingle, for a roof that shows from the street.",
-  },
-  {
-    image: "/images/materials/single-ply-membrane.png",
-    fit: "Flat & low slope",
-    title: "Single-ply membrane (TPO / PVC)",
-    life: "20–30",
-    body: "Heat-welded membrane for flat and low-slope roofs, residential or commercial. Seams are fused into one continuous, watertight sheet.",
-  },
-];
+const k = "pages/home:materials";
+const materials = file("pages/home").materials.items as unknown[];
 
-// Manufacturer logos, recoloured to the band's cream, in public/images/brands/.
-// Sources: GAF from Wikimedia Commons (File:GAF_logo.svg); CertainTeed,
-// Malarkey and Duro-Last from each manufacturer's own website. `height` is
-// the rendered height in px; `width` keeps the aspect ratio for layout.
+// Manufacturer logos, recoloured to the band's cream, in public/images/brands/;
+// the files and their names (alt) are in home.json under `materials.brands`,
+// in this order. Sources: GAF from Wikimedia Commons (File:GAF_logo.svg);
+// CertainTeed, Malarkey and Duro-Last from each manufacturer's own website.
+// `height` is the rendered height in px; `width` keeps the aspect ratio for
+// layout.
 const brands = [
-  { name: "GAF", logo: "/images/brands/gaf.svg", height: 56, width: 56 },
-  { name: "CertainTeed", logo: "/images/brands/certainteed.svg", height: 36, width: 156 },
-  { name: "Malarkey Roofing Products", logo: "/images/brands/malarkey.svg", height: 40, width: 190 },
-  { name: "Duro-Last", logo: "/images/brands/duro-last.svg", height: 30, width: 210 },
+  { height: 56, width: 56 }, // GAF
+  { height: 36, width: 156 }, // CertainTeed
+  { height: 40, width: 190 }, // Malarkey
+  { height: 30, width: 210 }, // Duro-Last
 ];
 ---
 
@@ -64,17 +48,13 @@ const brands = [
 
   <div class="container-page pt-24 pb-20 md:pt-28 md:pb-24">
     <div class="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
-      <h2 class="t-display-lg max-w-xl">Roofing materials for every roof and budget</h2>
-      <p class="t-lead max-w-xl text-on-forest-mute">
-        Architectural and designer shingle for steep roofs, membrane for flat ones.
-        We'll recommend the one that suits the pitch, the budget and an Oregon
-        winter, and tell you why.
-      </p>
+      <Text k={`${k}.title`} as="h2" class="t-display-lg max-w-xl" />
+      <Text k={`${k}.lead`} class="t-lead max-w-xl text-on-forest-mute" />
     </div>
 
     <ul class="mt-12 grid md:grid-cols-3">
       {
-        materials.map((material, index) => (
+        materials.map((_, index) => (
           <li
             class:list={[
               // Two rules in all, between the three materials and nowhere else:
@@ -84,23 +64,22 @@ const brands = [
               index > 0 && "md:pl-8",
             ]}
           >
-            <img
-              src={asset(material.image)}
-              alt=""
+            <Img
+              k={`${k}.items.${index}.image`}
               width="160"
               height="160"
               loading="lazy"
               decoding="async"
               class="size-40 object-contain object-left"
             />
-            <p class="t-spaced-sm mt-7 text-on-forest-mute">{material.fit}</p>
-            <h3 class="t-heading-md mt-3">{material.title}</h3>
-            <p class="t-body-sm mt-3 grow text-on-forest-mute">{material.body}</p>
+            <Text k={`${k}.items.${index}.fit`} class="t-spaced-sm mt-7 text-on-forest-mute" />
+            <Text k={`${k}.items.${index}.title`} as="h3" class="t-heading-md mt-3" />
+            <Text k={`${k}.items.${index}.body`} class="t-body-sm mt-3 grow text-on-forest-mute" />
 
             {/* Pinned to the foot of the column so the three figures share a line. */}
             <dl class="mt-8 flex flex-col-reverse">
-              <dt class="t-spaced-sm mt-3 text-on-forest-mute">Years expected life</dt>
-              <dd class="t-display-lg leading-none">{material.life}</dd>
+              <Text k={`${k}.items.${index}.lifeLabel`} as="dt" class="t-spaced-sm mt-3 text-on-forest-mute" />
+              <Text k={`${k}.items.${index}.life`} as="dd" class="t-display-lg leading-none" />
             </dl>
           </li>
         ))
@@ -115,14 +94,13 @@ const brands = [
         the same optical weight. Worded as brands we install, not as
         certifications: the site claims none. */}
     <div class="mt-16 flex flex-col gap-8 border-t border-hairline-dark pt-10 lg:flex-row lg:items-center lg:gap-16">
-      <p class="t-spaced-sm shrink-0 text-on-forest-mute lg:max-w-[11rem]">Brands we install</p>
+      <Text k={`${k}.brandsLabel`} class="t-spaced-sm shrink-0 text-on-forest-mute lg:max-w-[11rem]" />
       <ul class="grid grow grid-cols-2 items-center gap-x-8 gap-y-10 lg:flex lg:justify-between lg:gap-10">
         {
-          brands.map((brand) => (
+          brands.map((brand, i) => (
             <li class="flex items-center justify-center">
-              <img
-                src={asset(brand.logo)}
-                alt={brand.name}
+              <Img
+                k={`${k}.brands.${i}`}
                 width={brand.width}
                 height={brand.height}
                 loading="lazy"

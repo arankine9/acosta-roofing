@@ -3,38 +3,39 @@
 // yard sign on the right, the same sign the crew stakes in the lawn, drawn
 // in HTML rather than photographed, so the phone number and licence blank on
 // it are real text. The treeline at the foot hands off to the cream body.
+//
+// The headline is the business's tagline (site.json), the same sentence the
+// stacked lockup would otherwise carry; the rest is the home page's own.
 import Logo from "./Logo.astro";
 import Treeline from "./Treeline.astro";
-import { site, counties } from "../data/site";
+import Text from "./Text.astro";
+import { site } from "../data/site";
+import { file } from "../lib/cms";
+
+const k = "pages/home:hero";
+const c = file("pages/home").hero;
 ---
 
 <section class="on-forest relative bg-forest text-on-forest">
   <div class="container-page grid gap-12 pt-16 pb-28 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-16 lg:pt-24 lg:pb-36">
     <div class="min-w-0">
-      <h1 class="t-display-xl max-w-[15ch]">{site.tagline}</h1>
+      <Text k="site:tagline" as="h1" class="t-display-xl max-w-[15ch]" />
 
-      <p class="t-lead mt-6 max-w-xl text-on-forest-mute">
-        Installation, repairs, maintenance and gutter systems across {site.serviceArea},
-        from a crew small enough that the person who quotes your job is the
-        person on your roof.
-      </p>
+      <Text k={`${k}.lead`} class="t-lead mt-6 max-w-xl text-on-forest-mute" />
 
       <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-        <a href={site.phoneHref} class="btn btn-cream">Call {site.phone}</a>
-        <a href="#contact" class="btn btn-outline-cream">Request a Free Estimate</a>
+        <a href={site.phoneHref} class="btn btn-cream"><Text k={`${k}.call`} bare /></a>
+        <a href="#contact" class="btn btn-outline-cream"><Text k={`${k}.estimate`} bare /></a>
       </div>
 
       <!-- Proof row. Hairline rules, no cards; nothing lifts off this band. -->
+      {/* Three across, always: a fixed row, not a list to add to. */}
       <dl class="mt-14 grid max-w-xl grid-cols-3 items-start border-t border-hairline-dark">
         {
-          [
-            { value: "5", label: "Services under one roof" },
-            { value: String(counties.length), label: "Counties served" },
-            { value: "Free", label: "On-site estimates" },
-          ].map((item) => (
+          c.proof.map((_: unknown, i: number) => (
             <div class="flex flex-col border-l border-hairline-dark py-5 pr-3 pl-3 first:border-l-0 first:pl-0 min-[400px]:pr-5 min-[400px]:pl-5">
-              <dd class="t-display-lg leading-none">{item.value}</dd>
-              <dt class="t-spaced-sm mt-3 text-balance text-on-forest-mute">{item.label}</dt>
+              <Text k={`${k}.proof.${i}.value`} as="dd" class="t-display-lg leading-none" />
+              <Text k={`${k}.proof.${i}.label`} as="dt" class="t-spaced-sm mt-3 text-balance text-on-forest-mute" />
             </div>
           ))
         }
@@ -47,17 +48,17 @@ import { site, counties } from "../data/site";
         <Logo layout="stacked" tagline={false} class="w-full" />
 
         <div class="mt-8 border-y border-hairline py-3">
-          <p class="t-spaced text-forest">Licensed &middot; Bonded &middot; Insured</p>
+          <Text k={`${k}.sign.coverage`} class="t-spaced text-forest" />
         </div>
 
         <div class="mt-6 flex flex-col items-stretch gap-3 text-left min-[380px]:flex-row">
           <!--
             CCB blank, exactly as it appears on the printed sign. Oregon
             requires the number in advertising; until `ccb` is set in
-            src/data/site.ts this renders the blank rather than a fake number.
+            src/content/site.json this renders the blank rather than a fake number.
           -->
           <div class="min-w-0 flex-1 border border-hairline px-3 py-2">
-            <p class="t-spaced-sm text-mute">CCB #</p>
+            <Text k={`${k}.sign.ccbLabel`} class="t-spaced-sm text-mute" />
             <p class="t-heading-sm mt-1 text-forest">
               {site.ccb || <span class="text-mute">__________</span>}
             </p>
@@ -66,7 +67,7 @@ import { site, counties } from "../data/site";
             href={site.phoneHref}
             class="flex min-h-12 min-w-0 flex-1 flex-col justify-center bg-forest px-3 py-2 text-center text-cream"
           >
-            <span class="t-spaced-sm text-on-forest-mute">Call</span>
+            <Text k={`${k}.sign.callLabel`} as="span" class="t-spaced-sm text-on-forest-mute" />
             <span class="t-heading-sm mt-1 whitespace-nowrap">{site.phone}</span>
           </a>
         </div>

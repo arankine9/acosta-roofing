@@ -10,8 +10,14 @@ import { page } from "../lib/url";
 // need no credit but are listed anyway, so the licence of every image on
 // the site can be checked from one place.
 //
-// Add a line here whenever a photo is added, and remove it when a photo is.
-// Photos Acosta shoots of its own jobs don't need an entry.
+// Add a line here whenever a photo is added. Photos Acosta shoots of its
+// own jobs don't need an entry.
+//
+// Only photos still on the site are listed (see `onSite` below): most photos
+// are image fields in src/content/, which the owner can replace from the
+// portal, and when he swaps a stock photo for his own its credit drops off
+// the page with it. An entry for a photo that's gone can stay here; it just
+// isn't shown.
 
 const licenses = {
   unsplash: { name: "Unsplash License", url: "https://unsplash.com/license" },
@@ -45,7 +51,39 @@ export interface CreditGroup {
 
 export const licenseInfo = (key: LicenseKey) => licenses[key];
 
-export const photoCredits: CreditGroup[] = [
+// Where photos are used. An image field in content is an object with a
+// `src`; a template or data file names its photo as a quoted path
+// (asset("/images/..."), src: "/images/..."). This file is left out of the
+// search, since it names every photo.
+const content = import.meta.glob<unknown>("../content/**/*.json", { eager: true, import: "default" });
+const sources = import.meta.glob<string>(["../**/*.astro", "../**/*.ts"], {
+  eager: true,
+  query: "?raw",
+  import: "default",
+});
+
+const contentImages = new Set<string>();
+const collect = (value: unknown): void => {
+  if (Array.isArray(value)) value.forEach(collect);
+  else if (value && typeof value === "object") {
+    const src = (value as { src?: unknown }).src;
+    if (typeof src === "string") contentImages.add(src);
+    Object.values(value).forEach(collect);
+  }
+};
+Object.values(content).forEach(collect);
+
+const templates = Object.entries(sources)
+  .filter(([path]) => !path.endsWith("/photo-credits.ts"))
+  .map(([, source]) => source);
+
+/* True while the photo is on the site: an image `src` in content, or still
+   named in a template. */
+export const onSite = (file: string) =>
+  contentImages.has(file) ||
+  templates.some((source) => ['"', "'", "`"].some((q) => source.includes(`${q}${file}${q}`)));
+
+const allCredits: CreditGroup[] = [
   {
     page: "Home page",
     href: page("/"),
@@ -356,3 +394,9 @@ export const photoCredits: CreditGroup[] = [
     ],
   },
 ];
+
+/* The credits for photos still on the site, by page; a page with none left
+   is dropped. */
+export const photoCredits: CreditGroup[] = allCredits
+  .map((group) => ({ ...group, credits: group.credits.filter((credit) => onSite(credit.file)) }))
+  .filter((group) => group.credits.length > 0);

@@ -17,7 +17,10 @@ interface Props {
   [attr: string]: unknown;
 }
 
-const { k, as, type = "text", bare = false, ...rest } = Astro.props;
+const { k, as, type = "text", bare = false, ...props } = Astro.props;
+// A parent with scoped styles hands its scope attribute down as `true`;
+// written out as-is it would render ="true" rather than bare.
+const rest = Object.fromEntries(Object.entries(props).map(([name, value]) => [name, value === true ? "" : value]));
 const Tag = as ?? (bare ? "span" : "p");
 const value = html(get<string>(k), type);
 ---

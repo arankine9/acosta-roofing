@@ -1,0 +1,66 @@
+{
+  "seo": {
+    "title": "Contact",
+    "description": "Call {{phone}} or request a free on-site roofing estimate from {{name}} in {{city}}. Serving {{serviceArea}} and northwest Oregon. Oregon CCB #{{ccb}}."
+  },
+  "hero": {
+    "eyebrow": "Contact",
+    "title": "Tell us about the roof",
+    "lead": "Call, email or send the form. Say what you're seeing and where the house is, and we'll set a time to come look. The estimate is free and written down.",
+    "image": {
+      "src": "/images/contact/ladder-at-the-ridge.jpg",
+      "alt": "An aluminum ladder laid up a brown shingle roof beside a brick chimney, under a blue sky"
+    },
+    "caption": "Most estimates start the same way: up the ladder for a close look at the shingles and the flashing.",
+    "callLabel": "Call",
+    "emailLabel": "Email"
+  },
+  "next": {
+    "title": "What happens next",
+    "steps": [
+      {
+        "title": "We call you back",
+        "body": "If we miss your call, or you send the form or an email, we call you back; after hours, that's the next working morning. We'll ask a few questions so we come prepared."
+      },
+      {
+        "title": "We set a time to visit",
+        "body": "A time that suits you. If we can judge the job from outside, you don't have to be home; if we need the attic, or you want to walk it with us, we'll come when you are."
+      },
+      {
+        "title": "We walk the roof",
+        "body": "Slopes, flashing, penetrations, gutters and, if there's access, the attic. We take photos as we go and show you what we found."
+      },
+      {
+        "title": "You get a written estimate",
+        "body": "Itemized and in plain words, with the materials named and the schedule set out. It's free, and there's no follow-up pressure."
+      }
+    ],
+    "area": "We work anywhere in Oregon within about {{driveMinutes}} minutes' drive of our {{city}} shop, across {{countyCount}} counties from the Portland metro into the north Willamette Valley. <a href=\"/service-area/\" class=\"link-inline\">See the service area map</a>."
+  },
+  "haveReady": {
+    "label": "Useful to have ready",
+    "items": [
+      {
+        "title": "The roof's age, if you know it",
+        "body": "Or roughly when you bought the house. Closing paperwork and old invoices often have it."
+      },
+      {
+        "title": "Photos",
+        "body": "Of the roof from the ground, a stain on the ceiling, a sagging gutter. A phone photo tells us a lot before we arrive."
+      },
+      {
+        "title": "Where you see water",
+        "body": "Which room, how close to an outside wall or chimney, and whether it shows only in wind-driven rain."
+      },
+      {
+        "title": "Anything done before",
+        "body": "Past repairs, a previous claim, or a second layer of shingles you know about."
+      },
+      {
+        "title": "Access",
+        "body": "Gates, dogs, attic hatch location, and where a truck can park."
+      }
+    ],
+    "note": "None of it is required. If all you know is that there's a drip, call."
+  }
+}

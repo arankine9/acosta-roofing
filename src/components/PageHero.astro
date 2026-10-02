@@ -13,23 +13,15 @@ import { site } from "../data/site";
 import { estimateHref } from "../data/nav";
 import Text from "./Text.astro";
 import Img from "./Img.astro";
-import { asset } from "../lib/url";
 import { maybe, credit } from "../lib/cms";
 import type { Crumb } from "../layouts/Page.astro";
 
 interface Props {
   /* Content key of this hero's words and photo, e.g. "pages/about:hero":
      an object with title and, optionally, eyebrow, lead, image ({ src,
-     alt, credit? }) and caption. With `k` set, those props below are ignored. */
-  k?: string;
-  title?: string;
-  lead?: string;
-  eyebrow?: string;
+     alt, credit? }) and caption. */
+  k: string;
   crumbs: Crumb[];
-  /* Path under public/, e.g. "/images/roof-repair/hero.jpg". */
-  image?: string;
-  imageAlt?: string;
-  imageCaption?: string;
   /* Photo shape. Landscape suits most roof shots. */
   imageAspect?: "landscape" | "portrait" | "square";
   /* Set false on pages where the buttons would be redundant (Contact). */
@@ -41,27 +33,20 @@ interface Props {
 
 const {
   k,
-  title,
-  lead,
-  eyebrow,
   crumbs,
-  image,
-  imageAlt = "",
-  imageCaption,
   imageAspect = "landscape",
   actions = true,
   treelineOffset = 0,
 } = Astro.props;
 
-// From content: which optional parts this hero has.
-const has = k
-  ? {
-      eyebrow: maybe(`${k}.eyebrow`) !== undefined,
-      lead: maybe(`${k}.lead`) !== undefined,
-      image: maybe(`${k}.image`) !== undefined,
-      caption: maybe(`${k}.caption`) !== undefined,
-    }
-  : { eyebrow: !!eyebrow, lead: !!lead, image: !!image, caption: !!imageCaption };
+// Which optional parts this hero has.
+const has = {
+  eyebrow: maybe(`${k}.eyebrow`) !== undefined,
+  lead: maybe(`${k}.lead`) !== undefined,
+  image: maybe(`${k}.image`) !== undefined,
+  caption: maybe(`${k}.caption`) !== undefined,
+};
+const imageCredit = has.image ? credit(`${k}.image`) : "";
 
 const aspect = {
   landscape: "aspect-[4/3]",
@@ -81,34 +66,18 @@ const aspect = {
       ]}
     >
       <div class="min-w-0">
-        {
-          k ? (
-            <>
-              {has.eyebrow && <Text k={`${k}.eyebrow`} class="t-eyebrow mb-5 text-on-forest-mute" />}
-              <Text
-                k={`${k}.title`}
-                as="h1"
-                class={`t-display-xl text-balance ${has.image ? "max-w-[16ch]" : "max-w-[20ch]"}`}
-              />
-              {has.lead && <Text k={`${k}.lead`} class="t-lead mt-6 max-w-2xl text-on-forest-mute" />}
-            </>
-          ) : (
-            <>
-              {eyebrow && <p class="t-eyebrow mb-5 text-on-forest-mute">{eyebrow}</p>}
-              <h1 class:list={["t-display-xl text-balance", image ? "max-w-[16ch]" : "max-w-[20ch]"]}>{title}</h1>
-              {lead && <p class="t-lead mt-6 max-w-2xl text-on-forest-mute">{lead}</p>}
-            </>
-          )
-        }
+        {has.eyebrow && <Text k={`${k}.eyebrow`} class="t-eyebrow mb-5 text-on-forest-mute" />}
+        <Text k={`${k}.title`} as="h1" class={`t-display-xl text-balance ${has.image ? "max-w-[16ch]" : "max-w-[20ch]"}`} />
+        {has.lead && <Text k={`${k}.lead`} class="t-lead mt-6 max-w-2xl text-on-forest-mute" />}
 
         {
           actions && (
             <div class="mt-9 flex flex-col gap-3 sm:flex-row">
               <a href={site.phoneHref} class="btn btn-cream">
-                Call {site.phone}
+                <Text k="shared:buttons.call" bare />
               </a>
               <a href={estimateHref} class="btn btn-outline-cream">
-                Request a Free Estimate
+                <Text k="shared:buttons.freeEstimate" bare />
               </a>
             </div>
           )
@@ -123,27 +92,15 @@ const aspect = {
             {/* A keyline standing off the photo's edge, the routed groove of
                 the panels, drawn as a frame the photo sits inside. */}
             <div class="relative p-2 outline outline-1 outline-hairline-dark">
-              {k ? (
-                <Img k={`${k}.image`} class={`${aspect} border-0!`} fetchpriority="high" decoding="async" />
-              ) : (
-                <img
-                  src={asset(image!)}
-                  alt={imageAlt}
-                  class={`${aspect} border-0!`}
-                  fetchpriority="high"
-                  decoding="async"
-                />
-              )}
+              <Img k={`${k}.image`} class={`${aspect} border-0!`} fetchpriority="high" decoding="async" />
             </div>
-            {k
-              ? (has.caption || credit(`${k}.image`)) && (
-                  <figcaption>
-                    {has.caption && <Text k={`${k}.caption`} bare />}
-                    {has.caption && credit(`${k}.image`) && " "}
-                    <Fragment set:html={credit(`${k}.image`)} />
-                  </figcaption>
-                )
-              : imageCaption && <figcaption>{imageCaption}</figcaption>}
+            {(has.caption || imageCredit) && (
+              <figcaption>
+                {has.caption && <Text k={`${k}.caption`} bare />}
+                {has.caption && imageCredit && " "}
+                <Fragment set:html={imageCredit} />
+              </figcaption>
+            )}
           </figure>
         )
       }

@@ -23,11 +23,13 @@
 //
 // Any of them may carry {{tokens}} for business facts kept in site.json, so
 // "call {{phone}}" follows the number when it changes. See `tokens` below.
+// In a link's href they are filled in as plain values: href="tel:{{phone}}".
 //
 // A build with CMS_EDIT=1 (the portal's copy of the site) marks every field
 // with data-cms attributes so the editor can find, edit and save it. A normal
 // build emits none of them, so the public site's HTML is unaffected.
 import { site, counties } from "../data/site";
+import { serviceMap } from "../data/service-map";
 import { page } from "./url";
 
 export const EDIT = process.env.CMS_EDIT === "1";
@@ -85,6 +87,8 @@ export const tokens: Record<string, string> = {
   serviceArea: site.serviceArea,
   ccb: site.ccb,
   countyCount: String(counties.length),
+  // From the drive-time map: changes only when the map is rebuilt.
+  driveMinutes: String(serviceMap.drive.minutes),
 };
 
 const TOKEN = /\{\{\s*(\w+)\s*\}\}/g;
@@ -141,11 +145,20 @@ function sanitize(html: string, allowed: Set<string>): string {
       // Internal links are written root-relative ("/about/") and pick up the
       // base path here, so they work under the portal's /site/ prefix too.
       const out = attr === "href" && value.startsWith("/") && !value.startsWith("//") ? page(value) : value;
-      kept.push(`${attr}="${out.replace(/"/g, "&quot;")}"`);
+      kept.push(`${attr}="${attrTokens(out).replace(/"/g, "&quot;")}"`);
     }
     return `<${name}${kept.length ? " " + kept.join(" ") : ""}>`;
   });
 }
+
+// Tokens inside an attribute (href="mailto:{{email}}") are filled in as
+// plain values, and a tel: link gets the dialable number rather than the
+// display one. The edit build keeps them as written, braces encoded so the
+// chip pass below leaves them alone, and the editor saves them back as is.
+const attrTokens = (value: string) =>
+  EDIT
+    ? value.replace(/[{}]/g, (brace) => (brace === "{" ? "&#123;" : "&#125;"))
+    : value.replace(/^tel:\{\{\s*phone\s*\}\}$/, site.phoneHref).replace(TOKEN, (_, name) => tokenValue(name));
 
 const markup = (value: string, allowed: Set<string>) =>
   sanitize(value, allowed)

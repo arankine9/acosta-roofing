@@ -1,15 +1,15 @@
 ---
 // The four-up pictogram bar that closes the brand board, moved up under the
 // hero where it does the most work: it is the first thing a homeowner scans
-// after the headline. Hairline dividers, no boxes.
+// after the headline. Hairline dividers, no boxes. Always four: the rules
+// below are worked out for a 2x2 and a 1x4 grid, so it is not a list the
+// owner can add to.
 import Icon from "./Icon.astro";
+import Text from "./Text.astro";
+import { file } from "../lib/cms";
 
-const claims = [
-  { icon: "quality", label: "Quality workmanship" },
-  { icon: "honest", label: "Honest & reliable" },
-  { icon: "built", label: "Built to last" },
-  { icon: "oregon", label: "Rooted in Oregon" },
-];
+const k = "pages/home:trust";
+const claims: { icon: string }[] = file("pages/home").trust;
 ---
 
 <div class="bg-canvas">
@@ -28,7 +28,7 @@ const claims = [
             ]}
           >
             <Icon name={claim.icon} size={26} class="shrink-0" />
-            <span class="t-spaced-sm">{claim.label}</span>
+            <Text k={`${k}.${index}.label`} as="span" class="t-spaced-sm" />
           </li>
         ))
       }

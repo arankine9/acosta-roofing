@@ -1,0 +1,256 @@
+{
+  "seo": {
+    "title": "Multi-Unit Roofing",
+    "description": "Roof replacement, repair, maintenance and gutters for apartments, condos and townhome rows across {{serviceArea}}, planned building by building around the residents. Condition assessments for capital planning."
+  },
+  "hero": {
+    "eyebrow": "Multi-unit roofing",
+    "title": "Apartments, condos and townhome rows",
+    "lead": "Replacement, repair and maintenance planned around the people living underneath. The board or manager gets a schedule, residents get notice before the loud days, and everyone has one number to call.",
+    "image": {
+      "src": "/images/multi-unit/townhome-roofs-gutters.jpg",
+      "alt": "Row of three-story townhomes with dark shingle roofs, stepped gables, gutters and downspouts"
+    }
+  },
+  "phasing": {
+    "eyebrow": "Planning the work",
+    "title": "Building by building, or in phases",
+    "body": "<p>Few properties replace every roof at once, and few should. Roofs on the same property wear at different rates: south slopes bake in the summer, north slopes stay damp and grow moss, and the buildings under big firs fill their valleys with needles every fall.</p><p>So we plan the work the way the roofs are actually wearing, and in pieces a budget can carry.</p>",
+    "rules": [
+      {
+        "title": "Worst roofs first",
+        "body": "The order comes from the condition of each roof, not the order of the addresses."
+      },
+      {
+        "title": "Grouped by location",
+        "body": "Buildings side by side go together, so the crew, the dumpster and the parking changes stay in one corner of the property at a time."
+      },
+      {
+        "title": "Sized to the budget year",
+        "body": "One building or six, whatever the reserves or the owner's budget will carry that year."
+      },
+      {
+        "title": "One spec for all of it",
+        "body": "Phase three is built exactly like phase one. More on that below."
+      }
+    ],
+    "plan": {
+      "label": "Example phasing plan",
+      "count": "Six buildings",
+      "phases": [
+        {
+          "phase": "Phase 1",
+          "when": "This year",
+          "body": "Buildings C and E: the two worst roofs, next to each other."
+        },
+        {
+          "phase": "Phase 2",
+          "when": "Next budget year",
+          "body": "Buildings A and B: worn, but with a few years left after repairs."
+        },
+        {
+          "phase": "Phase 3",
+          "when": "Year three or later",
+          "body": "Buildings D and F: sound for now. Maintenance keeps them that way."
+        }
+      ],
+      "caption": "An illustration, not a real property. The order comes from the condition assessment, not from the site map."
+    }
+  },
+  "communication": {
+    "eyebrow": "Living under the work",
+    "title": "Who hears what, and when",
+    "intro": "A reroof on an occupied building goes smoothly when nobody is surprised. The board or manager gets the schedule and the decisions; residents get plain notice of what affects them, before it does.",
+    "columns": {
+      "when": "When",
+      "board": "The board or manager",
+      "residents": "Residents"
+    },
+    "notices": [
+      {
+        "when": "Planning",
+        "board": "Scope and a written estimate for each building, the phasing plan, and a draft schedule.",
+        "residents": "Whatever the board or manager decides to share. Many announce the project at a meeting or in a newsletter."
+      },
+      {
+        "when": "Before a building starts",
+        "board": "Confirmed dates, where the dumpster and materials go, which parking and driveways are affected, and a notice ready to send to residents.",
+        "residents": "A written notice: which days are loud, what happens to parking and driveways, and what to clear off balconies and patios."
+      },
+      {
+        "when": "The day before",
+        "board": "A go or hold call based on the forecast.",
+        "residents": "A reminder on the door or by email: move cars out of the marked areas, bring in patio furniture and planters."
+      },
+      {
+        "when": "Each work day",
+        "board": "A short update if anything changes: weather, a rotten deck section, a schedule slip.",
+        "residents": "Work starts and ends at the agreed times, and the site is cleaned and swept for nails before the crew leaves."
+      },
+      {
+        "when": "Building finished",
+        "board": "A walkthrough, photos of the work, and notes for the property's records.",
+        "residents": "Parking, patios and balconies back to normal."
+      }
+    ],
+    "image": {
+      "src": "/images/multi-unit/townhome-row-driveways.jpg",
+      "alt": "Row of townhomes with garages, short driveways, balconies and front plantings along a curved street"
+    },
+    "caption": "Garages, driveways, balconies and plantings all sit under the eaves. Residents need to know which days to park elsewhere and clear the decks.",
+    "extras": {
+      "title": "Worth putting in the notice",
+      "items": [
+        {
+          "title": "Loud days, spelled out",
+          "body": "Tear-off is the loud part. Residents who work from home, keep night shifts or have nervous pets want to know those days in advance."
+        },
+        {
+          "title": "Things on the walls",
+          "body": "Hammering and tear-off shake the top floor. Pictures, mirrors and shelves on those walls are worth taking down for the day."
+        },
+        {
+          "title": "Balconies and patios",
+          "body": "Anything under the eaves can catch falling debris. Furniture, grills and planters come in; we cover what can't move."
+        }
+      ]
+    }
+  },
+  "onSite": {
+    "eyebrow": "On site",
+    "title": "Cars, landscaping and cleanup",
+    "intro": "A reroof sends a lot of old roofing off the edge. Here's how it stays off cars, shrubs and walkways.",
+    "items": [
+      {
+        "title": "Cars and parking",
+        "body": "Cars stay out of the zone under the work, with notice ahead and signs on the day. Carports and covered spaces are protected when the roof above them comes off."
+      },
+      {
+        "title": "Landscaping",
+        "body": "Tarps and plywood over shrubs, beds and A/C condensers along the drip line. Tear-off goes into the dumpster or down a chute, not onto the lawn."
+      },
+      {
+        "title": "Entries and walkways",
+        "body": "Doors stay usable. When the work is directly over an entry, it's covered, or residents are routed to another door for the day."
+      },
+      {
+        "title": "Cleanup every day",
+        "body": "A magnetic sweep of driveways, walks, lawns and parking at the end of each day, not only at the end of the job. Tear-off debris comes out of the gutters before we leave a building."
+      },
+      {
+        "title": "Dried in every night",
+        "body": "We don't open more roof than can be closed up the same day. Nobody's ceiling depends on tomorrow's forecast."
+      },
+      {
+        "title": "Dumpsters and materials",
+        "body": "Placed where the manager agrees, clear of fire lanes and entries, and moved as the work moves through the property."
+      }
+    ]
+  },
+  "spec": {
+    "eyebrow": "Consistency",
+    "title": "The same roof on every building",
+    "body": "<p>Roof a property over several years and it's easy to end up with six buildings and six different roofs: one crew's flashing here, a different vent there, a shingle color that was discontinued halfway through.</p><p>We write one spec for the property and hold it through every phase. The buildings age together, they look like they belong together, and the next board inherits one roof system instead of six.</p>",
+    "listLabel": "Held the same on every building",
+    "items": [
+      "Underlayment, and ice-and-water shield in the valleys and at the eaves",
+      "Drip edge, step flashing and wall flashing details",
+      "Pipe boots and vents",
+      "Ventilation: intake at the eaves, exhaust at the ridge",
+      "Shingle line and color"
+    ]
+  },
+  "gutters": {
+    "eyebrow": "Gutters & downspouts",
+    "title": "More roof, fewer downspouts",
+    "body": "<p>Multi-unit roofs put a lot of water in a few places. A long townhome row can drain a big stretch of roof into a handful of downspouts, and upper roofs often empty onto lower ones.</p><ul><li><strong>Sized for the roof, not the house.</strong> Long runs and big roof areas can need larger gutters and more downspouts than a single house would.</li><li><strong>Upper roofs piped down.</strong> A downspout that dumps onto a lower roof wears a stripe in the shingles and overloads the gutter below. We carry it down to the lower gutter or to the ground.</li><li><strong>Away from walks and entries.</strong> A downspout that empties across a walkway leaves ice on it the few cold mornings we get each winter.</li><li><strong>Under firs and maples,</strong> guards or a cleaning schedule. A plugged gutter three stories up overflows onto balconies and front doors.</li></ul>"
+  },
+  "capital": {
+    "eyebrow": "Capital planning",
+    "title": "A roof-by-roof condition assessment",
+    "body": "<p>Boards and owners are asked to budget for roofs years ahead, often from a reserve study that estimates roof life from install dates. Walking the actual roofs makes those numbers better. Some roofs will outlast the schedule, and some won't make it.</p><p>The assessment gives the board something to plan from: which roofs to replace first, which ones repairs can carry a few more years, and a scope for each building so the work can be priced when the money is there.</p>",
+    "image": {
+      "src": "/images/multi-unit/garden-apartments-trees.jpg",
+      "alt": "Aerial view of garden-style apartment buildings with gray shingle roofs, parking lots and tall trees"
+    },
+    "caption": "On a property like this, every building sits under different trees and faces a different way. Each roof ages on its own schedule.",
+    "report": {
+      "label": "What the report contains",
+      "items": [
+        "A roof plan for each building, with areas, slopes, valleys and penetrations",
+        "The roofing on each: material, number of layers, and approximate age where it can be told",
+        "Photos of every roof and every problem we found",
+        "Condition notes: worn or lifted shingles, flashing, valleys, pipe boots, moss, ventilation, gutters and downspouts",
+        "Remaining life for each roof as a range, with the reasoning behind it",
+        "A suggested order and timing for replacement, and the repairs that would stretch the roofs you aren't replacing yet",
+        "A written scope for each building, ready to price when the board is ready"
+      ]
+    },
+    "example": {
+      "title": "What a summary page looks like",
+      "intro": "An example of the one-page summary that sits on top of the full report. The buildings and findings are made up to show the format.",
+      "columns": {
+        "building": "Building",
+        "roof": "Roof",
+        "saw": "What we saw",
+        "next": "Recommendation",
+        "timing": "Timing"
+      },
+      "rows": [
+        {
+          "building": "A",
+          "roof": "Architectural shingle, one layer",
+          "saw": "Granule loss on the south slopes; two lifted ridge caps",
+          "next": "Reset ridge caps now; plan replacement",
+          "timing": "Years 2–3"
+        },
+        {
+          "building": "C",
+          "roof": "Asphalt shingle, two layers",
+          "saw": "Curling shingles, exposed nails, soft decking at one valley",
+          "next": "Tear off and replace",
+          "timing": "This year"
+        },
+        {
+          "building": "D",
+          "roof": "Architectural shingle, one layer",
+          "saw": "Moss on the north slope; otherwise sound",
+          "next": "Moss treatment; replace cracked pipe boots",
+          "timing": "Replace in 5+ years"
+        }
+      ]
+    }
+  },
+  "portfolio": {
+    "eyebrow": "Repairs & maintenance",
+    "title": "One number for every building",
+    "intro": "Managers and boards get one point of contact who knows the property and its roofs. No explaining the buildings from scratch each time something drips.",
+    "note": "Same-day emergency response may be available depending on scope.",
+    "items": [
+      {
+        "title": "Leak calls",
+        "body": "The manager sends the unit and what the resident saw. We find the source, fix it, and send back photos and a note of what we did, filed by building and unit."
+      },
+      {
+        "title": "Scheduled maintenance",
+        "body": "Gutters cleared in the fall after the needles and leaves drop, moss treated, valleys cleared, pipe boots and flashing checked. On a schedule the board approves, for every building at once."
+      },
+      {
+        "title": "After storms",
+        "body": "After an east wind or an ice storm, a walk of every roof for lifted shingles, blown-off ridge caps and damaged gutters, with a list of what we found and what needs doing first."
+      },
+      {
+        "title": "Records that stay with the property",
+        "body": "Photos and notes kept by building, so the roof history is still there when the manager or the board changes."
+      }
+    ]
+  },
+  "related": {
+    "title": "Related work"
+  },
+  "closingCta": {
+    "label": "Property estimate",
+    "title": "Walk the roofs with us",
+    "body": "Tell us how many buildings, roughly how old the roofs are, and what's leaking. We'll walk them and put it in writing, building by building."
+  }
+}

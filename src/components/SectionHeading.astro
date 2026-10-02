@@ -2,8 +2,15 @@
 // The headline that titles a plate, in the condensed display cut, with an
 // optional lead paragraph under it. Neither takes a tint; they inherit the
 // ink of the surface they sit on.
+import Text from "./Text.astro";
+import { maybe } from "../lib/cms";
+
 interface Props {
-  title: string;
+  /* Content key of the words: an object with `title` and, optionally,
+     `description`, e.g. "shared:contact". With `k` set, `title` and
+     `description` below are ignored. */
+  k?: string;
+  title?: string;
   description?: string;
   tone?: "forest" | "cream";
   align?: "left" | "center";
@@ -11,6 +18,7 @@ interface Props {
 }
 
 const {
+  k,
   title,
   description,
   tone = "forest",
@@ -20,9 +28,17 @@ const {
 
 const titleTone = tone === "cream" ? "text-on-forest" : "text-ink";
 const bodyTone = tone === "cream" ? "text-on-forest-mute" : "text-body";
+const hasDescription = k ? maybe(`${k}.description`) !== undefined : !!description;
 ---
 
 <div class={`${align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"} ${className}`}>
-  <h2 class={`t-display-lg ${titleTone}`}>{title}</h2>
-  {description && <p class={`t-lead mt-5 ${bodyTone}`}>{description}</p>}
+  {k ? <Text k={`${k}.title`} as="h2" class={`t-display-lg ${titleTone}`} /> : <h2 class={`t-display-lg ${titleTone}`}>{title}</h2>}
+  {
+    hasDescription &&
+      (k ? (
+        <Text k={`${k}.description`} class={`t-lead mt-5 ${bodyTone}`} />
+      ) : (
+        <p class={`t-lead mt-5 ${bodyTone}`}>{description}</p>
+      ))
+  }
 </div>
