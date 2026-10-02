@@ -5,7 +5,7 @@
   "scripts": {
     "build": "node build.mjs",
     "dev": "wrangler pages dev dist",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name acosta-portal"
+    "deploy": "npm run build && CLOUDFLARE_ACCOUNT_ID=81a0f797b5af61ac83bed02827e17084 wrangler pages deploy dist --project-name acosta-portal --branch main"
   },
   "devDependencies": {
     "wrangler": "^4.146.0"

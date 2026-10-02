@@ -1,9 +1,10 @@
 # Content portal
 
-A private editor for the site's words and photos, at
-**portal.acostaroofingpnw.com**. The owner signs in with a one-time code
-emailed to him, edits the pages in place, and publishes. Every change is a
-git commit on this repo, so nothing is lost and anything can be undone.
+A private editor for the site's words and photos. The owner goes to
+**portal.acostaroofingpnw.com** (which redirects to
+**acosta.arankine.com**), signs in with a one-time code emailed to him,
+edits the pages in place, and publishes. Every change is a git commit on
+this repo, so nothing is lost and anything can be undone.
 
 It is its own Cloudflare Pages project (`acosta-portal`), built from this
 folder. The public site (`acosta-roofing`) is unaffected by it except
@@ -84,106 +85,49 @@ afterwards. To work on the editor without GitHub at all, use the mock in
 `npm run build` reuses the site's installed `node_modules` locally; on
 Cloudflare (or with `--install`) it runs `npm ci` at the repo root first.
 
-## Setup (one time)
+## Where it runs
 
-You need: the Cloudflare account that hosts acostaroofingpnw.com and the
-`acosta-roofing` Pages project, and admin on the GitHub repo
-`arankine9/acosta-roofing`. Do the steps in order; the portal is locked to
-everyone until Access is set up, and the API refuses all calls until its
-secrets are set.
+| What | Where |
+| --- | --- |
+| Public site, project `acosta-roofing` | Client's Cloudflare account (C.acosta.us@gmail.com's), Git-connected to this repo. Builds on every push to `main`; previews for other branches at `<branch>.acosta-roofing-eb8.pages.dev`, which is the editor's preview link for `content-draft`. |
+| Portal, project `acosta-portal` | Alex's Cloudflare account (Arankine909@gmail.com's), **direct upload** (a repo can be Git-connected to only one Cloudflare account). Served at `acosta.arankine.com` and `acosta-portal.pages.dev`. |
+| Login | Cloudflare Access in Alex's account (team `green-cloud-0c12.cloudflareaccess.com`): application "Acosta portal" covering `acosta.arankine.com`, `acosta-portal.pages.dev` and `*.acosta-portal.pages.dev`; One-time PIN only; policy "Owners" allows christian@acostaroofingpnw.com and arankine909@gmail.com. Session lasts a week. |
+| `portal.acostaroofingpnw.com` | Redirect rule "Portal" on the client's zone: 302 to `https://acosta.arankine.com`. The zone lives in the client's account, whose Zero Trust only its Super Administrator can enable, so the portal can't be served there behind Access. On `arankine.com`, the "Redirect to LinkedIn" rule exempts `acosta.arankine.com`. |
 
-### 1. GitHub token
+Project settings (production): `GITHUB_TOKEN` (secret), `ACCESS_TEAM_DOMAIN`,
+`ACCESS_AUD`, plus the plain values in `wrangler.toml`.
 
-1. github.com → your avatar → **Settings → Developer settings → Personal
-   access tokens → Fine-grained tokens → Generate new token**.
-2. Name `acosta-portal`. Pick an expiration and put the date in a calendar:
-   when it expires, saving stops until you replace it.
-3. **Resource owner** `arankine9`. **Repository access → Only select
-   repositories →** `arankine9/acosta-roofing`.
-4. **Permissions → Repository permissions → Contents: Read and write.**
-   (Metadata: Read-only is added automatically.) Nothing else.
-5. Generate, and copy the token for step 2.6.
+## Deploying the portal
 
-If `main` gets branch protection or a ruleset later, it must still allow
-this token to push (the portal updates `main` directly when publishing),
-and must not require pull requests.
+The portal is not rebuilt by pushes. Content edits don't need it: the
+editor loads every content file from GitHub on start and lays it over its
+copy of the site. **Redeploy after changing the site's code** (templates,
+styles, a new page) or the editor's:
 
-### 2. Pages project
+```bash
+cd portal && npm run deploy
+```
 
-1. Cloudflare dashboard → **Workers & Pages → Create → Pages → Import an
-   existing Git repository** (Connect to Git). Pick `arankine9/acosta-roofing`
-   → **Begin setup**.
-2. **Project name** `acosta-portal`. **Production branch** `main`.
-3. **Framework preset** None. **Build command** `npm run build`. **Build
-   output directory** `dist`. Under **Root directory (advanced)**: `portal`.
-4. **Save and Deploy.** The first build should succeed; the API will answer
-   500 (not configured) until the next steps are done.
-5. The plain settings (`GITHUB_REPO`, branches, `ALLOWED_EMAILS`,
-   `PREVIEW_URL`) come from `portal/wrangler.toml`, which is the source of
-   truth for them: change them there, not in the dashboard.
-6. Project → **Settings → Variables and Secrets → Add**, for
-   **Production**, each with **Type: Secret**:
-   - `GITHUB_TOKEN`: the token from step 1.
-   - `ACCESS_TEAM_DOMAIN`: from step 4.6, e.g. `yourteam.cloudflareaccess.com`.
-   - `ACCESS_AUD`: from step 4.6.
-   Secrets apply from the next deployment: after adding them, **Deployments
-   → latest → ⋯ → Retry deployment**.
-7. **Settings → Build → Branch control**: keep automatic production
-   deployments on, and set **Preview branch** to **None**. Pushes to
-   `content-draft` should build only the public site's preview, never the
-   portal.
+(`wrangler login` as arankine909@gmail.com first if needed.)
 
-The Node version comes from `portal/.node-version` (22).
+## Changing access
 
-### 3. Custom domain
+- **Add or remove someone:** edit the "Owners" policy (Zero Trust → Access →
+  Applications → Acosta portal) *and* `ALLOWED_EMAILS` in `wrangler.toml`,
+  then redeploy. The API checks both.
+- **GitHub token:** a fine-grained token scoped to `arankine9/acosta-roofing`
+  with Contents: Read and write. Replace it in the project's settings
+  (Workers & Pages → acosta-portal → Settings → Variables and Secrets →
+  `GITHUB_TOKEN`), then redeploy. If `main` gets branch protection, it must
+  still let this token push without a pull request.
 
-Project → **Custom domains → Set up a custom domain →**
-`portal.acostaroofingpnw.com` → **Continue → Activate domain**. The zone is
-in this account, so Cloudflare adds the DNS record itself. Wait for it to
-show Active.
+## Check
 
-### 4. Cloudflare Access (Zero Trust)
-
-1. Dashboard → **Zero Trust**. The first time, it asks for a **team name**
-   (your login page becomes `<team>.cloudflareaccess.com`) and a plan: the
-   **Free** plan covers this (up to 50 users).
-2. **Settings → Authentication → Login methods → Add new → One-time PIN**
-   (in the newer layout: **Integrations → Identity providers → Add →
-   One-time PIN**). No configuration needed.
-3. **Access → Applications → Add an application → Self-hosted** (newer
-   layout: **Access controls → Applications**). Name `Acosta portal`;
-   session duration as you like (24 hours means a new code each day).
-4. Add these destinations / public hostnames, all with no path:
-   - `portal.acostaroofingpnw.com`
-   - `acosta-portal.pages.dev`
-   - `*.acosta-portal.pages.dev` (the per-deployment URLs)
-
-   Use the project's actual `*.pages.dev` name from its overview page: if
-   `acosta-portal` was taken it has a suffix, like the public site's
-   `acosta-roofing-eb8`.
-5. Add a policy: name `Owners`, **Action: Allow**, **Include → Emails**:
-   `christian@acostaroofingpnw.com` and `arankine909@gmail.com`. Under
-   login methods, allow One-time PIN (turn on **Instant Auth** to skip the
-   chooser). Save.
-6. Copy two values into the Pages secrets (step 2.6), then redeploy:
-   - `ACCESS_AUD`: the application's **Application Audience (AUD) Tag**
-     (open the application → **Overview** / **Basic information**).
-   - `ACCESS_TEAM_DOMAIN`: the team domain, `<team>.cloudflareaccess.com`
-     (**Settings → Custom Pages** or **Settings → General → Team domain**).
-
-### 5. Check
-
-1. Open https://portal.acostaroofingpnw.com in a private window: you get
-   the Access login, a code arrives by email, and the editor loads.
-2. https://portal.acostaroofingpnw.com/api/me shows your email.
-3. Try another address at the login: it gets no code.
-4. `curl -i https://acosta-portal.pages.dev/api/me` (the pages.dev URL,
-   no login) is redirected to Access, never answered by the API.
-
-The public project `acosta-roofing` must build previews for the
-`content-draft` branch (Settings → Build → Branch control: all non-production
-branches, or a custom list including `content-draft`), so the editor's
-preview link works.
+1. In a private window, https://portal.acostaroofingpnw.com lands on the
+   Access login; a code arrives by email; the editor loads.
+2. https://acosta.arankine.com/api/me shows your email.
+3. Another address at the login gets no code.
+4. `curl -i https://acosta-portal.pages.dev/api/me` is redirected to Access.
 
 ### Limits worth knowing
 
@@ -192,5 +136,4 @@ preview link works.
   so very large uploads could fail to save. The editor already scales photos
   to at most 2000 px as JPEG (a few hundred KB) before uploading; Workers
   Paid removes the concern entirely.
-- The token can only touch this repo's contents. Rotate it before it expires
-  (step 1, then update the secret and redeploy).
+- Rotate the GitHub token before it expires (see Changing access).
