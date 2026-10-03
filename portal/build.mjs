@@ -77,8 +77,11 @@ if (existsSync(app)) {
 
 // 4. Headers. The portal is private: nothing in it is for search engines, and
 // the editor's pages must always be fetched fresh so a deploy takes effect.
-// (Functions set their own headers; these apply to static files.)
-let headers = `/*\n  X-Robots-Tag: noindex\n\n/api/*\n  Cache-Control: no-store\n`;
+// No other site may frame it, or a page could lay decoys over Publish and
+// Discard for a signed-in owner to click; the editor's own frame of /site/
+// is same-origin and still allowed. (Functions set their own headers; these
+// apply to static files.)
+let headers = `/*\n  X-Robots-Tag: noindex\n  X-Frame-Options: SAMEORIGIN\n  Content-Security-Policy: frame-ancestors 'self'\n\n/api/*\n  Cache-Control: no-store\n`;
 for (const path of [...new Set(["/", ...htmlPaths])].sort()) headers += `\n${path}\n  Cache-Control: no-store\n`;
 if (existsSync(join(app, "_headers"))) headers += `\n# From portal/app/_headers\n${readFileSync(join(app, "_headers"), "utf8")}`;
 writeFileSync(join(dist, "_headers"), headers);
