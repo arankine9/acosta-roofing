@@ -171,7 +171,9 @@ const routes = {
     if (total > 40 * 1024 * 1024) fail(413, "Uploads are over 40 MB in total.", "too_large");
     const d = draft;
     const changes = Object.entries(files).some(([id, data]) => !same((d || live).files[id], data)) || decoded.some(([p]) => !(d || live).uploads.has(p));
-    if (!changes) fail(400, "That save doesn't change anything.", "empty");
+    // As the real API: files that match what's there already commit nothing
+    // and come back as the current state, not an error.
+    if (!changes) return contentResponse();
     ensureDraft();
     for (const [id, data] of Object.entries(files)) draft.files[id] = clone(data);
     for (const [p, buf] of decoded) draft.uploads.set(p, buf);
@@ -286,7 +288,9 @@ const MIME = {
 
 function serveStatic(res, root, rel) {
   let p = normalize(join(root, decodeURIComponent(rel)));
-  if (!p.startsWith(root)) return false;
+  // Inside root, not just a path that starts with the same letters
+  // (dist/site-old next to dist/site).
+  if (p !== root && !p.startsWith(root.endsWith(sep) ? root : root + sep)) return false;
   if (existsSync(p) && statSync(p).isDirectory()) p = join(p, "index.html");
   if (!existsSync(p) || !statSync(p).isFile()) return false;
   res.writeHead(200, { "content-type": MIME[extname(p).toLowerCase()] || "application/octet-stream", "cache-control": "no-store" });
@@ -349,7 +353,9 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
+// Loopback only: the mock has no sign-in, so it isn't for the rest of the
+// network to reach.
+server.listen(PORT, "127.0.0.1", () => {
   console.log(`\n  Acosta portal mock on http://localhost:${PORT}/`);
   console.log(`  site:    ${SITE}`);
   console.log(`  content: ${tmp} (a scratch copy; the repo is never written)\n`);
